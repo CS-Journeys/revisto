@@ -1,5 +1,5 @@
 # Revisto
-[revisto.live](revisto.live) is a public, anonymous journaling website
+[revisto.live](https://revisto.live) is a public, anonymous journaling website
 
 ## Running Revisto locally
 ### Getting started
