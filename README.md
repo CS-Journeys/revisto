@@ -6,12 +6,29 @@
 1. Install [Node.js](https://nodejs.org/en/) LTS
 2. Install an IDE for web development ([VS Code](https://code.visualstudio.com/) is recommended)
 3. Download the project's files to a path like `C:/YOUR_PATH` and extract the .zip
-4. Open a command line and navigate to the "server" folder: `cd C:/YOUR_PATH/revisto/server`
-5. Install the backend server's dependencies: `npm install`
-6. Launch the backend server: `npm start`
-7. Open another command line and navigate to the "client" folder: `cd C:/YOUR_PATH/revisto/client`
-8. Install the frontend server's dependencies: `npm install`
-9. Launch the frontend server: `npm start`
+4. Open a command line (if using VS Code, you can use the command line built into the IDE) and navigate to the "server" folder: 
+
+`cd C:/YOUR_PATH/revisto/server`
+
+7. Install the backend server's dependencies: 
+
+`npm install`
+
+9. Launch the backend server:
+
+`npm start`
+
+10. Open another command line and navigate to the "client" folder:
+
+`cd C:/YOUR_PATH/revisto/client`
+
+11. Install the frontend server's dependencies:
+
+`npm install`
+
+12. Launch the frontend server:
+
+`npm start`
   
 
 ### How it works
