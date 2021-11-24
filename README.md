@@ -49,5 +49,3 @@ As soon as the "PostLists" component is mounted, it gets all post data from the 
 
 ## Wow, such a cool header
 <-- Insert cool stuff here-->
-
-## This is a test3
