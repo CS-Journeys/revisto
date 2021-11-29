@@ -1,5 +1,16 @@
 # Revisto
-[revisto.live](https://revisto.live) is a public, anonymous journaling website
+[www.revisto.live](https://revisto.live) is a public, anonymous journaling website
+## Table of contents
+
+  * [Running Revisto locally](#running-revisto-locally)
+    * [Getting started](#getting-started)
+    * [How it works](#how-it-works)
+      * [Server](#server)
+      * [Client](#client)
+  * [Contributing to Revisto](#contributing-to-revisto)
+    * [First-time setup](#first-time-setup)
+    * [Solving issues](#solving-issues)
+
 
 ## Running Revisto locally
 ### Getting started
@@ -47,5 +58,54 @@ The frontend server runs on port 3000. If you navigate to http://localhost:3000,
 
 As soon as the "PostLists" component is mounted, it gets all post data from the server via the GET http://localhost:5000/api/posts request. Then, it renders the title data of each post received.
 
-## Wow, such a cool header
-<-- Insert cool stuff here-->
+
+## Contributing to Revisto
+### First-time setup
+1. Install [Git](https://git-scm.com/downloads)
+2. Set up command line authentication for your GitHub account (follow [this](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) tutorial)
+3. Set up your identity by typing into a command line:
+
+`git config --global user.name "John Doe"`
+
+`git config --global user.email johndoe@example.com`
+
+(replace John Doe and the email address with your actual GitHub user name and email address)
+
+4. Use the command line to navigate to the path where you want to store the repository: 
+
+`cd C:/YOUR_PATH`
+
+5. Clone the repository: 
+
+`git clone git@github.com:CS-Journeys/revisto.git`
+
+### Solving issues
+
+1. Identify the [issue](https://github.com/CS-Journeys/revisto/issues) you'd like to solve
+2. Open a command line to the root of your local repository
+3. Update your local repository:
+
+`git pull`
+
+4. Create a new branch:
+
+`git checkout -b my-branch-name`
+
+5. Make your changes
+6. Add your modified files to the Git staging area:
+
+`git add my-file.js` to add specific files one by one, or
+
+`git add .` to add all modified files
+
+7. Commit your changes with a descriptive message:
+
+`git commit -m "Implement user authentication"`
+
+8. Push your changes to GitHub
+
+`git push -u origin my-branch-name`
+
+9. Create a pull request in GitHub via the green "Compare & pull request" button
+10. Notify your team leader of your newly created pull request or assign a reviewer via the "Reviewers" settings button
+11. Wait for the reviewer to review your code. If everything looks good, they will merge your code into the master branch.
