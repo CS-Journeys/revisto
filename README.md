@@ -107,5 +107,9 @@ As soon as the "PostLists" component is mounted, it gets all post data from the 
 `git push -u origin my-branch-name`
 
 9. Create a pull request in GitHub via the green "Compare & pull request" button
-10. Notify your team leader of your newly created pull request or assign a reviewer via the "Reviewers" settings button
-11. Wait for the reviewer to review your code. If everything looks good, they will merge your code into the master branch.
+10. In GitHub, link the pull request to the relevant issue
+11. Notify your team leader of your newly created pull request or assign a reviewer via the "Reviewers" settings button
+12. Wait for the reviewer to review your code. If everything looks good, they will merge your code into the master branch.
+13. Return to the master branch:
+
+`git switch master`
