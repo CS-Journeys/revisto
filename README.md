@@ -1,5 +1,16 @@
 # Revisto
 [www.revisto.live](https://revisto.live) is a public, anonymous journaling website
+## Table of contents
+
+  * [Running Revisto locally](#running-revisto-locally)
+    * [Getting started](#getting-started)
+    * [How it works](#how-it-works)
+      * [Server](#server)
+      * [Client](#client)
+  * [Contributing to Revisto](#contributing-to-revisto)
+    * [First-time setup](#first-time-setup)
+    * [Solving issues](#solving-issues)
+
 
 ## Running Revisto locally
 ### Getting started
@@ -81,7 +92,6 @@ As soon as the "PostLists" component is mounted, it gets all post data from the 
 `git checkout -b my-branch-name`
 
 5. Make your changes
-
 6. Add your modified files to the Git staging area:
 
 `git add my-file.js` to add specific files one by one, or
@@ -96,4 +106,6 @@ As soon as the "PostLists" component is mounted, it gets all post data from the 
 
 `git push -u origin my-branch-name`
 
-9. Create a pull request
+9. Create a pull request in GitHub via the green "Compare & pull request" button
+10. Notify your team leader of your newly created pull request or assign a reviewer via the "Reviewers" settings button
+11. Wait for the reviewer to review your code. If everything looks good, they will merge your code into the master branch.
