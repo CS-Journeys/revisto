@@ -9,6 +9,11 @@ export const getPosts = (req, res) => {
       id: 3874,
       title: "My phone doesn't work",
       text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
+    },
+    {
+      id: 9876,
+      title: "Kadin did 9/11",
+      text: "I will not elaborate"
     }
   ]);
 }
