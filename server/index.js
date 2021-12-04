@@ -2,6 +2,7 @@ import express from 'express';
 import cors from 'cors';
 import dotenv from 'dotenv';
 
+import {connectToServer} from './db/connection.js';
 import postRoutes from './routes/posts.js';
 
 dotenv.config();
