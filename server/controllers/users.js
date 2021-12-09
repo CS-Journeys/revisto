@@ -1,4 +1,5 @@
 import User from "../models/user.js";
+import passport from "passport";
 
 export const me = async (req, res) => {
   try {
@@ -32,23 +33,24 @@ export const register = async (req, res) => {
 };
 
 export const login = async (req, res) => {
-  
-  
-
-  passport.authenticate("local", (err, user, info) => {
-    console.log("Attempting login.");
-    if (err) {
-      return res.send(err);
-    }
-    if (!user) {
-      return res.send(info);
-    }
-    req.logIn(user, (err) => {
-      if (err) {
-        throw err;
-      }
-      return res.send(user);
-    });
-  })(req, res);
-  
+  passport.authenticate('local', function (err, user, info) { 
+         if(err){
+           res.json({success: false, message: err})
+         } else{
+          if (! user) {
+            res.json({success: false, message: 'username or password incorrect'})
+          } else{
+            req.login(user, function(err){
+              if(err){
+                res.json({success: false, message: err})
+              }else{
+                // const token =  jwt.sign({userId : user._id, 
+                //    username:user.username}, secretkey, 
+                //       {expiresIn: '24h'})
+                res.json({success:true, message:"Authentication successful"});
+              }
+            })
+          }
+         }
+      })(req, res);
 };
