@@ -10,7 +10,6 @@ import passport from 'passport';
 import passportLocal from 'passport-local';
 import UserDetails from './models/user.js';
 import Session from 'express-session';
-import jwt from 'jsonwebtoken';
 
 dotenv.config();
 

@@ -1,4 +1,5 @@
 import User from "../models/user.js";
+import { createJWT } from "../auth/auth-jwt.js";
 import passport from "passport";
 
 export const me = async (req, res) => {
@@ -44,10 +45,8 @@ export const login = async (req, res) => {
               if(err){
                 res.json({success: false, message: err})
               }else{
-                // const token =  jwt.sign({userId : user._id, 
-                //    username:user.username}, secretkey, 
-                //       {expiresIn: '24h'})
-                res.json({success:true, message:"Authentication successful"});
+                const token = createJWT(user._id);
+                res.json(token);
               }
             })
           }
