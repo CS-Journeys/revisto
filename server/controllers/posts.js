@@ -23,7 +23,7 @@ export const createPost = (req, res) => {
   //req.body has user, title, and content
   //create a new post with the request body
  
-  let newPost = new Post();
+  let newPost = new Post(req.body);
 
   console.log(req.body);
 
@@ -33,5 +33,15 @@ export const createPost = (req, res) => {
       res.send(err);
     }
     res.json(post);
+  });
+}
+
+export const getUserPosts = (req, res) => {
+  //Gets all posts by a specific user
+  Post.find({ user: req.params.id }, (err, posts) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(posts);
   });
 }

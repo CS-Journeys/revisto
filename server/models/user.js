@@ -7,8 +7,8 @@ let Schema = mongoose.Schema;
 let UserSchema = new Schema({
   password: String,
   username: String,
-  region: String,
-  role: String
+  region: { type: String, default: "US" },
+  language: { type: String, default: "EN" },
 });
 
 //Add passport-local-mongoose plug-in

@@ -13,28 +13,6 @@ mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopol
 
 let db = mongoose.connection;
 
-db.on('error', console.error.bind(console, 'Mongoose connection error:'));
+db.on('error', console.error.bind(console, 'Mongoose Connection Error: '));
 
 console.log("Connected to MongoDB");
-
-// const connectionString = process.env.ATLAS_URI;
-
-// const client = new MongoClient(connectionString, {
-//     useNewUrlParser: true,
-//     useUnifiedTopology: true,
-// });
-  
-// let dbConnection;
-  
-// function connectToServer(){
-//     client.connect(function (err, db) {
-//         dbConnection = db.db("revistoDb");
-//         console.log("Successfully connected to MongoDB.");
-//     });
-// }
-
-// function getDb(){
-//     return dbConnection;
-// }
-
-// export { connectToServer, getDb };
