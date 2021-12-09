@@ -1,4 +1,4 @@
-import { MongoClient } from 'mongodb';
+import mongoose from 'mongoose';
 import dotenv from 'dotenv';
 import { exit } from 'process';
 
@@ -9,24 +9,32 @@ if(!("ATLAS_URI" in process.env)){
     throw new Error("Mongodb Connection URL not defined. Check .env file");
 }
 
-const connectionString = process.env.ATLAS_URI;
+mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true });
 
-const client = new MongoClient(connectionString, {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-});
+let db = mongoose.connection;
+
+db.on('error', console.error.bind(console, 'Mongoose connection error:'));
+
+console.log("Connected to MongoDB");
+
+// const connectionString = process.env.ATLAS_URI;
+
+// const client = new MongoClient(connectionString, {
+//     useNewUrlParser: true,
+//     useUnifiedTopology: true,
+// });
   
-let dbConnection;
+// let dbConnection;
   
-function connectToServer(){
-    client.connect(function (err, db) {
-        dbConnection = db.db("revistoDb");
-        console.log("Successfully connected to MongoDB.");
-    });
-}
+// function connectToServer(){
+//     client.connect(function (err, db) {
+//         dbConnection = db.db("revistoDb");
+//         console.log("Successfully connected to MongoDB.");
+//     });
+// }
 
-function getDb(){
-    return dbConnection;
-}
+// function getDb(){
+//     return dbConnection;
+// }
 
-export { connectToServer, getDb };
+// export { connectToServer, getDb };

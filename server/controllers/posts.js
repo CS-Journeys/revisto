@@ -1,27 +1,37 @@
+import Post from '../models/Post.js';
+
 export const getPosts = (req, res) => {
-  res.status(200).json([
-    {
-      id: 1234,
-      title: "My bf cheated on my gf",
-      text: "It's been rough"
-    },
-    {
-      id: 3874,
-      title: "My phone doesn't work",
-      text: "Lorem ipsum dolor sit amet, consectetur adipiscing elit"
-    },
-    {
-      id: 9876,
-      title: "Kadin did 9/11",
-      text: "I will not elaborate"
+  Post.find({}, (err, posts) => {
+    if (err) {
+      res.send(err);
     }
-  ]);
+    res.json(posts);
+  });
 }
 
 export const getPost = (req, res) => {
-  res.send(`TODO: get post ${req.params.id}`);
+  //using req.params.id
+  Post.findById(req.params.id, (err, post) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(post);
+  });
 }
 
 export const createPost = (req, res) => {
-  res.send('TODO: create post');
+  //req.body has user, title, and content
+  //create a new post with the request body
+
+  let newPost = new Post(req.body);
+
+  console.log(req.body);
+
+  console.log(newPost);
+  newPost.save((err, post) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json(post);
+  });
 }
