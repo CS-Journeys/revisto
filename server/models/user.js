@@ -6,8 +6,9 @@ let Schema = mongoose.Schema;
 
 let UserSchema = new Schema({
   password: String,
-  email: String,
-  region: String
+  username: String,
+  region: String,
+  role: String
 });
 
 //Add passport-local-mongoose plug-in

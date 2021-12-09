@@ -22,8 +22,8 @@ export const getPost = (req, res) => {
 export const createPost = (req, res) => {
   //req.body has user, title, and content
   //create a new post with the request body
-
-  let newPost = new Post(req.body);
+ 
+  let newPost = new Post();
 
   console.log(req.body);
 

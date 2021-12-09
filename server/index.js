@@ -9,6 +9,8 @@ import userRoutes from './routes/users.js';
 import passport from 'passport';
 import passportLocal from 'passport-local';
 import UserDetails from './models/user.js';
+import Session from 'express-session';
+import jwt from 'jsonwebtoken';
 
 dotenv.config();
 
@@ -16,9 +18,15 @@ const app = express();
 
 const PORT = process.env.PORT || 5000;
 
+app.use(Session({
+  secret: 'hahafunnysecret',
+  resave: false,
+  saveUninitialized: false
+}));
+
 //Set up passport.js
 let LocalStrategy = passportLocal.Strategy;
-passport.use(new LocalStrategy(UserDetails.authenticate()));
+passport.use(UserDetails.createStrategy({userNameField: 'email'}));
 passport.serializeUser(UserDetails.serializeUser());
 passport.deserializeUser(UserDetails.deserializeUser());
 app.use(passport.initialize());
