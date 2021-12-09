@@ -38,10 +38,21 @@ export const createPost = (req, res) => {
 
 export const getUserPosts = (req, res) => {
   //Gets all posts by a specific user
-  Post.find({ user: req.params.id }, (err, posts) => {
+  console.log("We got here");
+  console.log(req.token.userId);
+  Post.find({ user: req.token.userId }, (err, posts) => {
     if (err) {
       res.send(err);
     }
     res.json(posts);
+  });
+}
+
+export const deletePost = (req, res) => {
+  Post.remove({ _id: req.params.id }, (err, post) => {
+    if (err) {
+      res.send(err);
+    }
+    res.json({ message: 'Successfully deleted post!' });
   });
 }
