@@ -3,7 +3,7 @@ import cors from 'cors';
 import dotenv from 'dotenv';
 import bodyParser from 'body-parser';
 
-import * as db from './db/connection.js';
+import db from './db/connection.js';
 import postRoutes from './routes/posts.js';
 import userRoutes from './routes/users.js';
 import passport from 'passport';

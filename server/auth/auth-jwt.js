@@ -10,14 +10,14 @@ export const authenticateJWT = (req, res, next) => {
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, tokenData) => {
       if (err) {
-        return res.sendStatus(403);
+        return res.json({ err: "BADAUTH" });
       }
 
       req.token = tokenData;
       next();
     });
   } else {
-    res.sendStatus(401);
+    res.json({err:"NOAUTH"});
   }
 }
 
