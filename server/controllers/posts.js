@@ -1,5 +1,6 @@
-import Post from "../models/Post.js";
+import Post from "../models/postModel.js";
 
+// Gets all posts
 export const getPosts = (req, res) => {
   Post.find({}, "title content dateCreated", (err, posts) => {
     if (err) {
@@ -9,8 +10,8 @@ export const getPosts = (req, res) => {
   });
 };
 
+// Gets post by id (uses req.params.id)
 export const getPost = (req, res) => {
-  //using req.params.id
   Post.findById(req.params.id, "title content dateCreated", (err, post) => {
     if (err) {
       res.json({ err: "NOPOST" });
@@ -19,24 +20,8 @@ export const getPost = (req, res) => {
   });
 };
 
-export const createPost = (req, res) => {
-  //req.body has user, title, and content
-  //create a new post with the request body
-
-  let newPost = new Post(req.body);
-  newPost.user = req.token.userId;
-
-  console.log(newPost);
-  newPost.save((err, post) => {
-    if (err) {
-      res.json({ err: "BADPOST" });
-    }
-    res.json({post});
-  });
-};
-
+// Gets all posts by a specific user
 export const getUserPosts = (req, res) => {
-  //Gets all posts by a specific user
   Post.find(
     { user: req.token.userId },
     "title content dateCreated",
@@ -44,16 +29,31 @@ export const getUserPosts = (req, res) => {
       if (err) {
         res.json({ err: "ERROR" });
       }
-      res.json({ posts });
+      res.json({posts});
     }
   );
 };
 
+// Creates a new post with the request body
+// req.body has user, title, and content
+export const createPost = (req, res) => {
+  let newPost = new Post(req.body);
+  newPost.user = req.token.userId;
+
+  newPost.save((err, post) => {
+    if (err) {
+      res.json({ err: "ERROR" });
+    }
+    res.sendStatus(201);
+  });
+};
+
+// Deletes the post of the given id (uses req.params.id)
 export const deletePost = (req, res) => {
   Post.remove({ _id: req.params.id }, (err, post) => {
     if (err) {
       res.json({ err: "ERROR" });
     }
-    res.json({ message: "Successfully deleted post!" });
+    res.sendStatus(200);
   });
 };

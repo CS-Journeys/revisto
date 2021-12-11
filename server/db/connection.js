@@ -1,15 +1,15 @@
 import mongoose from 'mongoose';
 import dotenv from 'dotenv';
-import { exit } from 'process';
 
+// Load .env configuration
 dotenv.config();
-
-if(!("ATLAS_URI" in process.env)){
-    console.error("Bad URL");
-    throw new Error("Mongodb Connection URL not defined. Check .env file");
+if (!("ATLAS_URI" in process.env)) {
+  console.error("MongoDB connection URL not defined. Ask the lead developers for more info.");
+  throw new Error("Missing 'ATLAS_URI' parameter in .env");
 }
 
 mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true });
+console.log("Connected to MongoDB");
 
 let db = mongoose.connection;
 
