@@ -15,4 +15,4 @@ let db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'Mongoose Connection Error: '));
 
-console.log("Connected to MongoDB");
+export default db;

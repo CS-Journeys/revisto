@@ -1,10 +1,11 @@
 import express from "express";
 
+import { authenticateJWT } from "../auth/auth-jwt.js";
 import {me, register, login} from "../controllers/users.js";
 
 const router = express.Router();
 
-router.get("/", me);
+router.get("/", authenticateJWT, me);
 router.post("/register", register);
 router.post("/login", login);
 

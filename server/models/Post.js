@@ -4,9 +4,9 @@ import mongoose from 'mongoose';
 let Schema = mongoose.Schema;
 
 let PostSchema = new Schema({
-  title: String,
-  content: String,
-  user: { type: Schema.Types.ObjectId, ref: "users" },
+  title: {type: String, required: true},
+  content: {type: String, required: true},
+  user: { type: Schema.Types.ObjectId, ref: "users", required: true },
   dateCreated: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now }
 });
