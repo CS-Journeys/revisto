@@ -1,11 +1,14 @@
 import express from 'express';
 
-import { getPosts, getPost, createPost } from '../controllers/posts.js';
+import { authenticateJWT } from '../auth/jwtAuth.js';
+import { getPosts, getPost, createPost, getUserPosts, deletePost } from '../controllers/posts.js';
 
 const router = express.Router();
 
 router.get('/', getPosts);
-router.get('/:id', getPost);
-router.post('/', createPost);
+router.get('/id/:id', getPost);
+router.get('/user', authenticateJWT, getUserPosts);
+router.post('/', authenticateJWT, createPost);
+router.delete("/id/:id", authenticateJWT, deletePost);
 
 export default router;
