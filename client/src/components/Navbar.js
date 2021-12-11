@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import logo from '../logo-tmp.png'
 
 class Navbar extends Component {
-
     render() {
         return (
         <nav class="navbar navbar-expand-sm nav-bg">

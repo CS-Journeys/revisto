@@ -1,9 +1,16 @@
-import React from 'react';
+import React, { Component } from 'react';
+import Post from './Post';
+
 import axios from 'axios';
 
-class PostsList extends React.Component {
-    state = {
-        posts: []
+class PostsList extends Component {
+
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            posts: []
+        };
     }
 
     componentDidMount() {
@@ -20,9 +27,9 @@ class PostsList extends React.Component {
 
     render() {
         return (
-        <ul>
-            { this.state.posts.map(post => <li>{post.title}</li>) }
-        </ul>
+        <div className="row">
+            { this.state.posts.map(post => <Post title={post.title} content={post.content}/>)  }
+        </div>
         )
     }
 }
