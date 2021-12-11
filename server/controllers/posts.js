@@ -6,7 +6,7 @@ export const getPosts = (req, res) => {
     if (err) {
       res.json({ err: "ERROR" });
     }
-    res.json({posts});
+    res.json(posts);
   });
 };
 
@@ -16,7 +16,7 @@ export const getPost = (req, res) => {
     if (err) {
       res.json({ err: "NOPOST" });
     }
-    res.json({post});
+    res.json(post);
   });
 };
 
@@ -29,7 +29,7 @@ export const getUserPosts = (req, res) => {
       if (err) {
         res.json({ err: "ERROR" });
       }
-      res.json({posts});
+      res.json(posts);
     }
   );
 };
