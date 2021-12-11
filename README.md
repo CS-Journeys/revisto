@@ -1,17 +1,20 @@
 # Revisto
 [www.revisto.live](https://revisto.live) is a public, anonymous journaling website
 ## Table of contents
-
   * [Getting started](#getting-started)
-    * [Setting up Git](#setting-up-git)
-    * [Setting up your IDE](#)
-    * [Setting up Node](#setting-up-node)
+    * [Setting up Git](#i-setting-up-git)
+    * [Setting up your IDE](#ii-setting-up-your-ide)
+    * [Setting up Node](#iii-setting-up-node)
+    * [Setting up your environment config](#iv-setting-up-your-environment-config)
+  * [Running Revisto locally](#running-revisto-locally)
   * [Contributing to Revisto](#contributing-to-revisto)
-    * [First-time setup](#first-time-setup)
     * [Solving issues](#solving-issues)
+  * [How it works](#how-it-works)
+    * [Server](#server)
+    * [Client](#client)
 
 ## Getting started
-### Setting up Git
+### I. Setting up Git
 1. Install [Git](https://git-scm.com/downloads)
 2. Set up command line authentication for your GitHub account (follow [this](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) tutorial)
 3. Set up your identity by typing into a command line:
@@ -30,12 +33,12 @@
 
 `git clone git@github.com:CS-Journeys/revisto.git`
 
-### Setting up your IDE
+### II. Setting up your IDE
 Install an IDE for web development ([VS Code](https://code.visualstudio.com/) is recommended)
 
-### Setting up Node
+### III. Setting up Node
 1. Install [Node.js](https://nodejs.org/en/) LTS
-2. 
+2. Open a command line and navigate to the "server" folder:
 
 `cd C:/YOUR_PATH/revisto/server`
 
@@ -51,9 +54,27 @@ Install an IDE for web development ([VS Code](https://code.visualstudio.com/) is
 
 `npm install`
 
+### IV. Setting up your environment config
+Contact the lead developers and ask them for the required .env files
+
 
 ## Running Revisto locally
 1. Open a command line and navigate to the "server" folder:
+
+`cd C:/YOUR_PATH/revisto/server`
+
+2. Launch the backend:
+
+`npm start`
+
+3. Open another command line and navigate to the "client" folder:
+
+`cd C:/YOUR_PATH/revisto/server`
+
+4. Launch the frontend:
+
+`npm start`
+
 
 ## Contributing to Revisto
 ### Solving issues
@@ -79,7 +100,7 @@ Install an IDE for web development ([VS Code](https://code.visualstudio.com/) is
 
 `git commit -m "Implement user authentication"`
 
-8. Push your changes to GitHub
+8. Push your changes to GitHub:
 
 `git push -u origin my-branch-name`
 
