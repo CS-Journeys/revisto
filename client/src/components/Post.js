@@ -11,11 +11,14 @@ class Post extends Component {
     }
 
     render() {
-        return (<div className="col">
+        let content = this.state.content.substring(0, 150);
+        content += " ...";
+
+        return (<div className="col-3">
             <div className="card">
                 <div className="card-header">{this.state.title}</div>
                 <div className="card-body">
-                    { (this.state.content) ? this.state.content : "No Content Found."}
+                    { (this.state.content) ? content : "No Content Found."}
                 </div>
             </div>
         </div>);
