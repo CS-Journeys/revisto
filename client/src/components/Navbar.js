@@ -4,7 +4,7 @@ import logo from '../logo-tmp.png'
 class Navbar extends Component {
     render() {
         return (
-        <nav class="navbar navbar-expand-sm nav-bg">
+        <nav class="navbar navbar-expand nav-bg">
             <img src={logo} alt="Logo" className="nav-logo" id="logo"/>
             <ul class="navbar-nav">
                 <li class="nav-item">

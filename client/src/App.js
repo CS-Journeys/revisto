@@ -31,9 +31,9 @@ class App extends Component {
             return (
                 <div className="App">
                     <Navbar/>
+                    <br/>
                     <div className="container-fluid">
                         {/* Render home page */}
-                        <h1>Hello world, these are the post titles:</h1>
                         <PostsList/>
                     </div>
                 </div>

@@ -5,22 +5,49 @@
 }
 body {
     font-family: "Bebas";
+    background-color: #dbebf3;
+}
+
+a, a:hover {
+    color: #116c82;
 }
 
 /*--Navbar--*/
 .nav-bg {
     background-color: white;
-    border-bottom: 5px solid #116c82;
 }
 
 .nav-bg a {
-    color: black;
+    color: #5e5e5e;
 }
 
 .nav-logo {
     width: 20%;
     height: auto;
     padding: 10px;
+}
+
+/*--Post Card--*/
+.card {
+    background-color: #679db6;
+}
+
+.card-header {
+    background-color: #679db6;
+    color: white;
+}
+
+.card-body {
+    padding-bottom: 0px;
+    color: #5e5e5e;
+    background-color: white;
+}
+
+.card-footer {
+    padding-top: 0px;
+    background-color: white;
+    border: 0px;
+    text-align: center;
 }
 
 /*--Color Schemes--*/
