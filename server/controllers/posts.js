@@ -6,7 +6,7 @@ export const getPosts = (req, res) => {
     if (err) {
       res.json({ err: "ERROR" });
     }
-    res.json(posts);
+    res.json({posts});
   });
 };
 
@@ -16,7 +16,7 @@ export const getPost = (req, res) => {
     if (err) {
       res.json({ err: "NOPOST" });
     }
-    res.json(post);
+    res.json({post});
   });
 };
 
@@ -29,7 +29,7 @@ export const getUserPosts = (req, res) => {
       if (err) {
         res.json({ err: "ERROR" });
       }
-      res.json(posts);
+      res.json({posts});
     }
   );
 };
@@ -44,16 +44,17 @@ export const createPost = (req, res) => {
     if (err) {
       res.json({ err: "ERROR" });
     }
-    res.sendStatus(201);
+    res.json({status:"Success"});
   });
 };
 
 // Deletes the post of the given id (uses req.params.id)
 export const deletePost = (req, res) => {
   Post.remove({ _id: req.params.id }, (err, post) => {
+    console.log(post);
     if (err) {
       res.json({ err: "ERROR" });
     }
-    res.sendStatus(200);
+    res.json({status:"Deleted"});
   });
 };
