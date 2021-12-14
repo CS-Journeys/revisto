@@ -28,7 +28,7 @@ class PostsList extends Component {
     render() {
         return (
         <div className="row">
-            { this.state.posts.map(post => <Post title={post.title} content={post.content}/>)  }
+            { this.state.posts.map(post => <Post title={post.title} content={post.content} dateCreated={new Date(post.dateCreated).toDateString().slice(0, -5)}/>)  }
         </div>
         )
     }

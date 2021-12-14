@@ -10,6 +10,17 @@ export const getPosts = (req, res) => {
   });
 };
 
+// Gets all posts sorted by date created - change to get sorted results from mongo instead of getting results then sorting.
+var mySort = {dateCreated : 1};
+export const getPostsByDate = (req, res) => {
+  Post.find.sort(mySort).toArray({}, "title content dateCreated", (err, posts) => {
+    if (err) {
+      res.json({ err: "ERROR" });
+    }
+    res.json(posts);
+  });
+};
+
 // Gets post by id (uses req.params.id)
 export const getPost = (req, res) => {
   Post.findById(req.params.id, "title content dateCreated", (err, post) => {
