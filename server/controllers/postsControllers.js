@@ -55,7 +55,7 @@ export const createPost = (req, res) => {
     if (err) {
       return res.json({ err: "ERROR" });
     }
-    res.json({ status: "Success" });
+    res.json({ status: "Success", id: post._id });
   });
 };
 
@@ -91,11 +91,13 @@ export const updatePost = (req, res) => {
     if (post.user != req.token.userId) {
       return res.json({ err: "NOTAUTHOR" });
     }
-    post.save((err, post) => {
+    if (req.body.title) { post.title = req.body.title; }
+    if (req.body.content) { post.content = req.body.content; }
+    post.save((err, newpost) => {
       if (err) {
         return res.json({ err: "ERROR" });
       }
-      res.json({ post:{title:post.title,content:post.content} });
+      res.json({ post:{title:newpost.title,content:newpost.content} });
     });
   });
 }

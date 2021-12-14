@@ -63,41 +63,93 @@ describe("Unathorized Interactions", () => {
 });
 
 describe("User Interactions", () => {
-  
-  let postId;
+  let created;
+  var postId;
 
-  test("should GET user's posts", done => {
+  test("should GET user's posts", (done) => {
     supertest(app)
       .get("/api/posts/user")
       .auth(token, { type: "bearer" })
       .expect(200)
       .then((res) => {
+        expect(res.body.err).not.toBeDefined();
         expect(res.body.posts).toBeDefined();
         expect(Array.isArray(res.body.posts)).toBeTruthy();
         done();
       });
   });
-  test('should create new post', async () => {
-    await supertest(app)
-      .post('/api/posts')
-      .auth(token, { type: 'bearer' })
+  test("should create new post", (done) => {
+    supertest(app)
+      .post("/api/posts")
+      .auth(token, { type: "bearer" })
       .send({
-        title: 'test post',
-        content: 'test content',
+        title: "test_post_deleteme",
+        content: "test content",
       })
       .expect(200)
       .then((res) => {
-        expect(res.body.post).toBeDefined();
-        expect(res.body.post.title).toBe('test post');
-        expect(res.body.post.content).toBe('test content');
-        expect(res.body.post.user).toBe(userId);
-        postId = res.body.post._id;
+        expect(res.body.err).not.toBeDefined();
+        expect(res.body.status).toBe("Success");
+        expect(res.body.id).toBeDefined();
+        Post.findByIdAndRemove(res.body.id).then(() => {
+          done();
+        });
       });
-  })
+  });
+  test("should update post", done => {
+    Post.create({
+      title: "Test Post",
+      content: "Test Content",
+      user: userId,
+    }).then(post => {
+      post.save((err, spost) => {
+        if (err) {
+          done();
+        } else {
+          postId = spost._id;
+          supertest(app)
+            .patch(`/api/posts/id/${postId.toString()}`)
+            .auth(token, { type: "bearer" })
+            .send({
+              title: "Updated Title",
+              content: "Updated Content",
+            })
+            .expect(200)
+            .then((res) => {
+              expect(res.body.err).not.toBeDefined();
+              expect(res.body.post).toBeDefined();
+              expect(res.body.post.title).toBe("Updated Title");
+              expect(res.body.post.content).toBe("Updated Content");
+              done();
+            });
+        }
+      });
+    });
+  });
 
-  afterAll(async () => {
-    //Delete the post created in the CREATE test.
-    await Post.findByIdAndDelete(postId);
+  test("should delete post", done => {
+    Post.create({
+      title: "Test Post",
+      content: "Test Content",
+      user: userId,
+    }).then((post) => {
+      post.save((err, spost) => {
+        if (err) {
+          done("Couldn't Create a Post");
+        } else {
+          postId = spost._id;
+          supertest(app)
+          .delete(`/api/posts/id/${postId.toString()}`)
+          .auth(token, { type: "bearer" })
+          .expect(200)
+          .then((res) => {
+            expect(res.body.err).not.toBeDefined();
+            expect(res.body.status).toBe("Success");
+            done();
+          });
+        }
+      });
+    });
   });
 });
 
