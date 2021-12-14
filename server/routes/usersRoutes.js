@@ -1,7 +1,7 @@
 import express from "express";
 
 import { authenticateJWT } from "../auth/jwtAuth.js";
-import { me, register, login } from "../controllers/users.js";
+import { me, register, login } from "../controllers/usersControllers.js";
 
 const router = express.Router();
 

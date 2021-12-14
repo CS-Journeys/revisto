@@ -1,7 +1,7 @@
 import express from 'express';
 
 import { authenticateJWT } from '../auth/jwtAuth.js';
-import { getPosts, getPost, createPost, getUserPosts, deletePost, updatePost } from '../controllers/posts.js';
+import { getPosts, getPost, createPost, getUserPosts, deletePost, updatePost } from '../controllers/postsControllers.js';
 
 const router = express.Router();
 
