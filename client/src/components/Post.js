@@ -6,7 +6,8 @@ class Post extends Component {
 
         this.state = {
             title: this.props.title,
-            content: this.props.content
+            content: this.props.content,
+            dateCreated: this.props.dateCreated
         };
     }
 
@@ -21,6 +22,9 @@ class Post extends Component {
                 </div>
                 <a href="#" className="card-footer">See More</a>
             </div>
+                <div>
+                    {this.state.dateCreated}
+                </div>
             <br />
         </div>);
     }
