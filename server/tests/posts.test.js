@@ -96,12 +96,12 @@ describe("User Interactions", () => {
         });
       });
   });
-  test("should update post", done => {
+  test("should update post", (done) => {
     Post.create({
       title: "Test Post",
       content: "Test Content",
       user: userId,
-    }).then(post => {
+    }).then((post) => {
       post.save((err, spost) => {
         if (err) {
           done();
@@ -120,14 +120,19 @@ describe("User Interactions", () => {
               expect(res.body.post).toBeDefined();
               expect(res.body.post.title).toBe("Updated Title");
               expect(res.body.post.content).toBe("Updated Content");
-              done();
+              Post.findByIdAndDelete(postId).then((post) => {
+                expect(post).toBeDefined();
+                expect(post.title).toBe("Updated Title");
+                expect(post.content).toBe("Updated Content");
+                done();
+              });
             });
         }
       });
     });
   });
 
-  test("should delete post", done => {
+  test("should delete post", (done) => {
     Post.create({
       title: "Test Post",
       content: "Test Content",
@@ -139,17 +144,79 @@ describe("User Interactions", () => {
         } else {
           postId = spost._id;
           supertest(app)
-          .delete(`/api/posts/id/${postId.toString()}`)
-          .auth(token, { type: "bearer" })
-          .expect(200)
-          .then((res) => {
-            expect(res.body.err).not.toBeDefined();
-            expect(res.body.status).toBe("Success");
-            done();
-          });
+            .delete(`/api/posts/id/${postId.toString()}`)
+            .auth(token, { type: "bearer" })
+            .expect(200)
+            .then((res) => {
+              expect(res.body.err).not.toBeDefined();
+              expect(res.body.status).toBe("Success");
+              Post.findById(postId).then((post) => {
+                expect(post).toBeNull();
+                done();
+              });
+            });
         }
       });
     });
+  });
+
+  describe("Error Handling", () => {
+    let otherPostId;
+    beforeAll(done => {
+      Post.findOne({ user: { $ne: userId } }).then(post => {
+        otherPostId = post._id;
+        done();
+      });
+    });
+
+    test("Can't PATCH nonexsistent post", (done) => {
+      supertest(app)
+        .patch("/api/posts/id/61b9277be352a2b2ebecc336")
+        .auth(token, { type: "bearer" })
+        .expect(200)
+        .then((res) => {
+          expect(res.body.err).toBeDefined();
+          expect(res.body.err).toBe("NOTAPOST");
+          done();
+        });
+    });
+
+    test("Can't DELETE nonexsistent post", (done) => {
+      supertest(app)
+        .delete("/api/posts/id/61b9277be352a2b2ebecc336")
+        .auth(token, { type: "bearer" })
+        .expect(200)
+        .then((res) => {
+          expect(res.body.err).toBeDefined();
+          expect(res.body.err).toBe("NOTAPOST");
+          done();
+        });
+    });
+
+    test("Can't PATCH other user's post", (done) => {
+      supertest(app)
+        .patch(`/api/posts/id/${otherPostId.toString()}`)
+        .auth(token, { type: "bearer" })
+        .expect(200)
+        .then((res) => {
+          expect(res.body.err).toBeDefined();
+          expect(res.body.err).toBe("NOTAUTHOR");
+          done();
+        });
+    });
+
+    test("Can't DELETE other user's post", (done) => {
+      supertest(app)
+        .delete(`/api/posts/id/${otherPostId.toString()}`)
+        .auth(token, { type: "bearer" })
+        .expect(200)
+        .then((res) => {
+          expect(res.body.err).toBeDefined();
+          expect(res.body.err).toBe("NOTAUTHOR");
+          done();
+        });
+    });
+
   });
 });
 
