@@ -16,7 +16,7 @@ class PostsList extends Component {
     componentDidMount() {
         axios.get('/posts')
         .then(res => {
-            const posts = res.data;
+            const {posts} = res.data;
             console.log(posts);
             this.setState({ posts });
         })

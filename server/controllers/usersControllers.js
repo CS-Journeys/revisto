@@ -6,7 +6,7 @@ import { createJWT } from "../auth/jwtAuth.js";
 // Get the current user (uses req.token.userId)
 export const me = async (req, res) => {
   const user = await User.findById(req.token.userId, "username region language");
-  res.json(user);
+  res.json({user});
 };
 
 // Create a new user with passport-local-mongoose
@@ -18,7 +18,7 @@ export const register = async (req, res) => {
     if (err) {
       return res.json({err:"USERTAKEN"});
     }
-    res.sendStatus(201);
+    res.json({status: "Success"});
   });
 };
 
@@ -42,4 +42,22 @@ export const login = async (req, res) => {
       }
     }
   })(req, res);
+};
+
+export const updateUser = async (req, res) => {
+  User.findById(req.token.userId, (err, user) => {
+    if (err) {
+      res.json({ err: "NOUSER" });
+    } else {
+      if(req.body.region) user.region = req.body.region;
+      if(req.body.language) user.language = req.body.language;
+      user.save((err) => {
+        if (err) {
+          res.json({ err: "CANTSAVE" });
+        } else {
+          res.json({ status: "Success" });
+        }
+      });
+    }
+  });
 };

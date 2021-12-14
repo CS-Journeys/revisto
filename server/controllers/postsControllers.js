@@ -6,7 +6,7 @@ export const getPosts = (req, res) => {
     if (err) {
       res.json({ err: "ERROR" });
     }
-    res.json(posts);
+    res.json({ posts });
   });
 };
 
@@ -27,7 +27,7 @@ export const getPost = (req, res) => {
     if (err) {
       res.json({ err: "NOPOST" });
     }
-    res.json(post);
+    res.json({ post });
   });
 };
 
@@ -40,7 +40,7 @@ export const getUserPosts = (req, res) => {
       if (err) {
         res.json({ err: "ERROR" });
       }
-      res.json(posts);
+      res.json({ posts });
     }
   );
 };
@@ -55,16 +55,43 @@ export const createPost = (req, res) => {
     if (err) {
       res.json({ err: "ERROR" });
     }
-    res.sendStatus(201);
+    res.json({ status: "Success" });
   });
 };
 
 // Deletes the post of the given id (uses req.params.id)
 export const deletePost = (req, res) => {
-  Post.remove({ _id: req.params.id }, (err, post) => {
+  Post.findById(req.params.id, (err, post) => {
     if (err) {
-      res.json({ err: "ERROR" });
+      res.json({ err: "NOTAPOST" });
     }
-    res.sendStatus(200);
+    if (post.user != req.token.userId) {
+      res.json({ err: "NOTAUTHOR" });
+    }
+    post.remove((err, post) => {
+      if (err) {
+        res.json({ err: "ERROR" });
+      }
+      res.json({ status: "Success" });
+    });
   });
 };
+
+export const updatePost = (req, res) => {
+  Post.findById(req.params.id, (err, post) => {
+    if (err) {
+      return res.json({ err: "NOTAPOST" });
+    }
+    console.log(post.user);
+    console.log(req.token.userId);
+    if (post.user != req.token.userId) {
+      return res.json({ err: "NOTAUTHOR" });
+    }
+    post.save((err, post) => {
+      if (err) {
+        return res.json({ err: "ERROR" });
+      }
+      res.json({ post:{title:post.title,content:post.content} });
+    });
+  });
+}
