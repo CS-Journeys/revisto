@@ -26,14 +26,14 @@ export const register = async (req, res) => {
 export const login = async (req, res) => {
   passport.authenticate('local', function (err, user, info) {
     if (err) {
-      res.json({ err: "INVALID" });
+      return res.json({ err: "INVALID" });
     } else {
       if (!user) {
-        res.json({ err: "INCORRECTLOGIN" });
+        return res.json({ err: "INCORRECTLOGIN" });
       } else {
         req.login(user, function (err) {
           if (err) {
-            res.json({ err: "BADLOGIN" });
+            return res.json({ err: "BADLOGIN" });
           } else {
             const token = createJWT(user._id);
             res.json({ token });

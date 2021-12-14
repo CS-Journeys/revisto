@@ -4,7 +4,7 @@ import Post from "../models/postModel.js";
 export const getPosts = (req, res) => {
   Post.find({}, "title content dateCreated", (err, posts) => {
     if (err) {
-      res.json({ err: "ERROR" });
+      return res.json({ err: "ERROR" });
     }
     res.json({ posts });
   });
@@ -15,7 +15,7 @@ var mySort = {dateCreated : 1};
 export const getPostsByDate = (req, res) => {
   Post.find.sort(mySort).toArray({}, "title content dateCreated", (err, posts) => {
     if (err) {
-      res.json({ err: "ERROR" });
+      return res.json({ err: "ERROR" });
     }
     res.json(posts);
   });
@@ -25,7 +25,7 @@ export const getPostsByDate = (req, res) => {
 export const getPost = (req, res) => {
   Post.findById(req.params.id, "title content dateCreated", (err, post) => {
     if (err) {
-      res.json({ err: "NOPOST" });
+      return res.json({ err: "NOPOST" });
     }
     res.json({ post });
   });
@@ -38,7 +38,7 @@ export const getUserPosts = (req, res) => {
     "title content dateCreated",
     (err, posts) => {
       if (err) {
-        res.json({ err: "ERROR" });
+        return res.json({ err: "ERROR" });
       }
       res.json({ posts });
     }
@@ -53,7 +53,7 @@ export const createPost = (req, res) => {
 
   newPost.save((err, post) => {
     if (err) {
-      res.json({ err: "ERROR" });
+      return res.json({ err: "ERROR" });
     }
     res.json({ status: "Success" });
   });
@@ -62,15 +62,19 @@ export const createPost = (req, res) => {
 // Deletes the post of the given id (uses req.params.id)
 export const deletePost = (req, res) => {
   Post.findById(req.params.id, (err, post) => {
+    console.log("Getting here");
     if (err) {
-      res.json({ err: "NOTAPOST" });
+      return res.json({ err: "BADQUERY" });
+    }
+    if (!post) {
+      return res.json({ err:"NOTAPOST"});
     }
     if (post.user != req.token.userId) {
-      res.json({ err: "NOTAUTHOR" });
+      return res.json({ err: "NOTAUTHOR" });
     }
     post.remove((err, post) => {
       if (err) {
-        res.json({ err: "ERROR" });
+        return res.json({ err: "ERROR" });
       }
       res.json({ status: "Success" });
     });
@@ -80,10 +84,11 @@ export const deletePost = (req, res) => {
 export const updatePost = (req, res) => {
   Post.findById(req.params.id, (err, post) => {
     if (err) {
+      return res.json({ err: "BADQUERY" });
+    }
+    if (!post) {
       return res.json({ err: "NOTAPOST" });
     }
-    console.log(post.user);
-    console.log(req.token.userId);
     if (post.user != req.token.userId) {
       return res.json({ err: "NOTAUTHOR" });
     }
