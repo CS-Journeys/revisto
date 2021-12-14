@@ -47,7 +47,15 @@ a, a:hover {
     padding-top: 0px;
     background-color: white;
     border: 0px;
+}
+
+.footer-link {
     text-align: center;
+    display: block;
+}
+
+.footer-date {
+    font-size: 90%;
 }
 
 /*--Color Schemes--*/

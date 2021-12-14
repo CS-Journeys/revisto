@@ -13,26 +13,19 @@ class Home extends Component {
 
         // Static data
         this.state = {
-            user: {
-                phone: "5551234569"
-            }
+            user: this.props.user
         }
     }
     
     render() {
-        if (this.state.user.phone != "") {
-            return (
-            <div className="App">
-                <Navbar/>
-                <br/>
-                <div className="container-fluid">
-                    {/* Render home page */}
-                    <PostsList/>
-                </div>
-            </div>);
-        } else {
-            return (<h1>No User Found!</h1>);
-        }
+        return (<div className="App">
+            <Navbar/>
+            <br/>
+            <div className="container-fluid">
+                {/* Render home page */}
+                <PostsList/>
+            </div>
+        </div>);
     }
 }
 
