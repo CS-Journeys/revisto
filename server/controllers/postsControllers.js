@@ -62,7 +62,6 @@ export const createPost = (req, res) => {
 // Deletes the post of the given id (uses req.params.id)
 export const deletePost = (req, res) => {
   Post.findById(req.params.id, (err, post) => {
-    console.log("Getting here");
     if (err) {
       return res.json({ err: "BADQUERY" });
     }
