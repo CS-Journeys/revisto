@@ -8,8 +8,14 @@ if (!("ATLAS_URI" in process.env)) {
   throw new Error("Missing 'ATLAS_URI' parameter in .env");
 }
 
-mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true });
-console.log("Connected to MongoDB");
+mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopology: true }, (err) => {
+  if (err) {
+    console.error(err);
+    throw new Error("MongoDB connection error");
+  } else {
+    console.log("Connected to MongoDB");
+  }
+});
 
 let db = mongoose.connection;
 
