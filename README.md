@@ -1,66 +1,20 @@
 # Revisto
 [www.revisto.live](https://revisto.live) is a public, anonymous journaling website
 ## Table of contents
-
+  * [Getting started](#getting-started)
+    * [Setting up Git](#i-setting-up-git)
+    * [Setting up your IDE](#ii-setting-up-your-ide)
+    * [Setting up Node](#iii-setting-up-node)
+    * [Setting up your environment config](#iv-setting-up-your-environment-config)
   * [Running Revisto locally](#running-revisto-locally)
-    * [Getting started](#getting-started)
-    * [How it works](#how-it-works)
-      * [Server](#server)
-      * [Client](#client)
   * [Contributing to Revisto](#contributing-to-revisto)
-    * [First-time setup](#first-time-setup)
     * [Solving issues](#solving-issues)
+  * [How it works](#how-it-works)
+    * [Server](#server)
+    * [Client](#client)
 
-
-## Running Revisto locally
-### Getting started
-1. Install [Node.js](https://nodejs.org/en/) LTS
-2. Install an IDE for web development ([VS Code](https://code.visualstudio.com/) is recommended)
-3. Download the project's files to a path like `C:/YOUR_PATH` and extract the .zip
-4. Open a command line (if using VS Code, you can use the command line built into the IDE) and navigate to the "server" folder: 
-
-`cd C:/YOUR_PATH/revisto/server`
-
-7. Install the backend server's dependencies: 
-
-`npm install`
-
-9. Launch the backend server:
-
-`npm start`
-
-10. Open another command line and navigate to the "client" folder:
-
-`cd C:/YOUR_PATH/revisto/client`
-
-11. Install the frontend server's dependencies:
-
-`npm install`
-
-12. Launch the frontend server:
-
-`npm start`
-  
-
-### How it works
-#### Server
-The backend server runs on port 5000. It is configured to provide a set of HTTP requests including:
- - GET http://localhost:5000/api/posts (return all posts)
- - GET http://localhost:5000/api/posts/:id (return post of given id)
- - POST http://localhost:5000/api/posts (create a new post)
-
-Try putting http://localhost:5000/api/posts or http://localhost:5000/api/posts/920 into your browser while the serving is running. When you do so, your browser will execute a GET request to the given route. 
-
-It's a bit harder to try out POST requests, but you can use a tool like [Postman](https://www.postman.com/) to do so. 
-
-#### Client
-The frontend server runs on port 3000. If you navigate to http://localhost:3000, the website's frontend code will get "served" or sent to the client (your web browser). The client will then run this code locally.
-
-As soon as the "PostLists" component is mounted, it gets all post data from the server via the GET http://localhost:5000/api/posts request. Then, it renders the title data of each post received.
-
-
-## Contributing to Revisto
-### First-time setup
+## Getting started
+### I. Setting up Git
 1. Install [Git](https://git-scm.com/downloads)
 2. Set up command line authentication for your GitHub account (follow [this](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) tutorial)
 3. Set up your identity by typing into a command line:
@@ -79,6 +33,50 @@ As soon as the "PostLists" component is mounted, it gets all post data from the 
 
 `git clone git@github.com:CS-Journeys/revisto.git`
 
+### II. Setting up your IDE
+Install an IDE for web development ([VS Code](https://code.visualstudio.com/) is recommended)
+
+### III. Setting up Node
+1. Install [Node.js](https://nodejs.org/en/) LTS
+2. Open a command line and navigate to the "server" folder:
+
+`cd C:/YOUR_PATH/revisto/server`
+
+3. Install the backend server's dependencies: 
+
+`npm install`
+
+4. Navigate to the "client" folder:
+
+`cd ../client`
+
+5.  Install the frontend server's dependencies:
+
+`npm install`
+
+### IV. Setting up your environment config
+Contact the lead developers and ask them for the required .env files
+
+
+## Running Revisto locally
+1. Open a command line and navigate to the "server" folder:
+
+`cd C:/YOUR_PATH/revisto/server`
+
+2. Launch the backend:
+
+`npm start`
+
+3. Open another command line and navigate to the "client" folder:
+
+`cd C:/YOUR_PATH/revisto/server`
+
+4. Launch the frontend:
+
+`npm start`
+
+
+## Contributing to Revisto
 ### Solving issues
 
 1. Identify the [issue](https://github.com/CS-Journeys/revisto/issues) you'd like to solve
@@ -102,7 +100,7 @@ As soon as the "PostLists" component is mounted, it gets all post data from the 
 
 `git commit -m "Implement user authentication"`
 
-8. Push your changes to GitHub
+8. Push your changes to GitHub:
 
 `git push -u origin my-branch-name`
 
@@ -113,3 +111,20 @@ As soon as the "PostLists" component is mounted, it gets all post data from the 
 13. Return to the master branch:
 
 `git switch master`
+  
+
+## How it works
+### Server
+The backend server runs on port 5000. It is configured to provide a set of HTTP requests including:
+ - GET http://localhost:5000/api/posts (return all posts)
+ - GET http://localhost:5000/api/posts/:id (return post of given id)
+ - POST http://localhost:5000/api/posts (create a new post)
+
+Try putting http://localhost:5000/api/posts or http://localhost:5000/api/posts/920 into your browser while the serving is running. When you do so, your browser will execute a GET request to the given route. 
+
+It's a bit harder to try out POST requests, but you can use a tool like [Postman](https://www.postman.com/) to do so. 
+
+### Client
+The frontend server runs on port 3000. If you navigate to http://localhost:3000, the website's frontend code will get "served" or sent to the client (your web browser). The client will then run this code locally.
+
+As soon as the "PostLists" component is mounted, it gets all post data from the server via the GET http://localhost:5000/api/posts request. Then, it renders the title data of each post received.

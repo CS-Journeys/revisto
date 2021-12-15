@@ -6,28 +6,67 @@
     src: url(./css/roboto-condensed/RobotoCondensed-Light.ttf);
 }
 body {
+<<<<<<< HEAD
     font-family: "Bebas", "RobotoCondensed";
 }
 
 a {
     font-family: "RobotoCondensed";
     font-size: large;
+=======
+    font-family: "Bebas";
+    background-color: #dbebf3;
+}
+
+a, a:hover {
+    color: #116c82;
+>>>>>>> db088dd6db72cd98d71a0dacfb5dd1e3052c45c1
 }
 
 /*--Navbar--*/
 .nav-bg {
     background-color: white;
-    border-bottom: 5px solid #116c82;
 }
 
 .nav-bg a {
-    color: black;
+    color: #5e5e5e;
 }
 
 .nav-logo {
     width: 30vw;
     height: auto;
     padding: 10px;
+}
+
+/*--Post Card--*/
+.card {
+    background-color: #679db6;
+}
+
+.card-header {
+    background-color: #679db6;
+    color: white;
+}
+
+.card-body {
+    padding-bottom: 0px;
+    color: #5e5e5e;
+    background-color: white;
+}
+
+.card-footer {
+    padding-top: 0px;
+    background-color: white;
+    border: 0px;
+}
+
+.footer-link {
+    text-align: center;
+    display: block;
+}
+
+.footer-date {
+    font-size: 90%;
 }
 
 /*--Color Schemes--*/
