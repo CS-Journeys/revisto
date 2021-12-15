@@ -159,10 +159,8 @@ describe("User Interactions", () => {
             })
             .expect(200)
             .then((res) => {
-              expect(res.body.err).not.toBeDefined();
-              expect(res.body.post).toBeDefined();
-              expect(res.body.post.title).toBe("Updated Title");
-              expect(res.body.post.content).toBe("Updated Content");
+              expect(res.body.err).toBeUndefined();
+              expect(res.body.status).toBe("Success");
               Post.findByIdAndDelete(postId).then((post) => {
                 expect(post).toBeDefined();
                 expect(post.title).toBe("Updated Title");
