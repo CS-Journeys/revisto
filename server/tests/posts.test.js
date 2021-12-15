@@ -28,8 +28,8 @@ beforeAll((done) => {
   );
 });
 
-describe("Front Page (Available to Anyone)", () => {
-  test("should GET posts at /api/posts", async () => {
+describe("Front Page", () => {
+  test("should GET all posts", async () => {
     await supertest(app)
       .get("/api/posts")
       .expect(200)
@@ -38,27 +38,70 @@ describe("Front Page (Available to Anyone)", () => {
         expect(Array.isArray(res.body.posts)).toBeTruthy();
       });
   });
+
+  test("should GET a single post", async () => {
+    const post = await Post.findOne({});
+    await supertest(app)
+      .get(`/api/posts/id/${post._id}`)
+      .expect(200)
+      .then((res) => {
+        expect(res.body.post).toBeDefined();
+        expect(res.body.post.title).toEqual(post.title);
+        expect(res.body.post.content).toEqual(post.content);
+      });
+  });
+  describe("Error Handling", () => {
+    test("can't GET nonexsistent post", async () => {
+      await supertest(app)
+        .get(`/api/posts/id/5e9f8f9f9f9f9f9f9f9f9f9`)
+        .expect(200)
+        .then((res) => {
+          expect(res.body.post).toBeUndefined();
+          expect(res.body.err).toEqual("NOTAPOST");
+        });
+    });
+  });
 });
 
 describe("Unathorized Interactions", () => {
-  test("should deny unauthorized GET", async () => {
-    await supertest(app).get("/api/posts/user").expect(401);
+  test("should deny unauthorized GET", (done) => {
+    supertest(app)
+      .get("/api/posts/user")
+      .expect(401)
+      .then((res) => {
+        expect(res.body.err).toEqual("NOTOKEN");
+        done();
+      });
   });
 
-  test("should deny unauthorized POST", async () => {
-    await supertest(app).post("/api/posts").expect(401);
+  test("should deny unauthorized POST", (done) => {
+    supertest(app)
+      .post("/api/posts")
+      .expect(401)
+      .then((res) => {
+        expect(res.body.err).toEqual("NOTOKEN");
+        done();
+      });
   });
 
-  test("should deny unauthorized DELETE", async () => {
-    await supertest(app)
+  test("should deny unauthorized DELETE", (done) => {
+    supertest(app)
       .delete("/api/posts/id/61b517baa5ef68156885298f")
-      .expect(401);
+      .expect(401)
+      .then((res) => {
+        expect(res.body.err).toEqual("NOTOKEN");
+        done();
+      });
   });
 
-  test("should deny unauthorized PATCH", async () => {
-    await supertest(app)
+  test("should deny unauthorized PATCH", (done) => {
+    supertest(app)
       .patch("/api/posts/id/61b517baa5ef68156885298f")
-      .expect(401);
+      .expect(401)
+      .then((res) => {
+        expect(res.body.err).toEqual("NOTOKEN");
+        done();
+      });
   });
 });
 
@@ -162,8 +205,8 @@ describe("User Interactions", () => {
 
   describe("Error Handling", () => {
     let otherPostId;
-    beforeAll(done => {
-      Post.findOne({ user: { $ne: userId } }).then(post => {
+    beforeAll((done) => {
+      Post.findOne({ user: { $ne: userId } }).then((post) => {
         otherPostId = post._id;
         done();
       });
@@ -217,6 +260,29 @@ describe("User Interactions", () => {
         });
     });
 
+    test("Can't pass in a bad hash to PATCH", (done) => {
+      supertest(app)
+        .patch("/api/posts/id/61b9277www352a2b2ebecc336")
+        .auth(token, { type: "bearer" })
+        .expect(200)
+        .then((res) => {
+          expect(res.body.err).toBeDefined();
+          expect(res.body.err).toBe("BADQUERY");
+          done();
+        });
+    });
+
+    test("Can't pass in a bad hash to DELETE", (done) => {
+      supertest(app)
+        .delete("/api/posts/id/61b9277www352a2b2ebecc336")
+        .auth(token, { type: "bearer" })
+        .expect(200)
+        .then((res) => {
+          expect(res.body.err).toBeDefined();
+          expect(res.body.err).toBe("BADQUERY");
+          done();
+        });
+    });
   });
 });
 

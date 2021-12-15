@@ -25,7 +25,7 @@ export const getPostsByDate = (req, res) => {
 export const getPost = (req, res) => {
   Post.findById(req.params.id, "title content dateCreated", (err, post) => {
     if (err) {
-      return res.json({ err: "NOPOST" });
+      return res.json({ err: "NOTAPOST" });
     }
     res.json({ post });
   });
