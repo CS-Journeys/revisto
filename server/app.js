@@ -1,13 +1,10 @@
 import express from "express";
 import cors from "cors";
-import dotenv from "dotenv";
 import passport from "passport";
 
 import postRoutes from "./routes/postsRoutes.js";
 import userRoutes from "./routes/usersRoutes.js";
 import UserDetails from "./models/userModel.js";
-
-dotenv.config();
 
 const app = express();
 

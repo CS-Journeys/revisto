@@ -97,7 +97,7 @@ export const updatePost = (req, res) => {
       if (err) {
         return res.json({ err: "ERROR" });
       }
-      res.json({ post:{title:newpost.title,content:newpost.content} });
+      res.json({ status: "Success" });
     });
   });
 }
