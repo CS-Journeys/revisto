@@ -11,12 +11,8 @@
     "package.json": "^2.0.1",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
-<<<<<<< HEAD
-    "react-scripts": "^5.0.0",
-=======
     "react-router-dom": "^6.1.1",
     "react-scripts": "^4.0.3",
->>>>>>> db088dd6db72cd98d71a0dacfb5dd1e3052c45c1
     "web-vitals": "^1.1.2"
   },
   "scripts": {

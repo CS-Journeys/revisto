@@ -6,21 +6,12 @@
     src: url(./css/roboto-condensed/RobotoCondensed-Light.ttf);
 }
 body {
-<<<<<<< HEAD
-    font-family: "Bebas", "RobotoCondensed";
-}
-
-a {
-    font-family: "RobotoCondensed";
-    font-size: large;
-=======
     font-family: "Bebas";
     background-color: #dbebf3;
 }
 
 a, a:hover {
     color: #116c82;
->>>>>>> db088dd6db72cd98d71a0dacfb5dd1e3052c45c1
 }
 
 /*--Navbar--*/
