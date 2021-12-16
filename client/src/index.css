@@ -2,6 +2,8 @@
 @font-face{
     font-family: "Bebas";
     src: url(./css/bebas/Bebas-Regular.ttf);
+    font-family: "RobotoCondensed";
+    src: url(./css/roboto-condensed/RobotoCondensed-Light.ttf);
 }
 body {
     font-family: "Bebas";
@@ -22,7 +24,7 @@ a, a:hover {
 }
 
 .nav-logo {
-    width: 20%;
+    width: 30vw;
     height: auto;
     padding: 10px;
 }
@@ -73,4 +75,10 @@ a, a:hover {
 
 .bg-gr {
     background-color: #bcbdc0;
+}
+
+@media only screen and (max-width: 1000px) {
+    .nav-logo {
+        width: 50vw;
+    }
 }

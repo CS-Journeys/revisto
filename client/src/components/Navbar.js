@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
+import logo from '../revistoLogo.svg'
 import { Link } from 'react-router-dom';
-import logo from '../logo-tmp.png'
 
 class Navbar extends Component {
     constructor(props) {
