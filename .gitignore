@@ -5,3 +5,7 @@
 
 # config
 **/.env
+
+.vscode
+
+**/coverage

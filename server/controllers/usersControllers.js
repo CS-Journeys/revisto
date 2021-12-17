@@ -61,3 +61,13 @@ export const updateUser = async (req, res) => {
     }
   });
 };
+
+export const deleteUser = async (req, res) => {
+  User.findByIdAndRemove(req.token.userId, (err) => {
+    if (err) {
+      res.json({ err: "NOUSER" });
+    } else {
+      res.json({ status: "Success" });
+    }
+  });
+};
