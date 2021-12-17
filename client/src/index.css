@@ -24,7 +24,7 @@ a, a:hover {
 }
 
 .nav-logo {
-    width: 30vw;
+    width: 20%;
     height: auto;
     padding: 10px;
 }
@@ -79,6 +79,6 @@ a, a:hover {
 
 @media only screen and (max-width: 1000px) {
     .nav-logo {
-        width: 50vw;
+        width: 40%;
     }
 }
