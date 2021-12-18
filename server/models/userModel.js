@@ -6,12 +6,13 @@ const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
   password: String,
-  username: String,
+  email: String,
   region: { type: String, default: "US" },
   language: { type: String, default: "EN" },
 });
 
 // Add passport-local-mongoose plug-in
-UserSchema.plugin(passportLocalMongoose);
+UserSchema.plugin(passportLocalMongoose, { usernameField: "email" });
+
 
 export default mongoose.model("users", UserSchema);

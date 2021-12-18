@@ -9,7 +9,7 @@ import UserDetails from "./models/userModel.js";
 const app = express();
 
 // Set up passport.js
-passport.use(UserDetails.createStrategy({ userNameField: "email" }));
+passport.use(UserDetails.createStrategy());
 passport.serializeUser(UserDetails.serializeUser());
 passport.deserializeUser(UserDetails.deserializeUser());
 

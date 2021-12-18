@@ -16,7 +16,7 @@ beforeAll((done) => {
     env.ATLAS_URI,
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => {
-      User.findOne({ username: "test@test.com" }, (err, user) => {
+      User.findOne({ email: "test@test.com" }, (err, user) => {
         if (err) {
           done();
         } else {
@@ -32,18 +32,18 @@ beforeAll((done) => {
 
 describe("User", () => {
   test("should register", done => {
-    User.findOneAndDelete({ username: "TESTUSER" }, () => {
+    User.findOneAndDelete({ email: "TESTUSER" }, () => {
       supertest(app)
         .post("/api/users/register")
         .send({
-          username: "TESTUSER",
+          email: "TESTUSER",
           password: "TESTPASS",
         })
         .expect(200)
         .then((res) => {
           expect(res.body.err).toBeUndefined();
           expect(res.body.status).toBe("Success");
-          User.findOneAndDelete({ username: "TESTUSER" }, (err, user) => {
+          User.findOneAndDelete({ email: "TESTUSER" }, (err, user) => {
             done();
           });
         });
@@ -53,7 +53,7 @@ describe("User", () => {
     await supertest(app)
       .post("/api/users/login")
       .send({
-        username: "test@test.com",
+        email: "test@test.com",
         password: "INTERNALDONTDELETE",
       })
       .expect(200)
@@ -69,7 +69,7 @@ describe("User", () => {
       .expect(200)
       .then((res) => {
         expect(res.body.user).toBeDefined();
-        expect(res.body.user.username).toBe("test@test.com");
+        expect(res.body.user.email).toBe("test@test.com");
         done();
       });
   });
@@ -99,7 +99,7 @@ describe("User", () => {
   });
   test("should DELETE user", done => {
     User.create({
-      username: "TESTUSER",
+      email: "TESTUSER",
     }, (err, user) => {
       if (user) {
         user.save((err, user) => {
@@ -133,11 +133,11 @@ describe("User", () => {
   });
 
   describe('Error Handling', () => {
-    test("can't register with existing username", done => { 
+    test("can't register with existing email", done => { 
       supertest(app)
         .post("/api/users/register")
         .send({
-          username: "test@test.com",
+          email: "test@test.com",
           password: "TESTPASS",
         })
         .expect(200)
@@ -147,11 +147,11 @@ describe("User", () => {
         });
     });
 
-    test("can't login with non-existent username", done => { 
+    test("can't login with non-existent email", done => { 
       supertest(app)
         .post("/api/users/login")
         .send({
-          username: "hciuoicnwon@ncownoc.coi",
+          email: "hciuoicnwon@ncownoc.coi",
           password: "TESTPASS",
         })
         .expect(200)

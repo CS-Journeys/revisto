@@ -15,7 +15,7 @@ beforeAll((done) => {
     env.ATLAS_URI,
     { useNewUrlParser: true, useUnifiedTopology: true },
     () => {
-      User.findOne({ username: "test@test.com" }, (err, user) => {
+      User.findOne({ email: "test@test.com" }, (err, user) => {
         if (err) {
           done();
         } else {
