@@ -14,11 +14,10 @@ class Navbar extends Component {
     render() {
         return (
         <nav className="navbar navbar-expand nav-bg">
-            <img src={logo} alt="Logo" className="nav-logo" id="logo"/>
+            <Link to="/" className="nav-logo">
+                <img src={logo} alt="Logo" id="logo"/>
+            </Link>
             <ul className="navbar-nav">
-                <li className="nav-item">
-                <a className="nav-link" href="#"><h2>Home</h2></a>
-                </li>
                 <li className="nav-item">
                 <a className="nav-link" href="#"><h2>New</h2></a>
                 </li>
@@ -27,6 +26,7 @@ class Navbar extends Component {
                     <li className="nav-item">
                         <Link className="nav-link" to="/login"><h2>Login</h2></Link>
                     </li> }
+                <a className="nav-link" href="#">About</a>
             </ul>
         </nav>);
     }

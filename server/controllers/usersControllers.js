@@ -5,15 +5,14 @@ import { createJWT } from "../auth/jwtAuth.js";
 
 // Get the current user (uses req.token.userId)
 export const me = async (req, res) => {
-  const user = await User.findById(req.token.userId, "username region language");
+  const user = await User.findById(req.token.userId, "email region language");
   res.json({user});
 };
 
 // Create a new user with passport-local-mongoose
-// (uses req.body.{username, password, region})
+// (uses req.body.{email, password, region})
 export const register = async (req, res) => {
-  const user = new User({ username: req.body.username, region: req.body.region });
-
+  const user = new User({ email: req.body.email, region: req.body.region });
   User.register(user, req.body.password, (err, user) => {
     if (err) {
       return res.json({err:"USERTAKEN"});
@@ -22,7 +21,7 @@ export const register = async (req, res) => {
   });
 };
 
-// Logs in the user (uses req.body.username and req.body.password)
+// Logs in the user (uses req.body.email and req.body.password)
 export const login = async (req, res) => {
   passport.authenticate('local', function (err, user, info) {
     if (err) {
@@ -58,6 +57,16 @@ export const updateUser = async (req, res) => {
           res.json({ status: "Success" });
         }
       });
+    }
+  });
+};
+
+export const deleteUser = async (req, res) => {
+  User.findByIdAndRemove(req.token.userId, (err) => {
+    if (err) {
+      res.json({ err: "NOUSER" });
+    } else {
+      res.json({ status: "Success" });
     }
   });
 };

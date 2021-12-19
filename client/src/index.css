@@ -40,7 +40,7 @@ body {
     box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2);
 }
 .nav-logo {
-    width: 30em;
+    width: 20%;
     height: auto;
     margin: 1em;
 }
@@ -95,6 +95,6 @@ body {
 
 @media only screen and (max-width: 1000px) {
     .nav-logo {
-        width: 50vw;
+        width: 40%;
     }
 }

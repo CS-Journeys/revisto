@@ -5,7 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "start": "nodemon index.js"
+    "start": "nodemon index.js",
+    "test": "jest --verbose",
+    "test:cov": "jest --coverage"
+
   },
   "keywords": [],
   "author": "",
@@ -21,5 +24,13 @@
     "nodemon": "^2.0.14",
     "passport": "^0.5.0",
     "passport-local-mongoose": "^6.1.0"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-runtime": "^7.16.5",
+    "@babel/preset-env": "^7.16.5",
+    "babel-jest": "^27.4.5",
+    "babel-polyfill": "^6.26.0",
+    "jest": "^27.4.5",
+    "supertest": "^6.1.6"
   }
 }

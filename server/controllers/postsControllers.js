@@ -25,7 +25,7 @@ export const getPostsByDate = (req, res) => {
 export const getPost = (req, res) => {
   Post.findById(req.params.id, "title content dateCreated", (err, post) => {
     if (err) {
-      return res.json({ err: "NOPOST" });
+      return res.json({ err: "NOTAPOST" });
     }
     res.json({ post });
   });
@@ -55,14 +55,13 @@ export const createPost = (req, res) => {
     if (err) {
       return res.json({ err: "ERROR" });
     }
-    res.json({ status: "Success" });
+    res.json({ status: "Success", id: post._id });
   });
 };
 
 // Deletes the post of the given id (uses req.params.id)
 export const deletePost = (req, res) => {
   Post.findById(req.params.id, (err, post) => {
-    console.log("Getting here");
     if (err) {
       return res.json({ err: "BADQUERY" });
     }
@@ -92,11 +91,13 @@ export const updatePost = (req, res) => {
     if (post.user != req.token.userId) {
       return res.json({ err: "NOTAUTHOR" });
     }
-    post.save((err, post) => {
+    if (req.body.title) { post.title = req.body.title; }
+    if (req.body.content) { post.content = req.body.content; }
+    post.save((err, newpost) => {
       if (err) {
         return res.json({ err: "ERROR" });
       }
-      res.json({ post:{title:post.title,content:post.content} });
+      res.json({ status: "Success" });
     });
   });
 }
