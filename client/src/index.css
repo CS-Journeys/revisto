@@ -7,26 +7,41 @@
 }
 body {
     font-family: "Bebas";
-    background-color: #dbebf3;
-}
-
-a, a:hover {
-    color: #116c82;
-}
-
-/*--Navbar--*/
-.nav-bg {
     background-color: white;
 }
 
+
+/*--Navbar--*/
+.nav-bg {
+    background-color: #B2CAD3;
+}
+/*B2CAD3*/
+
+.navbar {
+    font-family: "Bebas";
+    font-size: large;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    position: fixed;
+    top: 0;
+    width: 100%;
+}
+
 .nav-bg a {
-    color: #5e5e5e;
+    color: black; 
+}
+
+.nav-bg a:hover {
+    color: #116c82;
 }
 
 .nav-logo {
     width: 20%;
     height: auto;
-    padding: 10px;
+    margin: 1em;
+}
+
+h2 {
+    letter-spacing: 3px;
 }
 
 /*--Post Card--*/

@@ -19,14 +19,14 @@ class Navbar extends Component {
             </Link>
             <ul className="navbar-nav">
                 <li className="nav-item">
-                <a className="nav-link" href="#">New</a>
+                <a className="nav-link" href="#"><h2>New</h2></a>
                 </li>
                 { (this.state.user) ?
                     <p>Hello, {this.state.user.username}</p> :
                     <li className="nav-item">
-                        <Link className="nav-link" to="/login">Login</Link>
+                        <Link className="nav-link" to="/login"><h2>Login</h2></Link>
                     </li> }
-                <a className="nav-link" href="#">About</a>
+                <a className="nav-link" href="#"><h2>About</h2></a>
             </ul>
         </nav>);
     }
