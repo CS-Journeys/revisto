@@ -7,7 +7,7 @@
 }
 body {
     font-family: "Bebas";
-    background-color: #fafeff;
+    background-color: white;
 }
 
 
@@ -15,34 +15,33 @@ body {
 .nav-bg {
     background-color: #B2CAD3;
 }
+/*B2CAD3*/
 
 .navbar {
-    font-family: "RobotoCondensed";
+    font-family: "Bebas";
     font-size: large;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     position: fixed;
     top: 0;
     width: 100%;
 }
 
 .nav-bg a {
-    color: #fafeff;
-    background-color: #116c82;
-    border-radius: 25px;
-    height: 50px;
-    align-content: center;
-    margin-left: 10px;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: black; 
 }
 
 .nav-bg a:hover {
-    color: #fafeff;
-    box-shadow: 0 0px 0px 0 rgba(0, 0, 0, 0.2);
+    color: #116c82;
 }
+
 .nav-logo {
     width: 20%;
     height: auto;
     margin: 1em;
+}
+
+h2 {
+    letter-spacing: 3px;
 }
 
 /*--Post Card--*/
