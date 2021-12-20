@@ -5,6 +5,8 @@ import { BrowserRouter as Router,
 
 import Home from './pages/Home'
 import Login from './pages/Login'
+import LargePost from './pages/LargePost'
+
 import axios from 'axios';
 
 class App extends Component {
@@ -41,6 +43,7 @@ class App extends Component {
                 <Routes>
                     <Route path='/' element={<Home />} />
                     <Route path='/login' element={<Login />} />
+                    <Route path='/post/:postId' element={ <LargePost />} />
                 </Routes>
         </Router>);
     }

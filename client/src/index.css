@@ -21,7 +21,6 @@ body {
     font-family: "Bebas";
     font-size: large;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
-    position: fixed;
     top: 0;
     width: 100%;
 }
