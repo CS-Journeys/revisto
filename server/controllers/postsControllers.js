@@ -1,23 +1,15 @@
 import Post from "../models/postModel.js";
 
 // Gets all posts
+var mySort = {dateCreated : -1};
 export const getPosts = (req, res) => {
-  Post.find({}, "title content dateCreated", (err, posts) => {
+  const before = new Date(req.query.before);
+  const query = req.query.before ? { "dateCreated": { "$lt": before } } : {};
+  Post.find(query, 'title content dateCreated').sort(mySort).limit(20).select().exec((err, posts) => {
     if (err) {
       return res.json({ err: "ERROR" });
     }
     res.json({ posts });
-  });
-};
-
-// Gets all posts sorted by date created - change to get sorted results from mongo instead of getting results then sorting.
-var mySort = {dateCreated : 1};
-export const getPostsByDate = (req, res) => {
-  Post.find.sort(mySort).toArray({}, "title content dateCreated", (err, posts) => {
-    if (err) {
-      return res.json({ err: "ERROR" });
-    }
-    res.json(posts);
   });
 };
 
