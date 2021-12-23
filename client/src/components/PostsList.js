@@ -26,11 +26,9 @@ class PostsList extends Component {
     }
 
     render() {
-        return (
-        <div className="row">
-            { this.state.posts.map(post => <Post post={post}/>)  }
-        </div>
-        )
+        return (<div className="row d-flex justify-content-center">
+            { this.state.posts.map(post => <Post post={post}/>) }  
+        </div>);
     }
 }
 

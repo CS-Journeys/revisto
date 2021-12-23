@@ -9,7 +9,6 @@ import { Link } from 'react-router-dom';
  *  dateCreated: date post was created
 */
 
-
 class Post extends Component {
     constructor(props) {
         super(props);
@@ -30,7 +29,7 @@ class Post extends Component {
 
         if (this.state.content.length > 150) content += " . . .";
 
-        return (<div className="col-md-3">
+        return (<div className="col-md-5">
             <div className="card">
                 <div className="card-header">{this.state.title}</div>
                 <div className="card-body">
@@ -38,6 +37,7 @@ class Post extends Component {
                 </div>
                 <div className="card-footer">
                     <Link className="footer-link" to={url}>See More</Link>
+
                     <span className="footer-date">{this.state.dateCreated}</span>
                 </div>
             </div>

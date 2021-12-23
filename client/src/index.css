@@ -5,13 +5,17 @@
     font-family: "RobotoCondensed";
     src: url(./css/roboto-condensed/RobotoCondensed-Light.ttf);
 }
+
 body {
     font-family: "Bebas";
     background-color: white;
 }
 
-
 /*--Navbar--*/
+.nav-control {
+    margin-bottom: 10vh;
+}
+
 .nav-bg {
     background-color: #B2CAD3;
 }
@@ -22,6 +26,10 @@ body {
     font-size: large;
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
     top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 1000; /* sets navbar on top*/
+
     width: 100%;
 }
 
@@ -34,10 +42,11 @@ body {
 }
 
 .nav-logo {
-    width: 20%;
+    width: 15%;
     height: auto;
-    margin: 1em;
+    margin: 0.5vw;
 }
+
 
 h2 {
     letter-spacing: 3px;
@@ -92,6 +101,12 @@ h2 {
 }
 
 @media only screen and (max-width: 1000px) {
+    .nav-logo {
+        width: 25%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
     .nav-logo {
         width: 40%;
     }

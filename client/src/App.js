@@ -38,14 +38,19 @@ class App extends Component {
      * Renders the components
     */
     render() {
-        return (
-        <Router>
-                <Routes>
-                    <Route path='/' element={<Home />} />
-                    <Route path='/login' element={<Login />} />
-                    <Route path='/post/:postId' element={ <LargePost />} />
-                </Routes>
-        </Router>);
+        return (<div className="App container-fluid">
+            <div className="row d-flex justify-content-center">
+                <div className="col-lg-10">
+                    <Router>
+                            <Routes>
+                                <Route path='/' element={<Home />} />
+                                <Route path='/login' element={<Login />} />
+                                <Route path='/post/:postId' element={ <LargePost />} />
+                            </Routes>
+                    </Router>
+                </div>
+            </div>
+        </div>);
     }
 }
 

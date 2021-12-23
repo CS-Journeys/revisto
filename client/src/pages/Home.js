@@ -18,7 +18,7 @@ class Home extends Component {
     }
     
     render() {
-        return (<div className="App">
+        return (<div>
             <Navbar/>
             <br/>
             <div className="container-fluid">
