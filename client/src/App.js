@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { BrowserRouter as Router, 
         Routes, 
         Route } from 'react-router-dom'
+import { createBrowserHistory } from 'history';
 
 import Home from './pages/Home'
 import Login from './pages/Login'
@@ -20,7 +21,7 @@ class App extends Component {
     }
 
     componentDidMount() {
-        // Load current user (if exists)
+        // WILL FAIL: Need's user parameters (auth)
         axios.get('/users')
         .then(res => {
             const {user} = res.data;
@@ -38,14 +39,17 @@ class App extends Component {
      * Renders the components
     */
     render() {
+        // NOTE: There is prolly a better way than this
+        const history = createBrowserHistory();
+
         return (<div className="App container-fluid">
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-10">
-                    <Router>
+                    <Router location={history.location} navigator={history}>
                             <Routes>
                                 <Route path='/' element={<Home />} />
                                 <Route path='/login' element={<Login />} />
-                                <Route path='/post/:postId' element={ <LargePost />} />
+                                <Route path='/post/:postId' element={ <LargePost location={location} />} />
                             </Routes>
                     </Router>
                 </div>

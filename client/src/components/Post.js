@@ -36,7 +36,9 @@ class Post extends Component {
                     { (this.state.content) ? content : "No Content Found."}
                 </div>
                 <div className="card-footer">
-                    <Link className="footer-link" to={url}>See More</Link>
+                    <Link className="footer-link" to={ {pathname: url, state: { post: this.state }} }>
+                        See More
+                    </Link>
 
                     <span className="footer-date">{this.state.dateCreated}</span>
                 </div>

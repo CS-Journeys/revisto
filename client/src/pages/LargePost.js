@@ -1,22 +1,46 @@
 import React, { Component } from 'react';
+import Navbar from '../components/Navbar';
 
-/*
- * React Router passes two props:
- *  match: holds url param info
- *  location: holds url path info
-*/
+import axios from 'axios';
 
 class LargePost extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
-            id: null
+            post: null
         }
+    }
+    
+    // NOTE: There is probably a better way than this
+    componentDidMount() {
+        let path = this.props.location.pathname;
+        path = path.replace("/post/", "/posts/id/");
+
+        // Load current user (if exists)
+        axios.get(path)
+        .then(res => {
+            const {post} = res.data;
+            this.setState({ post });
+        })
+        .catch(error => { // Console log error
+            console.log(`Could not get post: ${error}`);
+        });
     }
 
     render() {
-        return (<h1>Hello World</h1>);
+        const post = this.state.post;
+
+        return (<div>
+            <Navbar/>
+            <br/>
+            <div className="container-fluid">
+                { (post)? <div>
+                    <h1>{post.title}</h1>
+                    <p>{post.content}</p>
+                </div> : null }
+            </div>
+        </div>);
     }
 }
 

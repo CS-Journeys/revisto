@@ -27,7 +27,7 @@ class PostsList extends Component {
 
     render() {
         return (<div className="row d-flex justify-content-center">
-            { this.state.posts.map(post => <Post post={post}/>) }  
+            { this.state.posts.map(post => <Post key={post._id} post={post}/>) }  
         </div>);
     }
 }
