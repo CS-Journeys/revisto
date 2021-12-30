@@ -2,6 +2,7 @@ import passport from "passport";
 
 import User from "../models/userModel.js";
 import { createJWT, verifyJWT } from "../auth/jwtAuth.js";
+import {SendPasswordReset} from "../utils/email.js";
 
 // Get the current user (uses req.token.userId)
 export const me = async (req, res) => {
@@ -75,7 +76,7 @@ export const requestPasswordReset = async (req, res) => {
   if (!req.body.email) {
     return res.json({ err: "NOEMAIL" });
   }
-  User.findOne({ email: req.body.email }, (err, user) => {
+  User.findOne({ email: req.body.email }, async (err, user) => {
     if (err) {
       res.json({ err: "BADQUERY" });
     } else {
@@ -83,7 +84,8 @@ export const requestPasswordReset = async (req, res) => {
         res.json({ err: "NOUSER" });
       } else {
         const token = createJWT({ userId: user._id, dateCreated: Date.now() });
-        res.json({ token });
+        await SendPasswordReset(user.email, token);
+        res.json({ status: "Success" });
       }
     }
   });
