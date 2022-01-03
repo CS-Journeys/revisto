@@ -47,6 +47,18 @@ body {
     margin: 0.5vw;
 }
 
+.navbar-left {
+    margin-right: auto;
+    margin-top: 1.3vh;
+}
+
+.navbar-right {
+    margin-left: auto;
+}
+
+.btn-dark {
+    background-color: black;
+}
 
 h2 {
     letter-spacing: 3px;

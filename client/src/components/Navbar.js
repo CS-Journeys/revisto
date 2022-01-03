@@ -17,19 +17,49 @@ class Navbar extends Component {
                 <Link to="/" className="nav-logo">
                     <img src={logo} alt="Logo" id="logo"/>
                 </Link>
-                <ul className="navbar-nav">
-                    <li className="nav-item">
-                    <a className="nav-link" href="#"><h4>New</h4></a>
-                    </li>
-                    { (this.state.user) ?
+                <div className="nav navbar-nav navbar-left">
+                    <Link className="nav-link" to="#"><h4>New</h4></Link>
+                    <Link className="nav-link" to="#"><h4>About</h4></Link>
+                </div >
+                { (this.state.user) ?
                         <p>Hello, {this.state.user.username}</p> :
-                        <li className="nav-item">
-                            <Link className="nav-link" to="/login"><h4>Login</h4></Link>
-                        </li> }
-                    <a className="nav-link" href="#"><h4>About</h4></a>
-                </ul>
+                        <div className="nav navbar-nav navbar-right">
+                            <NavBtn text="Sign In" link="#" />
+                            <NavBtn text="Login" link="/login" />
+                        </div>}
             </nav>
         </div>);
+    }
+}
+
+class NavBtn extends Component {
+    constructor(props) {
+        super(props);
+
+        this.state = {
+            text: this.props.text,
+            link: this.props.link,
+            color: null
+        };
+    }
+
+    render() {
+        switch (this.state.text) {
+            case "Sign In":
+                this.state.color = "btn-signin";
+                break;
+            case "Login":
+                this.state.color = "btn-login";
+                break;
+        }
+
+        let btnClass = "btn " + this.state.color + " nav-link";
+
+        return (<button type="button" className={btnClass}>
+            <Link to={this.state.link}>
+                {this.state.text}
+                </Link>
+            </button>);
     }
 }
 
