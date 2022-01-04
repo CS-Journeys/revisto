@@ -1,33 +1,45 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
+import axios from "axios";
 
 const LoginForm = () => {
-    const [userName, setUserName] = useState("");
+    const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
+    const [isShowInput, setIsShowInput] = useState(false);
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (userName && password) {
-            /* Do Axios Stuff */
+        if (email && password) {
+            axios
+                .post("/users/login", {
+                    email,
+                    password,
+                })
+                .then((res) => {
+                    console.log(res.data);
+                })
+                .catch((error) => alert(error));
         }
+        setEmail("");
+        setPassword("");
     };
 
     return (
         <article className="form">
             <form onSubmit={handleSubmit}>
-                <div className="form-group">
-                    <label htmlFor="userName">Username: </label>
+                <div className="form-control">
+                    <label htmlFor="email">Email: </label>
                     <input
                         type="text"
-                        id="userName"
-                        name="userName"
-                        value={userName}
-                        onChange={(e) => setUserName(e.target.value)}
+                        id="email"
+                        name="email"
+                        value={email}
+                        onChange={(e) => setEmail(e.target.value)}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-control">
                     <label htmlFor="password">Password: </label>
                     <input
-                        type="text"
+                        type={isShowInput ? "text" : "password"}
                         id="password"
                         name="password"
                         value={password}
@@ -37,6 +49,15 @@ const LoginForm = () => {
                 <button type="submit" onClick={handleSubmit}>
                     Login
                 </button>
+                <span className="check">
+                    <label htmlFor="Show Pass">
+                        <input
+                            type="checkbox"
+                            onChange={() => setIsShowInput(!isShowInput)}
+                        />
+                        Show Password
+                    </label>
+                </span>
             </form>
         </article>
     );

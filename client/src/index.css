@@ -35,7 +35,6 @@
     font-family: "RobotoCondensed";
     src: url(./css/roboto-condensed/RobotoCondensed-Light.ttf);
 }
-
 body {
     font-family: "Bebas";
     background-color: var(--clr-white);
@@ -141,10 +140,11 @@ h2 {
     padding: 0.25rem 0.5rem;
 }
 .form-control {
-    margin: 0.5rem 0;
+    margin: 0.5rem 0rem;
     display: grid;
     grid-template-columns: 100px 1fr;
     align-items: center;
+    padding-bottom: 3rem;
 }
 .form button {
     display: inline-block;
@@ -161,6 +161,17 @@ h2 {
 .form button:hover {
     background: var(--clr-black);
     color: var(--clr-white);
+}
+
+.check {
+    margin: 0.5rem 0rem;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+.check input {
+    margin-right: 0.25rem;
 }
 
 /*--Color Schemes--*/
@@ -181,12 +192,6 @@ h2 {
 }
 
 @media only screen and (max-width: 1000px) {
-    .nav-logo {
-        width: 25%;
-    }
-}
-
-@media only screen and (max-width: 600px) {
     .nav-logo {
         width: 40%;
     }
