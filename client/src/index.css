@@ -46,14 +46,14 @@ body {
 }
 
 .nav-bg {
-    background-color: #b2cad3;
+    background-color: var(--bg-gr-2);
 }
 /*B2CAD3*/
 
 .navbar {
     font-family: "Bebas";
     font-size: large;
-    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+    box-shadow: var(--box-shadow);
     top: 0;
     left: 0;
     position: fixed;
@@ -63,11 +63,11 @@ body {
 }
 
 .nav-bg a {
-    color: black;
+    color: var(--clr-black);
 }
 
 .nav-bg a:hover {
-    color: #116c82;
+    color: var(--bg-clr-1);
 }
 
 .nav-logo {
@@ -125,7 +125,6 @@ h2 {
 }
 
 /* Login Page */
-/* Login Page */
 .form {
     background: var(--clr-white);
     max-width: var(--fixed-width);
@@ -163,6 +162,7 @@ h2 {
     background: var(--clr-black);
     color: var(--clr-white);
 }
+
 .check {
     margin: 0.5rem 0rem;
     grid-template-columns: 100px 1fr;
