@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { Component, useState } from "react";
 import axios from "axios";
 
 const LoginForm = () => {
@@ -8,17 +8,19 @@ const LoginForm = () => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({ password: { password }, email: { email } });
         if (email && password) {
             axios
                 .post("/users/login", {
-                    password: { password },
-                    email: { email },
+                    email,
+                    password,
                 })
                 .then((res) => {
                     console.log(res.data);
-                });
+                })
+                .catch((error) => alert(error));
         }
+        setEmail("");
+        setPassword("");
     };
 
     return (
