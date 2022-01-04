@@ -1,14 +1,43 @@
+/*--Variables--*/
+:root {
+    /* Background Colors */
+    --bg-clr-1: #116c82;
+    --bg-clr-2: #679db6;
+    --bg-yl: #f5a61c;
+
+    --bg-gr-1: #bcbdc0;
+    --bg-gr-2: #b2cad3;
+    --card-body: #5e5e5e;
+
+    /* Standard Colors */
+    --clr-black: #000;
+    --clr-black-1: #222;
+    --clr-white: #fff;
+
+    --clr-grey-1: hsl(210, 22%, 49%);
+    --clr-grey-2: hsl(209, 23%, 60%);
+    --clr-grey-3: hsl(211, 27%, 70%);
+    --clr-grey-4: hsl(210, 31%, 80%);
+    --clr-grey-5: hsl(212, 33%, 89%);
+    --clr-grey-6: hsl(210, 36%, 96%);
+
+    --spacing: 0.1rem;
+    --radius: 0.25rem;
+    --fixed-width: 450px;
+
+    --box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
 /*--Font--*/
-@font-face{
+@font-face {
     font-family: "Bebas";
     src: url(./css/bebas/Bebas-Regular.ttf);
     font-family: "RobotoCondensed";
     src: url(./css/roboto-condensed/RobotoCondensed-Light.ttf);
 }
-
 body {
     font-family: "Bebas";
-    background-color: white;
+    background-color: var(--clr-white);
 }
 
 /*--Navbar--*/
@@ -17,7 +46,7 @@ body {
 }
 
 .nav-bg {
-    background-color: #B2CAD3;
+    background-color: #b2cad3;
 }
 /*B2CAD3*/
 
@@ -34,7 +63,7 @@ body {
 }
 
 .nav-bg a {
-    color: black; 
+    color: black;
 }
 
 .nav-bg a:hover {
@@ -66,23 +95,23 @@ h2 {
 
 /*--Post Card--*/
 .card {
-    background-color: #679db6;
+    background-color: var(--bg-clr-2);
 }
 
 .card-header {
-    background-color: #679db6;
-    color: white;
+    background-color: var(--bg-clr-2);
+    color: var(--clr-white);
 }
 
 .card-body {
     padding-bottom: 0px;
-    color: #5e5e5e;
-    background-color: white;
+    color: var(--card-body);
+    background-color: var(--clr-white);
 }
 
 .card-footer {
     padding-top: 0px;
-    background-color: white;
+    background-color: var(--clr-white);
     border: 0px;
 }
 
@@ -95,30 +124,74 @@ h2 {
     font-size: 90%;
 }
 
+/* Login Page */
+/* Login Page */
+.form {
+    background: var(--clr-white);
+    max-width: var(--fixed-width);
+    margin: 0 auto;
+    margin-bottom: 4rem;
+    padding: 1rem 2rem;
+    border-radius: var(--radius);
+}
+.form input {
+    background: var(--clr-grey-6);
+    border-color: transparent;
+    border-radius: var(--radius);
+    padding: 0.25rem 0.5rem;
+}
+.form-control {
+    margin: 0.5rem 0rem;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    padding-bottom: 3rem;
+}
+.form button {
+    display: inline-block;
+    background: var(--clr-black-1);
+    color: var(--clr-white);
+    border-color: transparent;
+    margin-top: 1rem;
+    letter-spacing: var(--spacing);
+    padding: 0.15rem 0.25rem;
+    text-transform: capitalize;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+.form button:hover {
+    background: var(--clr-black);
+    color: var(--clr-white);
+}
+.check {
+    margin: 0.5rem 0rem;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    padding: 0.5rem;
+    margin: 0.5rem;
+}
+.check input {
+    margin-right: 0.25rem;
+}
+
 /*--Color Schemes--*/
 .bg-bl-1 {
-    background-color: #116c82;
+    background-color: var(--bg-clr-1);
 }
 
 .bg-bl-2 {
-    background-color: #679db6;
+    background-color: var(--bg-clr-2);
 }
 
 .bg-yl {
-    background-color: #f5a61c;
+    background-color: var(--bg-yl);
 }
 
 .bg-gr {
-    background-color: #bcbdc0;
+    background-color: var(--bg-gr-1);
 }
 
 @media only screen and (max-width: 1000px) {
-    .nav-logo {
-        width: 25%;
-    }
-}
-
-@media only screen and (max-width: 600px) {
     .nav-logo {
         width: 40%;
     }
