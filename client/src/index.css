@@ -152,7 +152,6 @@ h2 {
     color: var(--clr-white);
     border-color: transparent;
     margin-top: 1rem;
-    letter-spacing: var(--spacing);
     padding: 0.15rem 0.25rem;
     text-transform: capitalize;
     border-radius: var(--radius);

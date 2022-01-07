@@ -8,7 +8,7 @@ class Navbar extends Component {
 
         this.state = {
             user: this.props.user
-        };
+        }
     }
 
     render() {
@@ -22,9 +22,9 @@ class Navbar extends Component {
                     <Link className="nav-link" to="#"><h4>About</h4></Link>
                 </div >
                 { (this.state.user) ?
-                        <p>Hello, {this.state.user.username}</p> :
+                        <p>Hello, {this.state.user.email}</p> :
                         <div className="nav navbar-nav navbar-right">
-                            <NavBtn text="Sign In" link="#" />
+                            <NavBtn text="Sign Up" link="#" />
                             <NavBtn text="Login" link="/login" />
                         </div>}
             </nav>
@@ -45,7 +45,7 @@ class NavBtn extends Component {
 
     render() {
         switch (this.state.text) {
-            case "Sign In":
+            case "Sign Up":
                 this.state.color = "btn-signin";
                 break;
             case "Login":

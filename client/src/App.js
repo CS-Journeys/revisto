@@ -5,10 +5,11 @@ import { BrowserRouter as Router,
 import { createBrowserHistory } from 'history';
 
 import Home from './pages/Home'
-import Login from './pages/Login'
-import LargePost from './pages/LargePost'
+import Login from './pages/Login';
+import LargePost from './pages/LargePost';
+import Navbar from './components/Navbar';
 
-import axios from 'axios';
+import { loadUser } from './auth';
 
 class App extends Component {
 
@@ -16,21 +17,16 @@ class App extends Component {
         super(props);
 
         this.state = {
-            user: []
+            user: null
         };
     }
 
     componentDidMount() {
-        // WILL FAIL: Need's user parameters (auth)
-        axios.get('/users')
-        .then(res => {
-            const {user} = res.data;
-            console.log(user);
-            this.setState({ user });
-        })
-        .catch(error => { // Console log error
-            console.log(`Could not get user: ${error}`);
+        this.setState({ user: loadUser(localStorage.getItem("token")) }, () => {
+            console.log(this.state.user);
         });
+
+        // Setstate is asynchronous, navbar is not updating
     }
 
     /*
@@ -46,11 +42,12 @@ class App extends Component {
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-10">
                     <Router location={history.location} navigator={history}>
-                            <Routes>
-                                <Route path='/' element={<Home />} />
-                                <Route path='/login' element={<Login />} />
-                                <Route path='/post/:postId' element={ <LargePost location={location} />} />
-                            </Routes>
+                        <Navbar user={ this.state.user } />
+                        <Routes>
+                            <Route path='/' element={<Home />} />
+                            <Route path='/login' element={<Login />} />
+                            <Route path='/post/:postId' element={ <LargePost location={location} />} />
+                        </Routes>
                     </Router>
                 </div>
             </div>

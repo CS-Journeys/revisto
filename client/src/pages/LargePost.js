@@ -32,7 +32,6 @@ class LargePost extends Component {
         const post = this.state.post;
 
         return (<div>
-            <Navbar/>
             <br/>
             <div className="container-fluid">
                 { (post)? <div>

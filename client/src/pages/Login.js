@@ -11,15 +11,15 @@ import Navbar from "../components/Navbar";
  *  username: the email of the user
  *  region: region of the user
  *  language: language of the user
- */
-
-export default class Login extends Component {
+*/
+class Login extends Component {
     render() {
         return (
             <div>
-                <Navbar />
                 <LoginForm />
             </div>
         );
     }
 }
+
+export default Login;
