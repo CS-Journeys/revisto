@@ -93,6 +93,15 @@ h2 {
     letter-spacing: 3px;
 }
 
+/* Create Post */
+.c-post {
+    padding: 3vh;
+    width: 100%;
+    height: min-content;
+    border-radius: 10px;
+    border: 2px solid var(--bg-clr-2);
+}
+
 /*--Post Card--*/
 .card {
     background-color: var(--bg-clr-2);

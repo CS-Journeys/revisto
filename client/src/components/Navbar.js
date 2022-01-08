@@ -14,19 +14,22 @@ class Navbar extends Component {
     render() {
         return (<div className="nav-control">
             <nav className="navbar navbar-expand nav-bg">
+                {/* Logo */}
                 <Link to="/" className="nav-logo">
                     <img src={logo} alt="Logo" id="logo"/>
                 </Link>
+
+                {/* Links */}
                 <div className="nav navbar-nav navbar-left">
-                    <Link className="nav-link" to="#"><h4>New</h4></Link>
-                    <Link className="nav-link" to="#"><h4>About</h4></Link>
-                </div >
-                { (this.state.user) ?
-                        <p>Hello, {this.state.user.email}</p> :
-                        <div className="nav navbar-nav navbar-right">
-                            <NavBtn text="Sign Up" link="#" />
-                            <NavBtn text="Login" link="/login" />
-                        </div>}
+                        <Link className="nav-link" to="#"><h4>New</h4></Link>
+                        <Link className="nav-link" to="#"><h4>About</h4></Link>
+                    </div >
+                    { (this.state.user) ?
+                            <p>Hello, {this.state.user.email}</p> :
+                            <div className="nav navbar-nav navbar-right">
+                                <NavBtn text="Sign Up" link="#" />
+                                <NavBtn text="Login" link="/login" />
+                            </div>}
             </nav>
         </div>);
     }
@@ -39,21 +42,21 @@ class NavBtn extends Component {
         this.state = {
             text: this.props.text,
             link: this.props.link,
-            color: null
+            type: null
         };
     }
 
     render() {
         switch (this.state.text) {
             case "Sign Up":
-                this.state.color = "btn-signin";
+                this.state.type = "btn-signin";
                 break;
             case "Login":
-                this.state.color = "btn-login";
+                this.state.type = "btn-login";
                 break;
         }
 
-        let btnClass = "btn " + this.state.color + " nav-link";
+        let btnClass = "btn " + this.state.type + " nav-link";
 
         return (<button type="button" className={btnClass}>
             <Link to={this.state.link}>

@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PostsList from '../components/PostsList';
-import Navbar from '../components/Navbar';
+import CreatePost from '../components/CreatePost';
 
 class Home extends Component {
     render() {
         return (<div>
-            <br/>
             <div className="container-fluid">
                 {/* Render home page */}
+                <CreatePost />
                 <PostsList/>
             </div>
         </div>);

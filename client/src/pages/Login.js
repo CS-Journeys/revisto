@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import LoginForm from "../components/LoginForm";
-import Navbar from "../components/Navbar";
 
 // Axios POST requests will be made
 // using the login page

@@ -32,7 +32,6 @@ class LargePost extends Component {
         const post = this.state.post;
 
         return (<div>
-            <br/>
             <div className="container-fluid">
                 { (post)? <div>
                     <h1>{post.title}</h1>

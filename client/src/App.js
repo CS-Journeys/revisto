@@ -43,6 +43,7 @@ class App extends Component {
                 <div className="col-lg-10">
                     <Router location={history.location} navigator={history}>
                         <Navbar user={ this.state.user } />
+                        <br />
                         <Routes>
                             <Route path='/' element={<Home />} />
                             <Route path='/login' element={<Login />} />
