@@ -8,10 +8,10 @@ if (!("TOKEN_SECRET" in process.env)) {
   throw new Error("Missing 'TOKEN_SECRET' parameter in .env")
 }
 
-// Creates a JSON Web Token with the secret key and the given user id.
-export const createJWT = (userId) => {
+// Creates a JSON Web Token with the secret key and given data .
+export const createJWT = (data) => {
   const duration = '24h';
-  const token = jwt.sign({userId}, process.env.TOKEN_SECRET, {expiresIn: duration});
+  const token = jwt.sign(data, process.env.TOKEN_SECRET, {expiresIn: duration});
   
   return token;
 }
@@ -34,4 +34,17 @@ export const authenticateJWT = (req, res, next) => {
   } else {
     res.status(401).json({err: "NOTOKEN"});
   }
+}
+
+// Pass in a jwt, it returns a promise that resolves to the data in the token.
+export const verifyJWT = (token) => {
+  return new Promise((resolve, reject) => {
+    jwt.verify(token, process.env.TOKEN_SECRET, (err, tokenData) => {
+      if (err) {
+        reject(err);
+      } else {
+        resolve(tokenData);
+      }
+    });
+  });
 }
