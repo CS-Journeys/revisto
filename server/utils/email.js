@@ -1,43 +1,37 @@
+import dotenv from "dotenv";
+dotenv.config();
+import {ENV} from "../constants.js";
 import AWS from "aws-sdk";
 
-const SES_CONFIG = {
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: "us-west-2",
-};
+let AWS_SES;
 
-const AWS_SES = SES_CONFIG.accessKeyId ? new AWS.SES(SES_CONFIG) : null;
+AWS.config.update({ region: "us-east-2" });
+AWS_SES = new AWS.SES({ apiVersion: "2010-12-01" });
 
-/**
- params is an object with the following properties:
-  Destination: {ToAddresses: [], CcAddresses: [], BccAddresses: []}
-  Message: {Subject: {Data: '', Charset: ''}, Body: {Html: {Data: '', Charset: ''}, Text: {Data: '', Charset: ''}}}
-  Source: ''
-  ReplyToAddresses: []
-  returns a Promise
-  */
-const SendEmail = (email, params) => {
-  var env = process.env.NODE_ENV || "development";
-  if (env === "development" && !AWS_SES) {
+const SendEmail = (params) => {
+  //Check if AWS_SES has proper credentials
+  if (!AWS_SES.config.credentials) {
+    return Promise.reject("AWS_SES is not defined");
+  }
+  if (ENV === "development") {
     console.log("Sending email to: " + params.Destination.ToAddresses[0]);
     console.log(params.Message.Body.Html.Data);
-    return Promise.reject("AWS_SES not configured");
   }
   return AWS_SES.sendEmail(params).promise();
 };
 
 export const SendPasswordReset = (email, token) => {
   let params = {
-    Source: "",
+    Source: "no-reply@revisto.live",
     Destination: {
-      ToAddresses: [email],
+      ToAddresses: ["revisto.live@gmail.com"],
     },
     ReplyToAddresses: [],
     Message: {
       Body: {
         Html: {
           Charset: "UTF-8",
-          Data: `<a href="revisto.live/reset/${token}>Reset Password</a>`,
+          Data: `<a href="revisto.live/reset/${token}">Reset Password</a>`,
         },
       },
       Subject: {
@@ -46,7 +40,7 @@ export const SendPasswordReset = (email, token) => {
       },
     },
   };
-  return SendEmail(email, params);
+  return SendEmail(params);
 };
 
 export default SendEmail;

@@ -81,11 +81,17 @@ export const requestPasswordReset = async (req, res) => {
       res.json({ err: "BADQUERY" });
     } else {
       if (!user) {
-        res.json({ err: "NOUSER" });
+        res.json({ err: "Sucess" });
       } else {
         const token = createJWT({ userId: user._id, dateCreated: Date.now() });
-        await SendPasswordReset(user.email, token);
-        res.json({ status: "Success" });
+        SendPasswordReset(user.email, token)
+          .then(() => {
+            res.json({ status: "Success" });
+          })
+          .catch((err) => {
+            res.json({ err: "INTERNAL" });
+            console.log(err);
+          });
       }
     }
   });
