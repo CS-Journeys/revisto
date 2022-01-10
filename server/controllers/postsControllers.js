@@ -96,6 +96,7 @@ export const updatePost = (req, res) => {
 
 export const reportPost = (req, res) => {
   const query = {
+    $inc: { reportCount: 1 },
     $push: req.body.report ? { reports: req.body.report } : {reports:"No Comment"},
   };
   console.log(query);

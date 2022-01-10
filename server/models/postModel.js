@@ -9,6 +9,7 @@ const PostSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: "users", required: true },
   dateCreated: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
+  reportCount: { type:Number, default: 0 },
   reports: {type:[String], default:[]},
 });
 
