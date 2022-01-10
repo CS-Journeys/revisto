@@ -8,6 +8,7 @@ import Home from './pages/Home'
 import Login from './pages/Login';
 import LargePost from './pages/LargePost';
 import Navbar from './components/Navbar';
+import CreatePost from './pages/CreatePost';
 
 import { loadUser } from './auth';
 
@@ -48,6 +49,7 @@ class App extends Component {
                             <Route path='/' element={<Home />} />
                             <Route path='/login' element={<Login />} />
                             <Route path='/post/:postId' element={ <LargePost location={location} />} />
+                            <Route path='/submit' element={ <CreatePost />} />
                         </Routes>
                     </Router>
                 </div>

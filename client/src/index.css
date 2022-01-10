@@ -35,9 +35,10 @@
     font-family: "RobotoCondensed";
     src: url(./css/roboto-condensed/RobotoCondensed-Light.ttf);
 }
+
 body {
     font-family: "Bebas";
-    background-color: var(--clr-white);
+    background-color: var(--clr-grey-6);
 }
 
 /*--Navbar--*/
@@ -46,7 +47,7 @@ body {
 }
 
 .nav-bg {
-    background-color: var(--bg-gr-2);
+    background-color: var(--clr-white);
 }
 /*B2CAD3*/
 
@@ -94,12 +95,21 @@ h2 {
 }
 
 /* Create Post */
+.cp-link:hover {
+    text-decoration: none;
+}
+
 .c-post {
-    padding: 3vh;
-    width: 100%;
-    height: min-content;
-    border-radius: 10px;
     border: 2px solid var(--bg-clr-2);
+}
+
+.cp-input {
+    padding-top: 3vh;
+    background-color: var(--clr-grey-6);
+}
+
+.cp-input:hover {
+    border-color: #116c82;
 }
 
 /*--Post Card--*/
