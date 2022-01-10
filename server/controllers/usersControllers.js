@@ -81,7 +81,7 @@ export const requestPasswordReset = async (req, res) => {
       if (!user) {
         res.json({ err: "NOTAUSER" });
       } else {
-        const token = createJWT({ userId: user._id, dateCreated: Date.now() });
+        const token = createJWT({userId: user._id});
         SendPasswordReset(user.email, token)
           .then(() => {
             res.json({ status: "Success" });
