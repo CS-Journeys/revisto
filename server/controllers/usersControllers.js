@@ -34,7 +34,9 @@ export const login = async (req, res) => {
             return res.json({ err: "BADLOGIN" });
           } else {
             const token = createJWT({userId:user._id});
+            //Set the bearer token and redirect to the home page
             res.json({ token });
+            res.redirect('/');
           }
         })
       }
