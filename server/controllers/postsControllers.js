@@ -93,3 +93,16 @@ export const updatePost = (req, res) => {
     });
   });
 }
+
+export const reportPost = (req, res) => {
+  const query = {
+    $push: req.body.report ? { reports: req.body.report } : {reports:"No Comment"},
+  };
+  console.log(query);
+  Post.findByIdAndUpdate(req.params.id, query, (err, post) => { 
+    if (err) {
+      res.json({ err: "ERROR" });
+    }
+    res.json({ status: "Success" });
+  });
+}

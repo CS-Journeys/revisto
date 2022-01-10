@@ -8,7 +8,8 @@ const PostSchema = new Schema({
   content: {type: String, required: true},
   user: { type: Schema.Types.ObjectId, ref: "users", required: true },
   dateCreated: { type: Date, default: Date.now },
-  dateUpdated: { type: Date, default: Date.now }
+  dateUpdated: { type: Date, default: Date.now },
+  reports: {type:[String], default:[]},
 });
 
 // Update dateUpdated on save
