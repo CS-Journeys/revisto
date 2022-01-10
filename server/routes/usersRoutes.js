@@ -6,7 +6,9 @@ import {
   register,
   login,
   updateUser,
-  deleteUser
+  deleteUser,
+  requestPasswordReset,
+  resetPassword,
 } from "../controllers/usersControllers.js";
 
 const router = express.Router();
@@ -16,5 +18,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.patch("/", authenticateJWT, updateUser);
 router.delete("/", authenticateJWT, deleteUser);
+router.get("/resetPass", requestPasswordReset);
+router.post("/resetPass", resetPassword);
 
 export default router;

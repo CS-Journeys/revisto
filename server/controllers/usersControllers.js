@@ -1,7 +1,8 @@
 import passport from "passport";
 
 import User from "../models/userModel.js";
-import { createJWT } from "../auth/jwtAuth.js";
+import { createJWT, verifyJWT } from "../auth/jwtAuth.js";
+import {SendPasswordReset} from "../utils/email.js";
 
 // Get the current user (uses req.token.userId)
 export const me = async (req, res) => {
@@ -9,8 +10,6 @@ export const me = async (req, res) => {
   res.json({user});
 };
 
-// Create a new user with passport-local-mongoose
-// (uses req.body.{email, password, region})
 export const register = async (req, res) => {
   const user = new User({ email: req.body.email, region: req.body.region });
   User.register(user, req.body.password, (err, user) => {
@@ -34,8 +33,10 @@ export const login = async (req, res) => {
           if (err) {
             return res.json({ err: "BADLOGIN" });
           } else {
-            const token = createJWT(user._id);
+            const token = createJWT({userId:user._id});
+            //Set the bearer token and redirect to the home page
             res.json({ token });
+            res.redirect('/');
           }
         })
       }
@@ -68,5 +69,61 @@ export const deleteUser = async (req, res) => {
     } else {
       res.json({ status: "Success" });
     }
+  });
+};
+
+export const requestPasswordReset = async (req, res) => {
+  if (!req.body.email) {
+    return res.json({ err: "NOEMAIL" });
+  }
+  User.findOne({ email: req.body.email }, async (err, user) => {
+    if (err) {
+      res.json({ err: "BADQUERY" });
+    } else {
+      if (!user) {
+        res.json({ err: "NOTAUSER" });
+      } else {
+        const token = createJWT({userId: user._id});
+        SendPasswordReset(user.email, token)
+          .then(() => {
+            res.json({ status: "Success" });
+          })
+          .catch((err) => {
+            res.json({ err: "INTERNAL" });
+            console.log(err);
+          });
+      }
+    }
+  });
+};
+
+export const resetPassword = async (req, res) => {
+  // has req.body.token and req.body.password
+  verifyJWT(req.body.token).then(({ userId }) => {
+    User.findById(userId, (err, user) => {
+      if (err) {
+        res.json({ err: "BADQUERY" });
+      } else {
+        if (!user) {
+          res.json({ err: "NOTAUSER" });
+        } else {
+          user.setPassword(req.body.password, (err) => {
+            if (err) {
+              res.json({ err: "BADPASSWORD" });
+            } else {
+              user.save((err) => {
+                if (err) {
+                  res.json({ err: "CANTSAVE" });
+                } else {
+                  res.json({ status: "Success" });
+                }
+              });
+            }
+          });
+        }
+      }
+    });
+  }).catch(err => {
+    res.json({ err: "BADTOKEN" });
   });
 };

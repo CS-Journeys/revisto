@@ -9,6 +9,7 @@ const UserSchema = new Schema({
   email: String,
   region: { type: String, default: "US" },
   language: { type: String, default: "EN" },
+  lastPost: { type: Date, default: Date.now },
 });
 
 // Add passport-local-mongoose plug-in

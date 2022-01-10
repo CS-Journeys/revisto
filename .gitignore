@@ -9,3 +9,6 @@
 .vscode
 
 **/coverage
+
+# build
+**/build

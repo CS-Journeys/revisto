@@ -20,9 +20,9 @@ beforeAll((done) => {
         if (err) {
           done();
         } else {
-          token = createJWT(user._id);
-          lan = user.language;
           userId = user._id;
+          token = createJWT({ userId });
+          lan = user.language;
           done();
         }
       });

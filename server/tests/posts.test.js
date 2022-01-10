@@ -19,8 +19,8 @@ beforeAll((done) => {
         if (err) {
           done();
         } else {
-          token = createJWT(user._id);
           userId = user._id;
+          token = createJWT({userId});
           done();
         }
       });
