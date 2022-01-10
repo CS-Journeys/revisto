@@ -10,8 +10,6 @@ export const me = async (req, res) => {
   res.json({user});
 };
 
-// Create a new user with passport-local-mongoose
-// (uses req.body.{email, password, region})
 export const register = async (req, res) => {
   const user = new User({ email: req.body.email, region: req.body.region });
   User.register(user, req.body.password, (err, user) => {
@@ -81,7 +79,7 @@ export const requestPasswordReset = async (req, res) => {
       res.json({ err: "BADQUERY" });
     } else {
       if (!user) {
-        res.json({ err: "Sucess" });
+        res.json({ err: "NOTAUSER" });
       } else {
         const token = createJWT({ userId: user._id, dateCreated: Date.now() });
         SendPasswordReset(user.email, token)
@@ -98,33 +96,28 @@ export const requestPasswordReset = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
-  //has req.body.token and req.body.password
-  verifyJWT(req.body.token).then(({ userId, dateCreated }) => {
+  // has req.body.token and req.body.password
+  verifyJWT(req.body.token).then(({ userId }) => {
     User.findById(userId, (err, user) => {
       if (err) {
         res.json({ err: "BADQUERY" });
       } else {
         if (!user) {
-          res.json({ err: "NOUSER" });
+          res.json({ err: "NOTAUSER" });
         } else {
-          //Token is valid for 1 day
-          if (Date.now() - dateCreated > 86400000) {
-            res.json({ err: "TOKENEXPIRED" });
-          } else {
-            user.setPassword(req.body.password, (err) => {
-              if (err) {
-                res.json({ err: "BADPASSWORD" });
-              } else {
-                user.save((err) => {
-                  if (err) {
-                    res.json({ err: "CANTSAVE" });
-                  } else {
-                    res.json({ status: "Success" });
-                  }
-                });
-              }
-            });
-          }
+          user.setPassword(req.body.password, (err) => {
+            if (err) {
+              res.json({ err: "BADPASSWORD" });
+            } else {
+              user.save((err) => {
+                if (err) {
+                  res.json({ err: "CANTSAVE" });
+                } else {
+                  res.json({ status: "Success" });
+                }
+              });
+            }
+          });
         }
       }
     });
