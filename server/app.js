@@ -4,6 +4,7 @@ import passport from "passport";
 
 import postRoutes from "./routes/postsRoutes.js";
 import userRoutes from "./routes/usersRoutes.js";
+import adminRoutes from "./routes/adminRoutes.js";
 import UserDetails from "./models/userModel.js";
 
 import { authenticate } from "./auth/jwtAuth.js";
@@ -26,5 +27,6 @@ app.use("/api", authenticate);
 app.use("/api", checkPermissions);
 app.use("/api/posts", postRoutes);
 app.use("/api/users", userRoutes);
+app.use("/api/admin", adminRoutes);
 
 export default app;
