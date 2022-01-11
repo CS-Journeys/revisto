@@ -62,7 +62,7 @@ class LoginForm extends Component {
                         <label htmlFor="Show Pass">
                             <input
                                 type="checkbox"
-                                onChange={() => this.setState({ isShowInput: !isShowInput }) }
+                                onChange={() => this.setState({ isShowInput: !this.state.isShowInput }) }
                             />
                             Show Password
                         </label>

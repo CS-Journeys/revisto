@@ -6,13 +6,17 @@ import {SendPasswordReset} from "../utils/email.js";
 
 // Get the current user (uses req.token.userId)
 export const me = async (req, res) => {
+  if (req.user) {
+    return res.json({ user: req.user });
+  }
   const user = await User.findById(req.token.userId, "email region language");
   res.json({user});
 };
 
-// Create a new user with passport-local-mongoose
-// (uses req.body.{email, password, region})
 export const register = async (req, res) => {
+  if (req.user) {
+    return res.redirect("/");
+  }
   const user = new User({ email: req.body.email, region: req.body.region });
   User.register(user, req.body.password, (err, user) => {
     if (err) {
@@ -24,6 +28,9 @@ export const register = async (req, res) => {
 
 // Logs in the user (uses req.body.email and req.body.password)
 export const login = async (req, res) => {
+  if (req.user) {
+    return res.redirect("/");
+  }
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return res.json({ err: "INVALID" });
@@ -36,12 +43,13 @@ export const login = async (req, res) => {
             return res.json({ err: "BADLOGIN" });
           } else {
             const token = createJWT({userId:user._id});
-            res.json({ token });
+            //Set the bearer token and redirect to the home page
+            return res.json({ token });
           }
-        })
+        });
       }
     }
-  })(req, res);
+  })(req,res);
 };
 
 export const updateUser = async (req, res) => {
@@ -81,9 +89,9 @@ export const requestPasswordReset = async (req, res) => {
       res.json({ err: "BADQUERY" });
     } else {
       if (!user) {
-        res.json({ err: "Sucess" });
+        res.json({ err: "NOTAUSER" });
       } else {
-        const token = createJWT({ userId: user._id, dateCreated: Date.now() });
+        const token = createJWT({userId: user._id});
         SendPasswordReset(user.email, token)
           .then(() => {
             res.json({ status: "Success" });
@@ -98,33 +106,28 @@ export const requestPasswordReset = async (req, res) => {
 };
 
 export const resetPassword = async (req, res) => {
-  //has req.body.token and req.body.password
-  verifyJWT(req.body.token).then(({ userId, dateCreated }) => {
+  // has req.body.token and req.body.password
+  verifyJWT(req.body.token).then(({ userId }) => {
     User.findById(userId, (err, user) => {
       if (err) {
         res.json({ err: "BADQUERY" });
       } else {
         if (!user) {
-          res.json({ err: "NOUSER" });
+          res.json({ err: "NOTAUSER" });
         } else {
-          //Token is valid for 1 day
-          if (Date.now() - dateCreated > 86400000) {
-            res.json({ err: "TOKENEXPIRED" });
-          } else {
-            user.setPassword(req.body.password, (err) => {
-              if (err) {
-                res.json({ err: "BADPASSWORD" });
-              } else {
-                user.save((err) => {
-                  if (err) {
-                    res.json({ err: "CANTSAVE" });
-                  } else {
-                    res.json({ status: "Success" });
-                  }
-                });
-              }
-            });
-          }
+          user.setPassword(req.body.password, (err) => {
+            if (err) {
+              res.json({ err: "BADPASSWORD" });
+            } else {
+              user.save((err) => {
+                if (err) {
+                  res.json({ err: "CANTSAVE" });
+                } else {
+                  res.json({ status: "Success" });
+                }
+              });
+            }
+          });
         }
       }
     });

@@ -7,6 +7,9 @@ import userRoutes from "./routes/usersRoutes.js";
 import adminRoutes from "./routes/adminRoutes.js";
 import UserDetails from "./models/userModel.js";
 
+import { authenticate } from "./auth/jwtAuth.js";
+import checkPermissions from "./auth/checkPermissions.js";
+
 const app = express();
 
 // Set up passport.js
@@ -20,6 +23,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use("/api", authenticate);
+app.use("/api", checkPermissions);
 app.use("/api/posts", postRoutes);
 app.use("/api/users", userRoutes);
 app.use("/api/admin", adminRoutes);

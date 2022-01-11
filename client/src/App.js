@@ -3,13 +3,15 @@ import { BrowserRouter as Router,
         Routes, 
         Route } from 'react-router-dom'
 import { createBrowserHistory } from 'history';
+import axios from 'axios';
 
 import Home from './pages/Home'
 import Login from './pages/Login';
 import LargePost from './pages/LargePost';
 import Navbar from './components/Navbar';
+import CreatePost from './pages/CreatePost';
+import Register from './pages/Register';
 
-import { loadUser } from './auth';
 
 class App extends Component {
 
@@ -22,11 +24,20 @@ class App extends Component {
     }
 
     componentDidMount() {
-        this.setState({ user: loadUser(localStorage.getItem("token")) }, () => {
-            console.log(this.state.user);
-        });
+        const token = localStorage.getItem("token");
 
-        // Setstate is asynchronous, navbar is not updating
+        const config = {
+            headers: { Authorization: `Bearer ${token}` }
+        };
+
+        axios.get('/users', config)
+            .then(res => {
+                this.setState({ user: res.data });
+                console.log("User: ", this.state.user);
+            })
+            .catch(error => { // Console log error
+                console.log(`Could not get user: ${error}`);
+            });
     }
 
     /*
@@ -48,6 +59,8 @@ class App extends Component {
                             <Route path='/' element={<Home />} />
                             <Route path='/login' element={<Login />} />
                             <Route path='/post/:postId' element={ <LargePost location={location} />} />
+                            <Route path='/submit' element={<CreatePost />} />
+                            <Route path='/register' element={<Register/>} />
                         </Routes>
                     </Router>
                 </div>
