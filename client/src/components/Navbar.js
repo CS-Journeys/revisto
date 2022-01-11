@@ -7,62 +7,49 @@ class Navbar extends Component {
         super(props);
 
         this.state = {
-            user: this.props.user
+            user: null
+        }
+    }
+
+    componentDidUpdate(prevProps) {
+        if (this.props != prevProps) {
+            this.setState({ user: this.props.user.user });
         }
     }
 
     render() {
+        const user = this.state.user;
+
         return (<div className="nav-control">
-            <nav className="navbar navbar-expand nav-bg">
+            <nav className="navbar navbar-expand-lg navbar-light nav-bg">
                 {/* Logo */}
                 <Link to="/" className="nav-logo">
                     <img src={logo} alt="Logo" id="logo"/>
                 </Link>
 
+                {/* Mobile Button */}
+                <button className="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" 
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                        
+                    <span className="navbar-toggler-icon"></span>
+                </button>
+
                 {/* Links */}
-                <div className="nav navbar-nav navbar-left">
+                <div className="collapse navbar-collapse" id="navbarNav">
+                    <div className="navbar-nav navbar-left" >
                         <Link className="nav-link" to="#"><h4>Featured</h4></Link>
                         <Link className="nav-link" to="#"><h4>About</h4></Link>
-                    </div >
-                    { (this.state.user) ?
-                            <p>Hello, {this.state.user.email}</p> :
-                            <div className="nav navbar-nav navbar-right">
-                                <NavBtn text="Sign Up" link="#" />
-                                <NavBtn text="Login" link="/login" />
+                    </div>
+                    { (user != null) ?
+                            <p className="nav-link">Hello, {user.email}</p> :
+                            <div className="navbar-nav navbar-right">
+                                <Link className="nav-link" to="#"><span>Sign Up</span></Link>
+                                <Link className="nav-link" to="/login"><span>Login</span></Link>
                             </div>}
+                </div>
+                
             </nav>
         </div>);
-    }
-}
-
-class NavBtn extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            text: this.props.text,
-            link: this.props.link,
-            type: null
-        };
-    }
-
-    render() {
-        switch (this.state.text) {
-            case "Sign Up":
-                this.state.type = "btn-signin";
-                break;
-            case "Login":
-                this.state.type = "btn-login";
-                break;
-        }
-
-        let btnClass = "btn " + this.state.type + " nav-link";
-
-        return (<button type="button" className={btnClass}>
-            <Link to={this.state.link}>
-                {this.state.text}
-                </Link>
-            </button>);
     }
 }
 
