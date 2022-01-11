@@ -12,7 +12,7 @@ class Navbar extends Component {
     }
 
     componentDidUpdate(prevProps) {
-        if (this.props != prevProps) {
+        if (this.props !== prevProps) {
             this.setState({ user: this.props.user.user });
         }
     }

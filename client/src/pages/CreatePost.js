@@ -11,7 +11,9 @@ class CreatePost extends Component {
     }
 
     setClickEvent() {
-        clicked = !clicked;
+        this.setState({
+            clicked: !this.state.clicked
+        });
     }
 
     render() {
