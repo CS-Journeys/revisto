@@ -15,11 +15,12 @@ const checkPermissions = async (req, res, next) => {
   } else {
     await User.findById(req.token.userId).then(user => {
       userType = user.userType;
+      req.user = user;
     });
   }
 
   // Determine the route (remove trailing '/')
-  let route = req.path.replace(/\/$/, '');
+  const route = req.path.replace(/\/$/, '');
 
   // Determine if user is authorized to make the request
   Permission.findOne({userType, route}, (err, permission) => {
