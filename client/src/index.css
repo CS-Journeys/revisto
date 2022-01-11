@@ -190,6 +190,29 @@ h2 {
     color: var(--clr-white);
 }
 
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input {
+  margin-bottom: 10px;
+}
+
+.form-floating>.form-control {
+    padding: 1rem .75rem
+}
+
 .check {
     margin: 0.5rem 0rem;
     grid-template-columns: 100px 1fr;

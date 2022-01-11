@@ -10,6 +10,7 @@ import Login from './pages/Login';
 import LargePost from './pages/LargePost';
 import Navbar from './components/Navbar';
 import CreatePost from './pages/CreatePost';
+import Register from './pages/Register';
 
 
 class App extends Component {
@@ -58,7 +59,8 @@ class App extends Component {
                             <Route path='/' element={<Home />} />
                             <Route path='/login' element={<Login />} />
                             <Route path='/post/:postId' element={ <LargePost location={location} />} />
-                            <Route path='/submit' element={ <CreatePost />} />
+                            <Route path='/submit' element={<CreatePost />} />
+                            <Route path='/register' element={<Register/>} />
                         </Routes>
                     </Router>
                 </div>
