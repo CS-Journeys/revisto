@@ -35,13 +35,12 @@ export const login = async (req, res) => {
           } else {
             const token = createJWT({userId:user._id});
             //Set the bearer token and redirect to the home page
-            res.json({ token });
-            res.redirect('/');
+            return res.json({ token });
           }
-        })
+        });
       }
     }
-  })(req, res);
+  });
 };
 
 export const updateUser = async (req, res) => {

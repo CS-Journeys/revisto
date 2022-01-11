@@ -21,7 +21,7 @@ class Navbar extends Component {
 
                 {/* Links */}
                 <div className="nav navbar-nav navbar-left">
-                        <Link className="nav-link" to="#"><h4>New</h4></Link>
+                        <Link className="nav-link" to="#"><h4>Featured</h4></Link>
                         <Link className="nav-link" to="#"><h4>About</h4></Link>
                     </div >
                     { (this.state.user) ?
