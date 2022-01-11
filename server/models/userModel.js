@@ -7,6 +7,7 @@ const Schema = mongoose.Schema;
 const UserSchema = new Schema({
   password: String,
   email: String,
+  userType: { type: String, default: "normal-user" },
   region: { type: String, default: "US" },
   language: { type: String, default: "EN" },
   lastPost: { type: Date, default: Date.now },

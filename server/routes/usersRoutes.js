@@ -1,6 +1,5 @@
 import express from "express";
 
-import { authenticateJWT } from "../auth/jwtAuth.js";
 import {
   me,
   register,
@@ -13,11 +12,11 @@ import {
 
 const router = express.Router();
 
-router.get("/", authenticateJWT, me);
+router.get("/", me);
 router.post("/register", register);
 router.post("/login", login);
-router.patch("/", authenticateJWT, updateUser);
-router.delete("/", authenticateJWT, deleteUser);
+router.patch("/", updateUser);
+router.delete("/", deleteUser);
 router.get("/resetPass", requestPasswordReset);
 router.post("/resetPass", resetPassword);
 
