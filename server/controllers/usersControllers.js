@@ -1,5 +1,5 @@
 import passport from "passport";
-
+import { PasswordErrorCheck, validateEmail } from "../utils/sec.js";
 import User from "../models/userModel.js";
 import { createJWT, verifyJWT } from "../auth/jwtAuth.js";
 import {SendPasswordReset} from "../utils/email.js";
@@ -17,10 +17,24 @@ export const register = async (req, res) => {
   if (req.user) {
     return res.redirect("/");
   }
-  const user = new User({ email: req.body.email, region: req.body.region });
-  User.register(user, req.body.password, (err, user) => {
+
+  const { email, password, region} = req.body;
+
+  // Validate email and password
+  if (!email || !password) {
+    return res.json({ err: "FIELD", msg: "Email and password required" });
+  }
+  const PswdError = PasswordErrorCheck(password);
+  if (PswdError!=="") {
+    return res.json({ err: "FIELD", msg: PswdError });
+  }
+  if (!validateEmail(email)) {
+    return res.json({ err: "FIELD", msg: "Invalid email" });
+  }
+  const user = new User({ email, region });
+  User.register(user, password, (err, user) => {
     if (err) {
-      return res.json({err:"USERTAKEN"});
+      return res.json({err:"FIELD", msg: "Email already taken"});
     }
     res.json({status: "Success"});
   });

@@ -58,7 +58,7 @@ class App extends Component {
                         <Routes>
                             <Route path='/' element={<Home user={this.state.user } />} />
                             <Route path='/login' element={<Login />} />
-                            <Route path='/post/:postId' element={ <LargePost location={location} />} />
+                            <Route path='/post/:postId' element={ <LargePost location={window.location} />} />
                             <Route path='/submit' element={<CreatePost />} />
                             <Route path='/register' element={<Register/>} />
                         </Routes>
