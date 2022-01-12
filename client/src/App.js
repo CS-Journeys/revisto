@@ -8,31 +8,10 @@ import LargePost from "./pages/LargePost";
 import Navbar from "./components/Navbar";
 import CreatePost from "./pages/CreatePost";
 import Register from "./pages/Register";
+import { useMe } from "./hooks/api";
 
 const App = () => {
-  const [user, setUser] = useState(null);
-
-  //Retrive the current user
-  useEffect(() => {
-    const token = localStorage.getItem("token");
-    const config = {
-      headers: { Authorization: `Bearer ${token}` },
-    };
-    axios
-      .get("/users", config)
-      .then(({ data }) => {
-        const { err } = data;
-        if (err) {
-          console.log(err);
-        } else {
-          setUser(data.user);
-        }
-      })
-      .catch((error) => {
-        // Console log error
-        console.log(`Could not get user: ${error}`);
-      });
-  }, []);
+  const { user } = useMe();
 
   return (
     <div className="App container-fluid">

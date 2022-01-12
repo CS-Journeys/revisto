@@ -1,8 +1,9 @@
-import axios from "axios";
-import React, { Component, useState } from "react";
+import React, { useState } from "react";
+import { useRegister } from "../hooks/api";
 
 const Register = () => {
   const [msg, setMsg] = useState("");
+  const { register } = useRegister();
 
   const handleSubmit = (e) => {
     // Prevent the default action of submitting the form
@@ -25,28 +26,14 @@ const Register = () => {
       return;
     }
 
-    // Send the request to the server
-    axios
-      .post("/users/register", {
-        email,
-        password,
-      })
-      .then(({ data: { err, token, msg } }) => {
-        if (err) {
-          if (err === "FIELD") {
-            setMsg(msg);
-          }
-          else {
-            console.log(err);
-          }
-        } else {
-          localStorage.setItem("token", token);
-          window.location.href = "/";
-        }
-      })
-      .catch((err) => {
-        console.log(err);
-      });
+    register({ email, password }, {
+      onSuccess: () => {
+        window.location.href = "/";
+      },
+      onError: (err) => {
+        setMsg(err.message);
+      }
+    });
   };
 
   return (

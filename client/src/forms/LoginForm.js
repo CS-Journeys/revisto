@@ -1,9 +1,11 @@
 import React, { Component, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { useLogin } from "../hooks/api";
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
+  const { login } = useLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,19 +13,16 @@ const LoginForm = () => {
     const email = form.email.value;
     const password = form.password.value;
     if (email && password) {
-      axios
-        .post("/users/login", {email,password})
-        .then(({ data }) => {
-          if (data.err) {
-            console.log(data.err);
-          } else {
-            localStorage.setItem("token", data.token);
-            window.location.href = "/";
-          }
-        })
-        .catch((err) => {
-          console.error(err);
-        });
+      login({ email, password }, {
+        onSuccess: (token) => {
+          //Set the token in local storage
+          localStorage.setItem("token", token);
+          window.location.href = "/";
+        },
+        onError: (err) => {
+          console.log(err);
+        }
+      });
     }
   };
 

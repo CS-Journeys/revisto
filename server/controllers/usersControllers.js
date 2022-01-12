@@ -22,19 +22,19 @@ export const register = async (req, res) => {
 
   // Validate email and password
   if (!email || !password) {
-    return res.json({ err: "FIELD", msg: "Email and password required" });
+    return res.json({ err: "Email and password required"});
   }
   const PswdError = PasswordErrorCheck(password);
   if (PswdError!=="") {
-    return res.json({ err: "FIELD", msg: PswdError });
+    return res.json({ err: PswdError });
   }
   if (!validateEmail(email)) {
-    return res.json({ err: "FIELD", msg: "Invalid email" });
+    return res.json({ err: "Invalid email" });
   }
   const user = new User({ email, region });
   User.register(user, password, (err, user) => {
     if (err) {
-      return res.json({err:"FIELD", msg: "Email already taken"});
+      return res.json({err: "Email already taken"});
     }
     res.json({status: "Success"});
   });
