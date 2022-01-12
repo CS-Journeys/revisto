@@ -1,44 +1,40 @@
-import React, { Component } from 'react';
+import React, { Component, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
+import axios from "axios";
 
-import axios from 'axios';
+const LargePost = (props) => {
+  const [post, setPost] = useState(null);
+  const { postId } = useParams();
 
-class LargePost extends Component {
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            post: null
+  useEffect(() => {
+    axios
+      .get(`/posts/id/${postId}`)
+      .then(({ data }) => {
+        const { err } = data;
+        if (err) {
+          console.log(err);
+        } else {
+          setPost(data.post);
         }
-    }
-    
-    // NOTE: There is probably a better way than this
-    componentDidMount() {
-        let path = this.props.location.pathname;
-        path = path.replace("/post/", "/posts/id/");
+      })
+      .catch((error) => {
+        // Console log error
+        console.log(`Could not get post: ${error}`);
+      });
+  }, []);
 
-        // Load current user (if exists)
-        axios.get(path)
-        .then(res => {
-            const {post} = res.data;
-            this.setState({ post });
-        })
-        .catch(error => { // Console log error
-            console.log(`Could not get post: ${error}`);
-        });
-    }
-
-    render() {
-        const post = this.state.post;
-
-        return (<div>
-            <div className="container-fluid">
-                { (post)? <div>
-                    <h1>{post.title}</h1>
-                    <p>{post.content}</p>
-                </div> : null }
+  return (
+      <div>
+        <div className="container-fluid">
+          {post ? (
+            <div>
+              <h1>{post.title}</h1>
+              <p>{post.content}</p>
             </div>
-        </div>);
-    }
-}
+          ) : null}
+        </div>
+      </div>
+    );
+};
 
 export default LargePost;

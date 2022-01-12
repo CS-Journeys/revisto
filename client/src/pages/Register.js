@@ -1,16 +1,10 @@
 import axios from "axios";
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 
-class Register extends Component {
-  constructor(props) {
-    super(props);
+const Register = () => {
+  const [msg, setMsg] = useState("");
 
-    this.state = {
-      msg: "",
-    };
-  }
-
-  handleSubmit = (e) => {
+  const handleSubmit = (e) => {
     // Prevent the default action of submitting the form
     e.preventDefault();
     // Get the values of the form
@@ -21,13 +15,13 @@ class Register extends Component {
 
     // Check if the passwords match
     if (password !== confirm) {
-      this.setState({ msg: "Passwords do not match" });
+      setMsg("Passwords do not match");
       return;
     }
 
     // Make sure all fields are filled
     if (email === "" || password === "" || confirm === "") {
-      this.setState({ msg: "Please fill out all fields" });
+      setMsg("Please fill out all fields");
       return;
     }
 
@@ -40,8 +34,10 @@ class Register extends Component {
       .then(({ data: { err, token, msg } }) => {
         if (err) {
           if (err === "FIELD") {
-            console.log("Field error");
-            this.setState({ msg });
+            setMsg(msg);
+          }
+          else {
+            console.log(err);
           }
         } else {
           localStorage.setItem("token", token);
@@ -52,50 +48,49 @@ class Register extends Component {
         console.log(err);
       });
   };
-  render() {
-    return (
-      <main className="form-signin text-center">
-        <form onSubmit={this.handleSubmit}>
-          <h1>Sign Up</h1>
-          {this.state.msg !== "" && (
-            <div className="alert alert-danger" role="alert">
-              {this.state.msg}
-            </div>
-          )}
-          <div className="form-floating">
-            <input
-              className="form-control"
-              type="email"
-              placeholder="Email"
-              name="email"
-              id="email"
-            />
+
+  return (
+    <main className="form-signin text-center">
+      <form onSubmit={handleSubmit}>
+        <h1>Sign Up</h1>
+        {msg !== "" && (
+          <div className="alert alert-danger" role="alert">
+            {msg}
           </div>
-          <div className="form-floating">
-            <input
-              className="form-control"
-              type="password"
-              placeholder="Password"
-              name="password"
-              id="password"
-            />
-          </div>
-          <div className="form-floating">
-            <input
-              className="form-control"
-              type="password"
-              placeholder="Confirm Password"
-              name="confirm"
-              id="confirmPassword"
-            />
-          </div>
-          <button className="w-100 btn btn-primary" type="submit">
-            Register
-          </button>
-        </form>
-      </main>
-    );
-  }
-}
+        )}
+        <div className="form-floating">
+          <input
+            className="form-control"
+            type="email"
+            placeholder="Email"
+            name="email"
+            id="email"
+          />
+        </div>
+        <div className="form-floating">
+          <input
+            className="form-control"
+            type="password"
+            placeholder="Password"
+            name="password"
+            id="password"
+          />
+        </div>
+        <div className="form-floating">
+          <input
+            className="form-control"
+            type="password"
+            placeholder="Confirm Password"
+            name="confirm"
+            id="confirmPassword"
+          />
+        </div>
+        <button className="w-100 btn btn-primary" type="submit">
+          Register
+        </button>
+      </form>
+    </main>
+  );
+};
 
 export default Register;

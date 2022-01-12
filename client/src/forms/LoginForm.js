@@ -1,78 +1,63 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
-class LoginForm extends Component {
-    constructor(props) {
-        super(props);
+const LoginForm = () => {
+  const [showPass, setShowPass] = useState(false);
 
-        this.state = {
-            email: "",
-            password: "",
-            isShowInput: false
-        }
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const form = e.target;
+    const email = form.email.value;
+    const password = form.password.value;
+    if (email && password) {
+      axios
+        .post("/users/login", {email,password})
+        .then(({ data }) => {
+          if (data.err) {
+            console.log(data.err);
+          } else {
+            localStorage.setItem("token", data.token);
+            window.location.href = "/";
+          }
+        })
+        .catch((err) => {
+          console.error(err);
+        });
     }
+  };
 
-    handleSubmit = (e) => {
-        e.preventDefault();
-        const config = {
-            email: this.state.email,
-            password: this.state.password
-        }
-
-        if (this.state.email && this.state.password) {
-            axios.post("/users/login", config)
-            .then(res => {
-                console.log("success: ", res.data.token);
-                localStorage.setItem("token", res.data.token);
-            })
-            .catch(err => { console.error(err) });
-        }
-        this.setState({email : "", password : "" });
-    };
-
-    render() {
-        return (<article className="form">
-                <form onSubmit={this.handleSubmit}>
-                    <h1>Login</h1>
-                    <div className="form-control">
-                        <label htmlFor="email">Email: </label>
-                        <input
-                            type="text"
-                            id="email"
-                            name="email"
-                            value={this.state.email}
-                            onChange={(e) => this.setState({ email: e.target.value }) }
-                        />
-                    </div>
-                    <div className="form-control">
-                        <label htmlFor="password">Password: </label>
-                        <input
-                            type={this.state.isShowInput ? "text" : "password"}
-                            id="password"
-                            name="password"
-                            value={this.state.password}
-                            onChange={(e) => this.setState({ password: e.target.value }) }
-                        />
-                    </div>
-                    <div>
-                        <span>Don't have an account? <Link to="/register">Sign Up</Link></span>
-                    </div>
-                    <button type="submit">
-                        Login
-                    </button>
-                    <span className="check">
-                        <label htmlFor="Show Pass">
-                            <input
-                                type="checkbox"
-                                onChange={() => this.setState({ isShowInput: !this.state.isShowInput }) }
-                            />
-                            Show Password
-                        </label>
-                    </span>
-                </form>
-            </article>);
-    }
+  return (
+    <div className="form">
+      <form onSubmit={handleSubmit}>
+        <h1>Login</h1>
+        <div className="form-control">
+          <label htmlFor="email">Email: </label>
+          <input type="text" id="email" name="email" />
+        </div>
+        <div className="form-control">
+          <label htmlFor="password">Password: </label>
+          <input
+            type={showPass ? "text" : "password"}
+            id="password"
+            name="password"
+          />
+        </div>
+        <div>
+          <span>
+            Don't have an account? <Link to="/register">Sign Up</Link>
+          </span>
+        </div>
+        <button type="submit">Login</button>
+        <span className="check">
+          <label htmlFor="Show Pass">
+            <input type="checkbox" onChange={() => setShowPass(!showPass)} />
+            Show Password
+          </label>
+        </span>
+      </form>
+    </div>
+  );
 };
 
 export default LoginForm;
