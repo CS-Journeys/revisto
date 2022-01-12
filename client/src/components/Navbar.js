@@ -43,7 +43,7 @@ class Navbar extends Component {
                     { (user != null) ?
                             <p className="nav-link">Hello, {user.email}</p> :
                             <div className="navbar-nav navbar-right">
-                                <Link className="nav-link" to="#"><span>Sign Up</span></Link>
+                                <Link className="nav-link" to="/register"><span>Sign Up</span></Link>
                                 <Link className="nav-link" to="/login"><span>Login</span></Link>
                             </div>}
                 </div>

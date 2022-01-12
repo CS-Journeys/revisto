@@ -7,7 +7,7 @@ class Home extends Component {
         return (<div>
             <div className="container-fluid">
                 {/* Render home page */}
-                <PostInput />
+                <PostInput user={this.props.user} />
                 <PostsList/>
             </div>
         </div>);

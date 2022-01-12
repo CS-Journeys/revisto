@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class LoginForm extends Component {
     constructor(props) {
@@ -53,6 +54,9 @@ class LoginForm extends Component {
                             value={this.state.password}
                             onChange={(e) => this.setState({ password: e.target.value }) }
                         />
+                    </div>
+                    <div>
+                        <span>Don't have an account? <Link to="/register">Sign Up</Link></span>
                     </div>
                     <button type="submit">
                         Login

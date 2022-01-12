@@ -30,7 +30,7 @@ class Register extends Component {
     return (
       <main className="form-signin text-center">
         <form onSubmit={this.handleSubmit}>
-          <h1>Register</h1>
+          <h1>Sign Up</h1>
             <div className="form-floating">
               <input
                 className="form-control"

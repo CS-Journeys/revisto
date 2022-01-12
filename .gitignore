@@ -7,6 +7,7 @@
 **/.env
 
 .vscode
+package-lock.json
 
 **/coverage
 
