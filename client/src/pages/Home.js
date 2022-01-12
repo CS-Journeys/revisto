@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import PostsList from "../components/PostsList";
 import PostInput from "../components/PostInput";
 

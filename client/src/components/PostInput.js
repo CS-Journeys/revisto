@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 //Note from Bmin- What is this doing? It's a decently big component functioning as a button?

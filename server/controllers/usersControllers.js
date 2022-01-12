@@ -103,7 +103,7 @@ export const requestPasswordReset = async (req, res) => {
       res.json({ err: "BADQUERY" });
     } else {
       if (!user) {
-        res.json({ err: "NOTAUSER" });
+        res.json({ status: "Success" });
       } else {
         const token = createJWT({userId: user._id});
         SendPasswordReset(user.email, token)

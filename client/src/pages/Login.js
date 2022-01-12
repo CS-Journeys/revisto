@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import LoginForm from "../forms/LoginForm";
 
 // Axios POST requests will be made
