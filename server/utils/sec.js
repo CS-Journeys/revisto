@@ -1,4 +1,4 @@
-//Password Stength Checker
+// Password Stength Checker
 export const PasswordErrorCheck = (password) => {
   let error = "";
   if (password.length < 8) {
