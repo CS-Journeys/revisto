@@ -9,17 +9,15 @@ const LoginForm = () => {
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    if (email && password) {
-      login({ email, password }, {
+    if (form.email && form.password) {
+      login({
+        email: form.email.value,
+        password: form.password.value
+      }, {
         onSuccess: (token) => {
           //Set the token in local storage
           localStorage.setItem("token", token);
           window.location.href = "/";
-        },
-        onError: (err) => {
-          console.log(err);
         }
       });
     }

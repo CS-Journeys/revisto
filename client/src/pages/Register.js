@@ -1,37 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
 import { useRegister } from "../hooks/api";
 
 const Register = () => {
-  const [msg, setMsg] = useState("");
-  const { register } = useRegister();
+  const { register, error } = useRegister();
 
   const handleSubmit = (e) => {
-    // Prevent the default action of submitting the form
     e.preventDefault();
-    // Get the values of the form
-    const form = e.target;
-    const email = form.email.value;
-    const password = form.password.value;
-    const confirm = form.confirm.value;
-
-    // Check if the passwords match
-    if (password !== confirm) {
-      setMsg("Passwords do not match");
-      return;
-    }
-
-    // Make sure all fields are filled
-    if (email === "" || password === "" || confirm === "") {
-      setMsg("Please fill out all fields");
-      return;
-    }
-
-    register({ email, password }, {
+    const form = new FormData(e.target);
+    register({
+      email: form.get("email"),
+      password: form.get("password"),
+      confirm: form.get("confirm")
+    }, {
       onSuccess: () => {
         window.location.href = "/";
-      },
-      onError: (err) => {
-        setMsg(err.message);
       }
     });
   };
@@ -40,9 +22,9 @@ const Register = () => {
     <main className="form-signin text-center">
       <form onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
-        {msg !== "" && (
+        {error && (
           <div className="alert alert-danger" role="alert">
-            {msg}
+            {error.message}
           </div>
         )}
         <div className="form-floating">

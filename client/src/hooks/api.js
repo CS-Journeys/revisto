@@ -19,8 +19,16 @@ export const useMe = () => {
   return { user: query.data, isLoading: query.isLoading, error: query.error };
 };
 
+//register accepts {email, password, confirm?}
 export const useRegister = () => {
-  const mut = useMutation(async ({email,password}) => {
+  const mut = useMutation(async ({email,password,confirm}) => {
+    if (confirm && password !== confirm) {
+      throw new Error("Passwords do not match");
+    }
+    if (email === "" || password === "" || (confirm && confirm === "")) {
+      throw new Error("Please fill out all fields");
+      return;
+    }
     const res = await axios.post("/users/register", { email, password });
     //Error handling
     if (res.data.err) {
