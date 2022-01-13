@@ -1,0 +1,8 @@
+route,GET,POST,PUT,PATCH,DELETE
+/posts,yes,no,,,
+/posts/id/:id,yes,,,no,no
+/posts/user,no,,,,
+/users,no,,,no,no
+/users/register,,yes,,,
+/users/login,,yes,,,
+/users/resetPass,yes,yes,,,
