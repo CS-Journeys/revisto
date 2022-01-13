@@ -4,17 +4,13 @@ import User from "../models/userModel.js";
 import { createJWT, verifyJWT } from "../auth/jwtAuth.js";
 import {SendPasswordReset} from "../utils/email.js";
 
-// Get the current user (uses req.token.userId)
+// Get the current user
 export const me = async (req, res) => {
-  if (req.user) {
-    return res.json({ user: req.user });
-  }
-  const user = await User.findById(req.token.userId, "email region language");
-  res.json({user});
+  res.json(req.user);
 };
 
 export const register = async (req, res) => {
-  if (req.user) {
+  if (req.user.userType != "guest") {
     return res.redirect("/");
   }
 
@@ -42,6 +38,9 @@ export const register = async (req, res) => {
 
 // Logs in the user (uses req.body.email and req.body.password)
 export const login = async (req, res) => {
+  if (req.user.userType != "guest") {
+    return res.redirect("/");
+  }
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return res.json({ err: "INVALID" });
@@ -64,25 +63,19 @@ export const login = async (req, res) => {
 };
 
 export const updateUser = async (req, res) => {
-  User.findById(req.token.userId, (err, user) => {
+  if (req.body.region) req.user.region = req.body.region;
+  if (req.body.language) req.user.language = req.body.language;
+  req.user.save((err) => {
     if (err) {
-      res.json({ err: "NOUSER" });
+      res.json({ err: "CANTSAVE" });
     } else {
-      if(req.body.region) user.region = req.body.region;
-      if(req.body.language) user.language = req.body.language;
-      user.save((err) => {
-        if (err) {
-          res.json({ err: "CANTSAVE" });
-        } else {
-          res.json({ status: "Success" });
-        }
-      });
+      res.json({ status: "Success" });
     }
   });
 };
 
 export const deleteUser = async (req, res) => {
-  User.findByIdAndRemove(req.token.userId, (err) => {
+  User.findByIdAndRemove(req.user._id, (err) => {
     if (err) {
       res.json({ err: "NOUSER" });
     } else {
