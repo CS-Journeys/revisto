@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import LoginForm from "../components/LoginForm";
+import LoginForm from "../forms/LoginForm";
 
 // Axios POST requests will be made
 // using the login page
@@ -14,7 +14,7 @@ import LoginForm from "../components/LoginForm";
 class Login extends Component {
     render() {
         return (
-            <div>
+            <div className="container">
                 <LoginForm />
             </div>
         );

@@ -35,9 +35,10 @@
     font-family: "RobotoCondensed";
     src: url(./css/roboto-condensed/RobotoCondensed-Light.ttf);
 }
+
 body {
     font-family: "Bebas";
-    background-color: var(--clr-white);
+    background-color: var(--clr-grey-6);
 }
 
 /*--Navbar--*/
@@ -46,7 +47,7 @@ body {
 }
 
 .nav-bg {
-    background-color: var(--bg-gr-2);
+    background-color: var(--clr-white);
 }
 /*B2CAD3*/
 
@@ -67,6 +68,15 @@ body {
 }
 
 .nav-bg a:hover {
+    color: var(--bg-clr-1);
+}
+
+.nav-link h4, .nav-link span {
+    color: var(--clr-black);
+}
+
+.nav-link h4:hover, 
+    .nav-link span:hover {
     color: var(--bg-clr-1);
 }
 
@@ -94,12 +104,21 @@ h2 {
 }
 
 /* Create Post */
+.cp-link:hover {
+    text-decoration: none;
+}
+
 .c-post {
-    padding: 3vh;
-    width: 100%;
-    height: min-content;
-    border-radius: 10px;
     border: 2px solid var(--bg-clr-2);
+}
+
+.cp-input {
+    padding-top: 3vh;
+    background-color: var(--clr-grey-6);
+}
+
+.cp-input:hover {
+    border-color: #116c82;
 }
 
 /*--Post Card--*/
@@ -169,6 +188,29 @@ h2 {
 .form button:hover {
     background: var(--clr-black);
     color: var(--clr-white);
+}
+
+.form-signin {
+  width: 100%;
+  max-width: 330px;
+  padding: 15px;
+  margin: auto;
+}
+
+.form-signin .checkbox {
+  font-weight: 400;
+}
+
+.form-signin .form-floating:focus-within {
+  z-index: 2;
+}
+
+.form-signin input {
+  margin-bottom: 10px;
+}
+
+.form-floating>.form-control {
+    padding: 1rem .75rem
 }
 
 .check {

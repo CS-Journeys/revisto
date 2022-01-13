@@ -1,20 +1,40 @@
 import passport from "passport";
-
+import { PasswordErrorCheck, validateEmail } from "../utils/sec.js";
 import User from "../models/userModel.js";
 import { createJWT, verifyJWT } from "../auth/jwtAuth.js";
 import {SendPasswordReset} from "../utils/email.js";
 
 // Get the current user (uses req.token.userId)
 export const me = async (req, res) => {
+  if (req.user) {
+    return res.json({ user: req.user });
+  }
   const user = await User.findById(req.token.userId, "email region language");
   res.json({user});
 };
 
 export const register = async (req, res) => {
-  const user = new User({ email: req.body.email, region: req.body.region });
-  User.register(user, req.body.password, (err, user) => {
+  if (req.user) {
+    return res.redirect("/");
+  }
+
+  const { email, password, region} = req.body;
+
+  // Validate email and password
+  if (!email || !password) {
+    return res.json({ err: "FIELD", msg: "Email and password required" });
+  }
+  const PswdError = PasswordErrorCheck(password);
+  if (PswdError!=="") {
+    return res.json({ err: "FIELD", msg: PswdError });
+  }
+  if (!validateEmail(email)) {
+    return res.json({ err: "FIELD", msg: "Invalid email" });
+  }
+  const user = new User({ email, region });
+  User.register(user, password, (err, user) => {
     if (err) {
-      return res.json({err:"USERTAKEN"});
+      return res.json({err:"FIELD", msg: "Email already taken"});
     }
     res.json({status: "Success"});
   });
@@ -22,6 +42,9 @@ export const register = async (req, res) => {
 
 // Logs in the user (uses req.body.email and req.body.password)
 export const login = async (req, res) => {
+  if (req.user) {
+    return res.redirect("/");
+  }
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return res.json({ err: "INVALID" });
@@ -34,12 +57,13 @@ export const login = async (req, res) => {
             return res.json({ err: "BADLOGIN" });
           } else {
             const token = createJWT({userId:user._id});
-            res.json({ token });
+            //Set the bearer token and redirect to the home page
+            return res.json({ token });
           }
-        })
+        });
       }
     }
-  })(req, res);
+  })(req,res);
 };
 
 export const updateUser = async (req, res) => {

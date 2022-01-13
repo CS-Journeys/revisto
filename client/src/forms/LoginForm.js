@@ -1,6 +1,6 @@
 import React, { Component } from "react";
-import Redirect from 'react-router-dom';
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 class LoginForm extends Component {
     constructor(props) {
@@ -55,6 +55,9 @@ class LoginForm extends Component {
                             onChange={(e) => this.setState({ password: e.target.value }) }
                         />
                     </div>
+                    <div>
+                        <span>Don't have an account? <Link to="/register">Sign Up</Link></span>
+                    </div>
                     <button type="submit">
                         Login
                     </button>
@@ -62,7 +65,7 @@ class LoginForm extends Component {
                         <label htmlFor="Show Pass">
                             <input
                                 type="checkbox"
-                                onChange={() => this.setState({ isShowInput: !isShowInput }) }
+                                onChange={() => this.setState({ isShowInput: !this.state.isShowInput }) }
                             />
                             Show Password
                         </label>

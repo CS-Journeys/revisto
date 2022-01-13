@@ -1,13 +1,13 @@
 import React, { Component } from 'react';
 import PostsList from '../components/PostsList';
-import CreatePost from '../components/CreatePost';
+import PostInput from '../components/PostInput';
 
 class Home extends Component {
     render() {
         return (<div>
             <div className="container-fluid">
                 {/* Render home page */}
-                <CreatePost />
+                <PostInput user={this.props.user} />
                 <PostsList/>
             </div>
         </div>);

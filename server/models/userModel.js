@@ -10,6 +10,7 @@ const UserSchema = new Schema({
   userType: { type: String, default: "normal-user" },
   region: { type: String, default: "US" },
   language: { type: String, default: "EN" },
+  lastPost: { type: Date, default: Date.now },
 });
 
 // Add passport-local-mongoose plug-in
