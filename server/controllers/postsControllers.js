@@ -23,10 +23,10 @@ export const getPost = (req, res) => {
   });
 };
 
-// Gets all posts by a specific user
+// Gets all of cur user's posts
 export const getUserPosts = (req, res) => {
   Post.find(
-    { user: req.token.userId },
+    { user: req.user._id },
     "title content dateCreated",
     (err, posts) => {
       if (err) {
@@ -38,27 +38,22 @@ export const getUserPosts = (req, res) => {
 };
 
 // Creates a new post with the request body
-// req.body has user, title, and content
+// req.body has title and content
 export const createPost = (req, res) => {
   
-  //Check if it's been a day since the last post by checking User.lastPost
-  User.findById(req.token.userId, (err, user) => {
-    if (err) {
-      return res.json({ err: "ERROR" });
+  // Check if it's been a day since the last post by checking User.lastPost
+  if (req.user.lastPost) {
+    let lastPost = new Date(req.user.lastPost);
+    let now = new Date();
+    let diff = now - lastPost;
+    let diffDays = Math.ceil(diff / (1000 * 3600 * 24));
+    if (diffDays < 1) {
+      return res.json({ err: "TOOFAST" });
     }
-    if (user.lastPost) {
-      let lastPost = new Date(user.lastPost);
-      let now = new Date();
-      let diff = now - lastPost;
-      let diffDays = Math.ceil(diff / (1000 * 3600 * 24));
-      if (diffDays < 1) {
-        return res.json({ err: "TOOFAST" });
-      }
-    }
-  });
+  };
   
   let newPost = new Post(req.body);
-  newPost.user = req.token.userId;
+  newPost.user = req.user._id;
   newPost.save((err, post) => {
     if (err) {
       return res.json({ err: "ERROR" });
