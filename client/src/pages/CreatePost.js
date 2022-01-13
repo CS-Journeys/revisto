@@ -1,10 +1,14 @@
 import React from "react";
+import { Link } from "react-router-dom";
 import PostForm from "../forms/PostForm";
 
-const CreatePost = () => {
+const CreatePost = (props) => {
   return (
       <div className="container">
-        <PostForm />
+        { (props.user) ? 
+          <PostForm /> :
+          <Link className="text-center" to="/login"><h1>Please Login</h1></Link>
+        }
       </div>
   );
 };

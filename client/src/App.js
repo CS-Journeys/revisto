@@ -23,7 +23,7 @@ const App = () => {
               <Route path="/" element={<Home user={user} />} />
               <Route path="/login" element={<Login />} />
               <Route path="/post/:postId" element={<LargePost />} />
-              <Route path="/submit" element={<CreatePost />} />
+              <Route path="/submit" element={<CreatePost user={user} />} />
               <Route path="/register" element={<Register />} />
             </Routes>
           </BrowserRouter>

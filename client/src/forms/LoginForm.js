@@ -3,9 +3,6 @@ import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/api";
 
 const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
-
   const [showPass, setShowPass] = useState(false);
   const { login } = useLogin();
 
@@ -32,13 +29,7 @@ const LoginForm = () => {
         <h1>Login</h1>
         <div className="form-control">
           <label htmlFor="email">Email: </label>
-          <input
-            type="text"
-            id="email"
-            name="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-          />
+          <input type="text" id="email" name="email" />
         </div>
         <div className="form-control">
           <label htmlFor="password">Password: </label>
@@ -46,8 +37,6 @@ const LoginForm = () => {
             type={showPass ? "text" : "password"}
             id="password"
             name="password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
           />
         </div>
         <div>
