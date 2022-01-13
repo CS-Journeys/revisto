@@ -17,7 +17,7 @@ router.post("/register", register);
 router.post("/login", login);
 router.patch("/", updateUser);
 router.delete("/", deleteUser);
-router.get("/resetPass", requestPasswordReset);
+router.post("/requestReset", requestPasswordReset);
 router.post("/resetPass", resetPassword);
 
 export default router;

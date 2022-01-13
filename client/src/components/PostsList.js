@@ -1,35 +1,18 @@
-import React, { Component } from 'react';
-import Post from './Post';
+import React from "react";
+import Post from "./Post";
 
-import axios from 'axios';
+import { usePosts } from "../hooks/api";
 
-class PostsList extends Component {
+const PostsList = (props) => {
+  const {posts} = usePosts();
 
-    constructor(props) {
-        super(props);
-
-        this.state = {
-            posts: []
-        };
-    }
-
-    componentDidMount() {
-        axios.get('/posts')
-        .then(res => {
-            const {posts} = res.data;
-            console.log(posts);
-            this.setState({ posts });
-        })
-        .catch(error => {
-            console.error(`Could not get posts: ${error}`);
-        });
-    }
-
-    render() {
-        return (<div className="row d-flex justify-content-center">
-            { this.state.posts.map(post => <Post key={post._id} post={post}/>) }  
-        </div>);
-    }
-}
+  return (
+    <div className="row d-flex justify-content-center">
+      {posts && posts.map((post) => (
+        <Post key={post._id} post={post} />
+      ))}
+    </div>
+  );
+};
 
 export default PostsList;

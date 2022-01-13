@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from "react";
 import LoginForm from "../forms/LoginForm";
 
 // Axios POST requests will be made
@@ -11,14 +11,13 @@ import LoginForm from "../forms/LoginForm";
  *  region: region of the user
  *  language: language of the user
 */
-class Login extends Component {
-    render() {
-        return (
-            <div className="container">
-                <LoginForm />
-            </div>
-        );
-    }
-}
+
+const Login = () => {
+    return (
+        <div className="container">
+            <LoginForm />
+        </div>
+    );
+};
 
 export default Login;
