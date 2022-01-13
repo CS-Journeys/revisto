@@ -1,6 +1,5 @@
-import { useQuery,useMutation } from "react-query";
+import { useQuery,useMutation,useQueryClient } from "react-query";
 import axios from "axios";
-
 //====== USERS ======
 
 export const useMe = () => {
@@ -27,7 +26,6 @@ export const useRegister = () => {
     }
     if (email === "" || password === "" || (confirm && confirm === "")) {
       throw new Error("Please fill out all fields");
-      return;
     }
     const res = await axios.post("/users/register", { email, password });
     //Error handling
@@ -40,13 +38,22 @@ export const useRegister = () => {
 }
 
 export const useLogin = () => {
-  const mut = useMutation(async ({email,password}) => {
+  const qc = useQueryClient();
+  const mut = useMutation(async ({ email, password }) => {
+    if (email === "" || password === "") {
+      throw new Error("Please fill out all fields");
+    }
     const res = await axios.post("/users/login", { email, password });
     //Error handling
     if (res.data.err) {
       throw new Error(res.data.err);
     }
     return res.data.token;
+  }, {
+    onSuccess: (token) => {
+      localStorage.setItem("token", token);
+      qc.invalidateQueries("me");   
+    }
   });
   return {token:mut.data,isLoading:mut.isLoading,error:mut.error,login:mut.mutate};
 }
@@ -189,7 +196,8 @@ export const useDeletePost = () => {
 
 //updatePost accespts {id,title,content}
 export const useUpdatePost = () => {
-  const mut = useMutation(async ({id,title,content}) => {
+  const qc = useQueryClient();
+  const mut = useMutation(async ({ id, title, content }) => {
     const token = localStorage.getItem("token");
     const config = {
       headers: { Authorization: `Bearer ${token}` },
@@ -199,7 +207,11 @@ export const useUpdatePost = () => {
     if (res.data.err) {
       throw new Error(res.data.err);
     }
-    return res.data;
+    return {id,title,content};
+  }, {
+    onSuccess: (data) => {
+      qc.invalidateQueries("post", data.id);
+    }
   });
   return {isLoading:mut.isLoading,error:mut.error,updatePost:mut.mutate};
 }

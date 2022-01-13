@@ -1,8 +1,12 @@
 import React from "react";
 import { useCreatePost } from "../hooks/api";
+import { useNavigate } from 'react-router-dom';
+import { useQueryClient } from "react-query";
 
 const PostForm = () => {
   const { createPost } = useCreatePost();
+  const nav = useNavigate();
+  const qc = useQueryClient();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -11,10 +15,11 @@ const PostForm = () => {
     if (form.title && form.content) {
       createPost({
         title: form.title.value,
-        password: form.content.value
+        content: form.content.value
       }, {
         onSuccess: () => {
-          window.location.href = "/";
+          qc.invalidateQueries('posts');
+          nav("/");
         }
       });
     }
