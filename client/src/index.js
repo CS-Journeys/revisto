@@ -10,7 +10,7 @@ axios.defaults.baseURL = process.env.REACT_APP_BASE_URL || "/api";
 const queryClient = new QueryClient({
   defaultOptions: {
     queries: {
-      staleTime: 60000,
+      staleTime: Infinity, // Right now it's set to never expire unless we explicitly tell it to. Maybe change if weird stuff happens.
       retry: false,
     },
   },

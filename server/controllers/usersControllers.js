@@ -42,9 +42,6 @@ export const register = async (req, res) => {
 
 // Logs in the user (uses req.body.email and req.body.password)
 export const login = async (req, res) => {
-  if (req.user) {
-    return res.redirect("/");
-  }
   passport.authenticate('local', function (err, user, info) {
     if (err) {
       return res.json({ err: "INVALID" });

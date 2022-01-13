@@ -1,26 +1,28 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/api";
+import { useNavigate } from "react-router-dom";
 
 const LoginForm = () => {
   const [showPass, setShowPass] = useState(false);
   const { login } = useLogin();
 
+  const nav = useNavigate();
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = e.target;
-    if (form.email && form.password) {
-      login({
+    login(
+      {
         email: form.email.value,
-        password: form.password.value
-      }, {
-        onSuccess: (token) => {
-          //Set the token in local storage
-          localStorage.setItem("token", token);
-          window.location.href = "/";
-        }
-      });
-    }
+        password: form.password.value,
+      },
+      {
+        onSuccess: () => {
+          nav("/");
+        },
+      }
+    );
   };
 
   return (

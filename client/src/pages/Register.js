@@ -1,21 +1,26 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/api";
 
 const Register = () => {
   const { register, error } = useRegister();
+  const nav = useNavigate();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const form = new FormData(e.target);
-    register({
-      email: form.get("email"),
-      password: form.get("password"),
-      confirm: form.get("confirm")
-    }, {
-      onSuccess: () => {
-        window.location.href = "/";
+    register(
+      {
+        email: form.get("email"),
+        password: form.get("password"),
+        confirm: form.get("confirm"),
+      },
+      {
+        onSuccess: () => {
+          nav("/");
+        },
       }
-    });
+    );
   };
 
   return (
