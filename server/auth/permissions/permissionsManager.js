@@ -25,7 +25,7 @@ class PermissionsManager {
   }
 
   static checkPermissions(req, res, next) {
-    let route = req.path.replace(/\/$/, '');
+    let route = req.route;
     let userType = req.user.userType;
     let method = req.method;
     let userId = req.user._id;
@@ -35,11 +35,11 @@ class PermissionsManager {
 
     // Determine if the request is allowed
     let userPermissions = PermissionsManager.permissions[userType];
-    if (userPermissions == "") {
+    if (!userPermissions) {
       console.error(`ERROR: Please define permissions for ${userType}`);
-    } else if (userPermissions[route] == "") {
+    } else if (!userPermissions[route]) {
       console.error(`ERROR: Please define permissions for ${userType, route}`);
-    } else if (userPermissions[route][method] == "") {
+    } else if (!userPermissions[route][method]) {
       console.error(`ERROR: Please define permission for ${userType, route, method}`);
     } else if (userPermissions[route][method] == "yes") {
       isAllowed = true;
