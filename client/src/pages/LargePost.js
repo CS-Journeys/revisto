@@ -11,10 +11,7 @@ const NormalPost = ({ post, onEdit }) => {
     deletePost(post._id, {
       onSuccess: () => {
         nav("/");
-      },
-      onError: (err) => {
-        console.error(err);
-      },
+      }
     });
   }
 
@@ -55,10 +52,7 @@ const EditablePost = ({ post, onCancel }) => {
     }, {
       onSuccess: () => {
         onCancel();
-      },
-      onError: (err) => {
-        console.error(err);
-      },
+      }
     });
   };
 
@@ -77,7 +71,7 @@ const EditablePost = ({ post, onCancel }) => {
       />
       {post.isMine ? (
         <div className="w-100 d-flex justify-content-end">
-          <button className="btn btn-primary mr-2">Save</button>
+          <button className="btn btn-primary mr-2" onClick={onUpdate}>Save</button>
           <button className="btn btn-secondary" onClick={onCancel}>
             Cancel
           </button>
