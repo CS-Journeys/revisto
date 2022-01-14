@@ -6,7 +6,7 @@ import {SendPasswordReset} from "../utils/email.js";
 
 // Get the current user
 export const me = async (req, res) => {
-  res.json(req.user);
+  res.json({user:req.user});
 };
 
 export const register = async (req, res) => {
