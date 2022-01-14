@@ -1,5 +1,4 @@
 import Post from "../models/postModel.js";
-import User from "../models/userModel.js";
 
 // Gets all posts
 var mySort = {dateCreated : -1};
