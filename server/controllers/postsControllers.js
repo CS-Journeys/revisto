@@ -16,11 +16,16 @@ export const getPosts = (req, res) => {
 
 // Gets post by id (uses req.params.id)
 export const getPost = (req, res) => {
-  Post.findById(req.params.id, "title content dateCreated", (err, post) => {
+  Post.findById(req.params.id, "title content dateCreated user", (err, post) => {
     if (err) {
       return res.json({ err: "NOTAPOST" });
     }
-    res.json({ post });
+    let modPost = post.toObject();
+    if (post.user.equals(req.user._id)) {
+      modPost.isMine = true;
+    }
+    delete modPost.user;
+    res.json({ post:modPost });
   });
 };
 

@@ -6,7 +6,6 @@ import { useQueryClient } from "react-query";
 const PostForm = () => {
   const { createPost } = useCreatePost();
   const nav = useNavigate();
-  const qc = useQueryClient();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -18,7 +17,6 @@ const PostForm = () => {
         content: form.content.value
       }, {
         onSuccess: () => {
-          qc.invalidateQueries('posts');
           nav("/");
         }
       });
