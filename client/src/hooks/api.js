@@ -208,7 +208,9 @@ export const useUpdatePost = () => {
     return {id,title,content};
   }, {
     onSuccess: (data) => {
-      qc.invalidateQueries("post", data.id);
+      qc.invalidateQueries(["post", data.id]);
+      qc.invalidateQueries("myposts");
+      qc.invalidateQueries("posts");
     }
   });
   return {isLoading:mut.isLoading,error:mut.error,updatePost:mut.mutate};

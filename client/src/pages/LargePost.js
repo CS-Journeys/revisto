@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useParams } from "react-router-dom";
 import { usePost, useUpdatePost, useDeletePost } from "../hooks/api";
 import { useNavigate } from "react-router-dom";
@@ -20,11 +20,15 @@ const NormalPost = ({ post, onEdit }) => {
       <h1 className="display-4 text-center border border-top-0 border-left-0 border-right-0 border-dark">
         {post.title}
       </h1>
-      <p>{post.content}</p>
+      <p style={{ whiteSpace: "pre-wrap" }}>{post.content}</p>
       {post.isMine ? (
         <div className="w-100 d-flex justify-content-end">
-          <button className="btn btn-primary mr-2" onClick={onEdit}>Edit</button>
-          <button className="btn btn-secondary" onClick={onDelete}>Delete</button>
+          <button className="btn btn-primary mr-2" onClick={onEdit}>
+            Edit
+          </button>
+          <button className="btn btn-secondary" onClick={onDelete}>
+            Delete
+          </button>
         </div>
       ) : null}
     </div>
@@ -35,7 +39,14 @@ const EditablePost = ({ post, onCancel }) => {
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
 
+  const textRef = useRef();
+
   const { updatePost } = useUpdatePost();
+
+  useEffect(() => {
+    textRef.current.style.height = "1px";
+    textRef.current.style.height = `${textRef.current.scrollHeight}px`;
+  }, []);
 
   const onType = (e) => {
     setContent(e.target.value);
@@ -59,19 +70,22 @@ const EditablePost = ({ post, onCancel }) => {
   return (
     <div className="w-100 p-4 bg-light shadow-sm">
       <input
-        className="mb-2 text-center border border-top-0 border-left-0 border-right-0 border-dark w-100 display-4"
+        className="mb-2 bg-light text-center border border-top-0 border-left-0 border-right-0 border-dark w-100 display-4"
         value={title}
         onChange={(e) => setTitle(e.target.value)}
       />
       <textarea
-        className="w-100 overflow-hidden"
-        style={{"resize": "none"}}
+        ref={textRef}
+        className="w-100 bg-light overflow-hidden"
+        style={{ resize: "none" }}
         value={content}
         onChange={onType}
       />
       {post.isMine ? (
         <div className="w-100 d-flex justify-content-end">
-          <button className="btn btn-primary mr-2" onClick={onUpdate}>Save</button>
+          <button className="btn btn-primary mr-2" onClick={onUpdate}>
+            Save
+          </button>
           <button className="btn btn-secondary" onClick={onCancel}>
             Cancel
           </button>
