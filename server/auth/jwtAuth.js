@@ -34,23 +34,15 @@ export const verifyJWT = (token) => {
 export const authenticate = (req, res, next) => {
   const authHeader = req.headers.authorization;
 
-  let hasBadToken = false;
-
   if (authHeader) {
     const token = authHeader.split(' ')[1];
 
     jwt.verify(token, process.env.TOKEN_SECRET, (err, tokenData) => {
-      if (err) {
-        hasBadToken = true;
-      } else {
+      if (!err) {
         req.token = tokenData;
       }
     });
   }
 
-  if (hasBadToken) {
-    res.status(401).json({err: "BADTOKEN"});
-  } else {
-    next();
-  }
+  next();
 }
