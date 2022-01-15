@@ -7,6 +7,8 @@ import LargePost from "./pages/LargePost";
 import Navbar from "./components/Navbar";
 import CreatePost from "./pages/CreatePost";
 import Register from "./pages/Register";
+import Profile from "./pages/Profile";
+
 import { useMe } from "./hooks/api";
 
 const App = () => {
@@ -25,6 +27,7 @@ const App = () => {
               <Route path="/post/:postId" element={<LargePost />} />
               <Route path="/submit" element={<CreatePost user={user} />} />
               <Route path="/register" element={<Register />} />
+              <Route path="/me" element={<Profile user={user} />} />
             </Routes>
           </BrowserRouter>
         </div>

@@ -35,7 +35,9 @@ const Navbar = ({user}) => {
             </Link>
           </div>
           {user ? (
-            <p className="nav-link">Hello, {user.email}</p>
+            <Link className="nav-link" to="/me">
+              <span>Your Journals</span>
+            </Link>
           ) : (
             <div className="navbar-nav navbar-right">
               <Link className="nav-link" to="/register">

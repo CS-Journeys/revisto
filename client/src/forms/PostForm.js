@@ -1,7 +1,6 @@
 import React from "react";
 import { useCreatePost } from "../hooks/api";
 import { useNavigate } from 'react-router-dom';
-import { useQueryClient } from "react-query";
 
 const PostForm = () => {
   const { createPost } = useCreatePost();

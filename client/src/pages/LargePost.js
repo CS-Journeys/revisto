@@ -7,6 +7,8 @@ const NormalPost = ({ post, onEdit }) => {
   const { deletePost } = useDeletePost();
   const nav = useNavigate();
 
+  const date = new Date(post.dateCreated).toDateString();
+
   const onDelete = () => {
     deletePost(post._id, {
       onSuccess: () => {
@@ -21,6 +23,7 @@ const NormalPost = ({ post, onEdit }) => {
         {post.title}
       </h1>
       <p style={{ whiteSpace: "pre-wrap" }}>{post.content}</p>
+      <span><strong>{date}</strong></span>
       {post.isMine ? (
         <div className="w-100 d-flex justify-content-end">
           <button className="btn btn-primary mr-2" onClick={onEdit}>
@@ -39,6 +42,7 @@ const EditablePost = ({ post, onCancel }) => {
   const [title, setTitle] = useState(post.title);
   const [content, setContent] = useState(post.content);
 
+  const date = post.dateCreated;
   const textRef = useRef();
 
   const { updatePost } = useUpdatePost();
