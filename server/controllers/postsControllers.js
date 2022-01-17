@@ -1,20 +1,21 @@
 import Post from "../models/postModel.js";
 
+const REVERSE_DATE_SORT = {dateCreated : -1};
+
 // Gets all posts
-var mySort = {dateCreated : -1};
-export const getPosts = (req, res) => {
+export const getPosts = async (req, res) => {
   const before = new Date(req.query.before);
   const query = req.query.before ? { "dateCreated": { "$lt": before } } : {};
-  Post.find(query, 'title content dateCreated').sort(mySort).limit(20).select().exec((err, posts) => {
+  Post.find(query, 'title content dateCreated').sort(REVERSE_DATE_SORT).limit(20).select().exec((err, posts) => {
     if (err) {
       return res.json({ err: "ERROR" });
     }
     res.json({ posts });
   });
-};
+}
 
 // Gets post by id (uses req.params.id)
-export const getPost = (req, res) => {
+export const getPost = async (req, res) => {
   Post.findById(req.params.id, "title content dateCreated user", (err, post) => {
     if (err) {
       return res.json({ err: "NOTAPOST" });
@@ -26,25 +27,21 @@ export const getPost = (req, res) => {
     delete modPost.user;
     res.json({ post:modPost });
   });
-};
+}
 
 // Gets all of cur user's posts
-export const getUserPosts = (req, res) => {
-  Post.find(
-    { user: req.user._id },
-    "title content dateCreated",
-    (err, posts) => {
-      if (err) {
-        return res.json({ err: "ERROR" });
-      }
-      res.json({ posts });
+export const getUserPosts = async (req, res) => {
+  Post.find({ user: req.user._id }, "title content dateCreated").sort(REVERSE_DATE_SORT).exec((err, posts) => {
+    if (err) {
+      return res.json({ err: "ERROR" });
     }
-  );
-};
+    res.json({ posts });
+  });
+}
 
 // Creates a new post with the request body
 // req.body has title and content
-export const createPost = (req, res) => {
+export const createPost = async (req, res) => {
   
   // Check if it's been a day since the last post by checking User.lastPost
   if (req.user.lastPost) {
@@ -56,7 +53,7 @@ export const createPost = (req, res) => {
       return res.json({ err: "TOOFAST" });
     }
   };
-  
+
   let newPost = new Post(req.body);
   newPost.user = req.user._id;
   newPost.save((err, post) => {
@@ -65,30 +62,9 @@ export const createPost = (req, res) => {
     }
     res.json({ status: "Success", id: post._id });
   });
-};
+}
 
-// Deletes the post of the given id (uses req.params.id)
-export const deletePost = (req, res) => {
-  Post.findById(req.params.id, (err, post) => {
-    if (err) {
-      return res.json({ err: "BADQUERY" });
-    }
-    if (!post) {
-      return res.json({ err:"NOTAPOST"});
-    }
-    if (post.user != req.token.userId) {
-      return res.json({ err: "NOTAUTHOR" });
-    }
-    post.remove((err, post) => {
-      if (err) {
-        return res.json({ err: "ERROR" });
-      }
-      res.json({ status: "Success" });
-    });
-  });
-};
-
-export const updatePost = (req, res) => {
+export const deletePost = async (req, res) => {
   Post.findById(req.params.id, (err, post) => {
     if (err) {
       return res.json({ err: "BADQUERY" });
@@ -96,17 +72,31 @@ export const updatePost = (req, res) => {
     if (!post) {
       return res.json({ err: "NOTAPOST" });
     }
-    if (post.user != req.token.userId) {
-      return res.json({ err: "NOTAUTHOR" });
+    if ((req.ifOwn && post.user == req.user._id) || !req.ifOwn) {
+      Post.deleteOne({ _id: post._id });
     }
-    if (req.body.title) { post.title = req.body.title; }
-    if (req.body.content) { post.content = req.body.content; }
-    post.save((err, newpost) => {
-      if (err) {
-        return res.json({ err: "ERROR" });
-      }
-      res.json({ status: "Success" });
-    });
+    res.json({ status: "Success" });
+  });
+}
+
+export const updatePost = async (req, res) => {
+  Post.findById(req.params.id, (err, post) => {
+    if (err) {
+      return res.json({ err: "BADQUERY" });
+    }
+    if (!post) {
+      return res.json({ err: "NOTAPOST" });
+    }
+    if ((req.ifOwn && post.user == req.user._id) || !req.ifOwn) {
+      if (req.body.title) { post.title = req.body.title; }
+      if (req.body.content) { post.content = req.body.content; }
+      post.save((err) => {
+        if (err) {
+          return res.json({ err: "ERROR" });
+        }
+        res.json({ status: "Success" });
+      });
+    }
   });
 }
 

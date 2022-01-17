@@ -28,8 +28,6 @@ class PermissionsManager {
     let route = req.route;
     let userType = req.user.userType;
     let method = req.method;
-    let userId = req.user._id;
-    let subjectOwner = req.subjectOwner;
 
     let isAllowed = false;
 
@@ -44,10 +42,8 @@ class PermissionsManager {
     } else if (userPermissions[route][method] == "yes") {
       isAllowed = true;
     } else if (userPermissions[route][method] == "if_own") {
-      console.error(`TODO: implement if_own`);
-      isAllowed = true; //  I'm letting them through till it's implemented.
-                        // Don't worry. I have guards on the actual routes. 
-                        // -Brendon
+      isAllowed = true;
+      req.ifOwn = true;
     }
 
     if (isAllowed) {
