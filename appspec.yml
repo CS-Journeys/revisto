@@ -4,7 +4,9 @@ os: linux
 files:
   - source: server
     destination: /home/ubuntu/revisto/server
-  - source: client
+  - source: client/build
+    destination: /home/ubuntu/revisto/client
+  - source: client/error_pages
     destination: /home/ubuntu/revisto/client
 
 permissions:
@@ -18,9 +20,14 @@ hooks:
  BeforeInstall:
     - location: scripts/before_install.sh
       timeout: 300
-      runas: root
+      runas: ubuntu
+
+  AfterInstall:
+    - location: scripts/after_install.sh
+      timeout: 300
+      runas: ubuntu
 
  ApplicationStart:
     - location: scripts/app_start.sh
       timeout: 300
-      runas: root
+      runas: ubuntu

@@ -26,6 +26,7 @@ phases:
 artifacts:
   files:
     - server/**/*
-    - client/**/*
+    - client/build/**/*
+    - client/error_pages/**/*
     - scripts/**/*
     - appspec.yml

@@ -1,2 +1,3 @@
 #!/bin/bash
-pm2 start /home/ubuntu/ecosystem.json
+cd /home/ubuntu/revisto/server
+pm2 start index.js --name "Revisto Backend"
