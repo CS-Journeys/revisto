@@ -28,4 +28,4 @@ artifacts:
     - server/**/*
     - client/**/*
     - scripts/**/*
-    - appspec.yaml
+    - appspec.yml
