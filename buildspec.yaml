@@ -27,3 +27,5 @@ artifacts:
   files:
     - server/**/*
     - client/**/*
+    - scripts/**/*
+    - appspec.yaml
