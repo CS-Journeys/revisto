@@ -6,11 +6,11 @@ phases:
       - echo Installing dependencies
       #installs server dependencies
       - cd server
-      - npm install
+      - npm install -f
       - cd ..
       #installs client dependencies
       - cd client
-      - npm install
+      - npm install -f
       - cd ..
   build:
     commands:
