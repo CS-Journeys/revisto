@@ -24,7 +24,7 @@ const Register = () => {
   };
 
   return (
-    <main className="form-signin text-center">
+    <main className="form text-center">
       <form onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
         {error && (

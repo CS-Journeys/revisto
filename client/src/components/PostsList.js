@@ -1,10 +1,8 @@
 import React from "react";
 import Post from "./Post";
 
-import { usePosts } from "../hooks/api";
-
-const PostsList = (props) => {
-  const {posts} = usePosts();
+const PostsList = ({ postFunc }) => {
+  const { posts } = postFunc;
 
   return (
     <div className="row d-flex justify-content-center">
