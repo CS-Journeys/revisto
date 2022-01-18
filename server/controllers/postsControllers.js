@@ -65,7 +65,7 @@ export const createPost = async (req, res) => {
 }
 
 export const deletePost = async (req, res) => {
-  Post.findById(req.params.id, (err, post) => {
+  Post.findById(req.params.id, async (err, post) => {
     if (err) {
       return res.json({ err: "BADQUERY" });
     }
@@ -75,7 +75,7 @@ export const deletePost = async (req, res) => {
     if (req.ifOwn && post.user.toString() != req.user._id) {
       return res.json({ err: "FORBIDDEN" });
     }
-    Post.deleteOne({ _id: post._id });
+    await Post.deleteOne({ _id: post._id });
     res.json({ status: "Success" });
   });
 }
