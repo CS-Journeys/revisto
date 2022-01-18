@@ -6,9 +6,20 @@
 # config
 **/.env
 
+# IDE
 .vscode
 
+# test
 **/coverage
 
 # build
 **/build
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
