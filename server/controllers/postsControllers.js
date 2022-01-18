@@ -72,9 +72,10 @@ export const deletePost = async (req, res) => {
     if (!post) {
       return res.json({ err: "NOTAPOST" });
     }
-    if ((req.ifOwn && post.user == req.user._id) || !req.ifOwn) {
-      Post.deleteOne({ _id: post._id });
+    if (req.ifOwn && post.user.toString() != req.user._id) {
+      return res.json({ err: "FORBIDDEN" });
     }
+    Post.deleteOne({ _id: post._id });
     res.json({ status: "Success" });
   });
 }
@@ -87,16 +88,17 @@ export const updatePost = async (req, res) => {
     if (!post) {
       return res.json({ err: "NOTAPOST" });
     }
-    if ((req.ifOwn && post.user == req.user._id) || !req.ifOwn) {
-      if (req.body.title) { post.title = req.body.title; }
-      if (req.body.content) { post.content = req.body.content; }
-      post.save((err) => {
-        if (err) {
-          return res.json({ err: "ERROR" });
-        }
-        res.json({ status: "Success" });
-      });
+    if (req.ifOwn && post.user.toString() != req.user._id) {
+      return res.json({ err: "FORBIDDEN" });
     }
+    if (req.body.title) { post.title = req.body.title; }
+    if (req.body.content) { post.content = req.body.content; }
+    post.save((err) => {
+      if (err) {
+        return res.json({ err: "ERROR" });
+      }
+      return res.json({ status: "Success" });
+    });
   });
 }
 
