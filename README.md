@@ -128,3 +128,5 @@ It's a bit harder to try out POST requests, but you can use a tool like [Postman
 The frontend server runs on port 3000. If you navigate to http://localhost:3000, the website's frontend code will get "served" or sent to the client (your web browser). The client will then run this code locally.
 
 As soon as the "PostLists" component is mounted, it gets all post data from the server via the GET http://localhost:5000/api/posts request. Then, it renders the title data of each post received.
+
+Test
