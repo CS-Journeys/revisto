@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useRef } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { usePost, useUpdatePost, useDeletePost } from "../hooks/api";
-import { useNavigate } from "react-router-dom";
+import ConfirmationModal from "../components/ConfirmationModal";
 
 const NormalPost = ({ post, onEdit }) => {
   const { deletePost } = useDeletePost();
@@ -29,9 +29,10 @@ const NormalPost = ({ post, onEdit }) => {
           <button className="btn btn-primary mr-2" onClick={onEdit}>
             Edit
           </button>
-          <button className="btn btn-secondary" onClick={onDelete}>
+          <ConfirmationModal style="secondary" confirmText="Delete"
+            body="Deleting is irreversible." title="Are you sure?" onConfirm={onDelete}>
             Delete
-          </button>
+          </ConfirmationModal>
         </div>
       ) : null}
     </div>
