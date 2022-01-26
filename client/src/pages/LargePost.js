@@ -6,7 +6,9 @@ import {
   useDeletePost,
   useReportPost,
 } from "../hooks/api";
+import MarkdownView from "react-showdown";
 import ConfirmationModal from "../components/ConfirmationModal";
+import MarkdownEditor from "../components/MarkdownEditor";
 
 const NormalPost = ({ post, onEdit }) => {
   const { deletePost } = useDeletePost();
@@ -38,7 +40,14 @@ const NormalPost = ({ post, onEdit }) => {
       <h1 className="display-4 text-center border border-top-0 border-left-0 border-right-0 border-dark">
         {post.title}
       </h1>
-      <p style={{ whiteSpace: "pre-wrap" }}>{post.content}</p>
+      <MarkdownView
+        markdown={post.content}
+        options={{
+          simpleLineBreaks: true,
+          openLinksInNewWindow: true,
+          emoji: true,
+        }}
+      />
       <span>
         <strong>{date}</strong>
       </span>
@@ -75,27 +84,19 @@ const NormalPost = ({ post, onEdit }) => {
 };
 
 const EditablePost = ({ post, onCancel }) => {
-  const [title, setTitle] = useState(post.title);
-  const [content, setContent] = useState(post.content);
-
-  const date = post.dateCreated;
-  const textRef = useRef();
-
   const { updatePost } = useUpdatePost();
-
+  const form = useRef();
+  
   useEffect(() => {
-    textRef.current.style.height = "1px";
-    textRef.current.style.height = `${textRef.current.scrollHeight}px`;
+    console.log(form.current);
+    form.current.content.value = post.content;
+    form.current.title.value = post.title;
   }, []);
 
-  const onType = (e) => {
-    setContent(e.target.value);
-    //resize textarea to fit content
-    e.target.style.height = "1px";
-    e.target.style.height = `${e.target.scrollHeight}px`;
-  };
-
   const onUpdate = (e) => {
+    e.preventDefault();
+    const content = e.target.content.value;
+    const title = e.target.title.value;
     updatePost(
       {
         id: post._id,
@@ -111,22 +112,15 @@ const EditablePost = ({ post, onCancel }) => {
   };
 
   return (
-    <div className="w-100 p-4 bg-light shadow-sm">
+    <form ref={form} onSubmit={onUpdate} className="w-100 p-4 bg-light shadow-sm">
       <input
         className="mb-2 bg-light text-center border border-top-0 border-left-0 border-right-0 border-dark w-100 display-4"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        name="title"
       />
-      <textarea
-        ref={textRef}
-        className="w-100 bg-light overflow-hidden"
-        style={{ resize: "none" }}
-        value={content}
-        onChange={onType}
-      />
+      <MarkdownEditor/>
       {post.isMine ? (
         <div className="w-100 d-flex justify-content-end">
-          <button className="btn btn-primary mr-2" onClick={onUpdate}>
+          <button className="btn btn-primary mr-2" type="submit">
             Save
           </button>
           <button className="btn btn-secondary" onClick={onCancel}>
@@ -134,7 +128,7 @@ const EditablePost = ({ post, onCancel }) => {
           </button>
         </div>
       ) : null}
-    </div>
+    </form>
   );
 };
 

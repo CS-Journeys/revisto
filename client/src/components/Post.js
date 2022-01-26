@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-
+import MarkdownView from "react-showdown";
 /*
  * Each Post in the databse has:
  *  _id: id of the collection
@@ -25,7 +25,18 @@ const Post = ({ post }) => {
       <div className="card">
         <div className="card-header">{post.title}</div>
         <div className="card-body">
-          {post.content ? content : "No Content Found."}
+          {post.content ? (
+            <MarkdownView
+              markdown={post.content}
+              options={{
+                simpleLineBreaks: true,
+                openLinksInNewWindow: true,
+                emoji: true,
+              }}
+            />
+          ) : (
+            "No Content Found."
+          )}
         </div>
         <div className="card-footer">
           <Link className="footer-link" to={{ pathname: url, state: { post } }}>
