@@ -2,13 +2,30 @@ import SimpleMDE from "react-simplemde-editor";
 import MarkdownView from "react-showdown";
 import ReactDOMServer from "react-dom/server";
 import "easymde/dist/easymde.min.css";
+import { useState, useCallback, useRef } from "react";
 
-const MarkdownEditor = () => {
+const MarkdownEditor = ({ initial = "" }) => {
+  const [value, setValue] = useState(initial);
+  const [cursor, setCursor] = useState(0);
+  const ref = useRef();
+  const onChange = useCallback((value) => {
+    setValue(value);
+    //Set cursor to where it currently is.
+    setCursor(ref.current.selectionStart);
+  }, []);
   return (
     <SimpleMDE
+      ref={ref}
+      value={value}
       name="content"
       id="content"
+      onChange={onChange}
+      onFocus={(e) => {
+        e.target.selectionStart = cursor;
+      }
+      }
       options={{
+        autofocus: true,
         forceSync: true,
         spellChecker: false,
         toolbar: [
@@ -35,6 +52,6 @@ const MarkdownEditor = () => {
       }}
     />
   );
-}
+};
 
 export default MarkdownEditor;

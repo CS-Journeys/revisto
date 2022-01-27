@@ -88,8 +88,6 @@ const EditablePost = ({ post, onCancel }) => {
   const form = useRef();
   
   useEffect(() => {
-    console.log(form.current);
-    form.current.content.value = post.content;
     form.current.title.value = post.title;
   }, []);
 
@@ -117,7 +115,7 @@ const EditablePost = ({ post, onCancel }) => {
         className="mb-2 bg-light text-center border border-top-0 border-left-0 border-right-0 border-dark w-100 display-4"
         name="title"
       />
-      <MarkdownEditor/>
+      <MarkdownEditor initial={ post.content}/>
       {post.isMine ? (
         <div className="w-100 d-flex justify-content-end">
           <button className="btn btn-primary mr-2" type="submit">
