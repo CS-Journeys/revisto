@@ -142,6 +142,13 @@ h2 {
     background-color: var(--clr-white);
 }
 
+.c-body-dim {
+    max-height: 10vh;
+    min-height: 10vh;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}
+
 .card-footer {
     padding-top: 0px;
     background-color: var(--clr-white);

@@ -15,16 +15,13 @@ const Post = ({ post }) => {
       .toDateString()
       .slice(0, -5);
   };
-  let content = post.content.slice(0, 150);
-  if (content.length < post.content.length) {
-    content += "...";
-  }
+
   const url = `/post/${post._id}`;
   return (
     <div className="col-md-5">
       <div className="card">
         <div className="card-header">{post.title}</div>
-        <div className="card-body">
+        <div className="card-body c-body-dim">
           {post.content ? (
             <MarkdownView
               markdown={post.content}
