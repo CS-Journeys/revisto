@@ -1,0 +1,46 @@
+/* Forms */
+.custom-form {
+    background: var(--clr-white);
+    max-width: var(--fixed-width);
+    margin: 0 auto;
+    margin-bottom: 4rem;
+    padding: 1rem 2rem;
+    border-radius: var(--radius);
+}
+
+/* NOTE: This is overriding Bootstrap, which
+    can have unexpected effects !!  */
+.form input {
+    background: var(--clr-grey-6);
+    border-color: transparent;
+    border-radius: var(--radius);
+    padding: 0.25rem 0.5rem;
+}
+.cf-control {
+    margin: 0.5rem 0rem;
+    display: grid;
+    grid-template-columns: 100px 1fr;
+    align-items: center;
+    padding-bottom: 3rem;
+}
+
+.custom-form button, .btn-custom {
+    display: inline-block;
+    background: var(--clr-primary-2);
+    color: var(--clr-white);
+    border-color: transparent;
+    margin-top: 1rem;
+    padding: 0.15rem 0.25rem;
+    text-transform: capitalize;
+    border-radius: var(--radius);
+    cursor: pointer;
+}
+
+.custom-form button:hover, .btn-custom:hover {
+    background: var(--clr-primary-1);
+    color: var(--clr-white);
+}
+
+.form-floating>.form-control {
+    padding: 1rem .75rem
+}

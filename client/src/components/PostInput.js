@@ -17,7 +17,7 @@ const PostInput = (props) => {
             <Link className="cp-link" to={linkTo}>
               <input
                 type="text"
-                className="form-control cp-input"
+                className="form-control cf-control cp-input"
                 placeholder="Say something about your day..."
                 aria-label="create-post"
               />

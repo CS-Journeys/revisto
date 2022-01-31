@@ -8,11 +8,14 @@ const MarkdownEditor = ({ initial = "" }) => {
   const [value, setValue] = useState(initial);
   const [cursor, setCursor] = useState(0);
   const ref = useRef();
+
   const onChange = useCallback((value) => {
     setValue(value);
     //Set cursor to where it currently is.
     setCursor(ref.current.selectionStart);
   }, []);
+
+
   return (
     <SimpleMDE
       ref={ref}
@@ -31,12 +34,11 @@ const MarkdownEditor = ({ initial = "" }) => {
         toolbar: [
           "bold",
           "italic",
-          "heading",
           "|",
           "unordered-list",
           "ordered-list",
-          "preview",
         ],
+        
         previewRender(text) {
           return ReactDOMServer.renderToString(
             <MarkdownView

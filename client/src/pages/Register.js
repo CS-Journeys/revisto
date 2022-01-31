@@ -24,7 +24,7 @@ const Register = () => {
   };
 
   return (
-    <main className="form text-center">
+    <main className="form custom-form text-center">
       <form onSubmit={handleSubmit}>
         <h1>Sign Up</h1>
         {error && (
@@ -34,7 +34,7 @@ const Register = () => {
         )}
         <div className="form-floating">
           <input
-            className="form-control"
+            className="form-control cf-control"
             type="email"
             placeholder="Email"
             name="email"
@@ -43,7 +43,7 @@ const Register = () => {
         </div>
         <div className="form-floating">
           <input
-            className="form-control"
+            className="form-control cf-control"
             type="password"
             placeholder="Password"
             name="password"
@@ -52,7 +52,7 @@ const Register = () => {
         </div>
         <div className="form-floating">
           <input
-            className="form-control"
+            className="form-control cf-control"
             type="password"
             placeholder="Confirm Password"
             name="confirm"

@@ -26,14 +26,14 @@ const LoginForm = () => {
   };
 
   return (
-    <div className="form">
-      <form onSubmit={handleSubmit}>
+    <div className="form custom-form">
+      <form onSubmit={handleSubmit} className="login-form">
         <h1>Login</h1>
-        <div className="form-control">
+        <div className="form-control cf-control">
           <label htmlFor="email">Email: </label>
           <input type="text" id="email" name="email" />
         </div>
-        <div className="form-control">
+        <div className="form-control cf-control">
           <label htmlFor="password">Password: </label>
           <input
             type={showPass ? "text" : "password"}

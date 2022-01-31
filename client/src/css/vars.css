@@ -1,0 +1,52 @@
+/*--Variables--*/
+:root {
+    /* Main Theme Colors */
+    --clr-primary-1: #116c82;
+    --clr-primary-2: #679db6;
+    --clr-secondary-1: #f5a61c;
+
+    /* Grey Background Colors */
+    --bg-gr-1: #bcbdc0;
+    --bg-gr-2: #b2cad3;
+    --card-body: #5e5e5e;
+
+    /* Standard Colors */
+    --clr-black: #000;
+    --clr-black-1: #222;
+    --clr-white: #fff;
+
+    --clr-grey-1: hsl(210, 22%, 49%);
+    --clr-grey-2: hsl(209, 23%, 60%);
+    --clr-grey-3: hsl(211, 27%, 70%);
+    --clr-grey-4: hsl(210, 31%, 80%);
+    --clr-grey-5: hsl(212, 33%, 89%);
+    --clr-grey-6: hsl(210, 36%, 96%);
+
+    --spacing: 0.1rem;
+    --radius: 0.25rem;
+    --fixed-width: 450px;
+
+    --box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.1);
+}
+
+/*--Font--*/
+@font-face {
+    font-family: "Bebas";
+    src: url(./bebas/Bebas-Regular.ttf);
+    
+    font-family: "RobotoCondensed";
+    src: url(./roboto-condensed/RobotoCondensed-Light.ttf);
+}
+
+body {
+    font-family: "Bebas";
+    background-color: var(--clr-grey-6);
+}
+
+a, a:hover {
+  color: var(--clr-primary-2);
+}
+
+h2 {
+    letter-spacing: 3px;
+}

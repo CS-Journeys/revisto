@@ -15,6 +15,7 @@ const queryClient = new QueryClient({
     },
   },
 });
+
 // Load React App
 ReactDOM.render(
   <QueryClientProvider client={queryClient}>

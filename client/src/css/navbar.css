@@ -1,0 +1,52 @@
+/*---Navbar---*/
+.navbar {
+    font-family: "Bebas";
+    font-size: large;
+    box-shadow: var(--box-shadow);
+    top: 0;
+    left: 0;
+    position: fixed;
+    z-index: 1000; /* sets navbar on top*/
+
+    width: 100%;
+}
+
+.nav-bg a {
+    color: var(--clr-black);
+}
+
+.nav-bg a:hover {
+    color: var(--clr-primary-1);
+}
+
+.nav-link h4, .nav-link span {
+    color: var(--clr-black);
+}
+
+.nav-link h4:hover, 
+    .nav-link span:hover {
+    color: var(--clr-primary-1);
+}
+
+.nav-logo {
+    width: 15%;
+    height: auto;
+    margin: 0.5vw;
+}
+
+.navbar-left {
+    margin-right: auto;
+    margin-top: 1.3vh;
+}
+
+.navbar-right {
+    margin-left: auto;
+}
+
+.nav-control {
+    margin-bottom: 10vh;
+}
+
+.nav-bg {
+    background-color: var(--clr-white);
+}
