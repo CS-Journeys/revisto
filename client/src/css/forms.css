@@ -11,11 +11,14 @@
 /* NOTE: This is overriding Bootstrap, which
     can have unexpected effects !!  */
 .form input {
-    background: var(--clr-grey-6);
-    border-color: transparent;
     border-radius: var(--radius);
     padding: 0.25rem 0.5rem;
+    border-color: var(--clr-primary-2);
 }
+.form textarea {
+    border-color: var(--clr-primary-2);
+}
+
 .cf-control {
     margin: 0.5rem 0rem;
     display: grid;
@@ -24,10 +27,11 @@
     padding-bottom: 3rem;
 }
 
-.custom-form button, .btn-custom {
+.form button {
     display: inline-block;
     background: var(--clr-primary-2);
     color: var(--clr-white);
+
     border-color: transparent;
     margin-top: 1rem;
     padding: 0.15rem 0.25rem;
@@ -36,7 +40,7 @@
     cursor: pointer;
 }
 
-.custom-form button:hover, .btn-custom:hover {
+.form button:hover {
     background: var(--clr-primary-1);
     color: var(--clr-white);
 }

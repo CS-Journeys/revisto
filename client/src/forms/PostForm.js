@@ -1,7 +1,6 @@
 import React from "react";
 import { useCreatePost } from "../hooks/api";
 import { useNavigate } from "react-router-dom";
-import MarkdownEditor from "../components/MarkdownEditor";
 
 const PostForm = () => {
   const { createPost } = useCreatePost();
@@ -25,17 +24,17 @@ const PostForm = () => {
     }
   };
 
-  return (<div className="container bg-white">
+  return (<div className="form">
         <form onSubmit={handleSubmit}>
           <h1>Create Post</h1>
           <input className="form-control form-control-lg" type="text" placeholder="Title" id="title" name="title" />
           
           <div className="form-group">
-              <label htmlFor="content">What's Happening?</label>
-              <MarkdownEditor />
+            <label htmlFor="content">What's Happening?</label>
+            <textarea className="form-control" type="text" id="content" name="content"></textarea>
           </div>
 
-          <button className="btn-custom" type="submit">Submit</button>
+          <button className="w-10" type="submit">Submit</button>
         </form> 
       </div>);
 };

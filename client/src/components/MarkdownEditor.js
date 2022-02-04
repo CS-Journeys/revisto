@@ -15,7 +15,6 @@ const MarkdownEditor = ({ initial = "" }) => {
     setCursor(ref.current.selectionStart);
   }, []);
 
-
   return (
     <SimpleMDE
       ref={ref}

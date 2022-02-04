@@ -3,13 +3,9 @@
     text-decoration: none;
 }
 
-.c-post {
-    border: 2px solid var(--clr-primary-2);
-}
-
 .cp-input {
+    border: 2px solid var(--clr-primary-2);
     padding-top: 3vh;
-    background-color: var(--clr-grey-6);
 }
 
 .cp-input:hover {

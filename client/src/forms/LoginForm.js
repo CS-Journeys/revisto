@@ -29,16 +29,20 @@ const LoginForm = () => {
     <div className="form custom-form">
       <form onSubmit={handleSubmit} className="login-form">
         <h1>Login</h1>
-        <div className="form-control cf-control">
-          <label htmlFor="email">Email: </label>
-          <input type="text" id="email" name="email" />
+        <div className="form-floating">
+          <input type="text" 
+            id="email"
+            name="email" 
+            className="form-control cf-control"
+            placeholder="Email" />
         </div>
-        <div className="form-control cf-control">
-          <label htmlFor="password">Password: </label>
+        <div className="form-floating">
           <input
             type={showPass ? "text" : "password"}
             id="password"
             name="password"
+            className="form-control cf-control"
+            placeholder="Password"
           />
         </div>
         <div>

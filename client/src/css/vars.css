@@ -31,22 +31,33 @@
 
 /*--Font--*/
 @font-face {
-    font-family: "Bebas";
-    src: url(./bebas/Bebas-Regular.ttf);
-    
-    font-family: "RobotoCondensed";
-    src: url(./roboto-condensed/RobotoCondensed-Light.ttf);
+  font-family: "Bebas";
+  src: url(./bebas/Bebas-Regular.ttf);
+}
+
+@font-face {
+  font-family: "RobotoCondensed";
+  src: url(./roboto-condensed/RobotoCondensed-Regular.ttf);
+}
+
+@font-face {
+  font-family: "RobotoLight";
+  src: url(./roboto-condensed/RobotoCondensed-Light.ttf);
 }
 
 body {
-    font-family: "Bebas";
-    background-color: var(--clr-grey-6);
+  font-family: "RobotoCondensed";
+  background-color: var(--clr-grey-6);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: "Bebas";
+}
+
+p {
+  font-family: "RobotoLight";
 }
 
 a, a:hover {
   color: var(--clr-primary-2);
-}
-
-h2 {
-    letter-spacing: 3px;
 }
