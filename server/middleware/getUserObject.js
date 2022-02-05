@@ -2,12 +2,14 @@ import User from '../models/userModel.js';
 
 const getUserObject = async (req, res, next) => {
   if (req.token) {
-    await User.findById(req.token.userId).then(user => {
+    const user = await User.findById(req.token.userId).exec();
+    if (user) {
       req.user = user;
-    });
-  } else {
-    req.user = { userType: 'guest' };
+      return next();
+    }
   }
+  
+  req.user = { userType: 'guest' };
   next();
 }
 

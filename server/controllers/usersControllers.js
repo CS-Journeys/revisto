@@ -1,141 +1,76 @@
 import passport from "passport";
-import { PasswordErrorCheck, validateEmail } from "../utils/sec.js";
+import createHttpError from "http-errors";
+import asyncHandler from "express-async-handler";
+
 import User from "../models/userModel.js";
-import { createJWT, verifyJWT } from "../auth/jwtAuth.js";
-import {SendPasswordReset} from "../utils/email.js";
+import { createJWT, verifyJWT } from "../utils/jwtAuth.js";
+import { SendPasswordReset } from "../utils/email.js";
+import { validateEmail, validatePassword } from "../utils/validator.js";
 
 // Get the current user
-export const me = async (req, res) => {
-  res.json({user:req.user});
-};
+export const me = asyncHandler(async (req, res) => {
+  res.json({ user: req.user });
+});
 
-export const register = async (req, res) => {
-  if (req.user.userType != "guest") {
-    return res.redirect("/");
-  }
+// Register a new user
+export const register = asyncHandler(async (req, res) => {
+  const { email, password, region } = req.body;
 
-  const { email, password, region} = req.body;
+  validateEmail(email);
+  validatePassword(password);
 
-  // Validate email and password
-  if (!email || !password) {
-    return res.json({ err: "Email and password required"});
-  }
-  const PswdError = PasswordErrorCheck(password);
-  if (PswdError!=="") {
-    return res.json({ err: PswdError });
-  }
-  if (!validateEmail(email)) {
-    return res.json({ err: "Invalid email" });
-  }
   const user = new User({ email, region });
-  User.register(user, password, (err, user) => {
-    if (err) {
-      return res.json({err: "Email already taken"});
-    }
-    res.json({status: "Success"});
-  });
-};
+  await User.register(user, password);
 
-// Logs in the user (uses req.body.email and req.body.password)
-export const login = async (req, res) => {
-  if (req.user.userType != "guest") {
-    return res.redirect("/");
-  }
+  res.end();
+});
+
+// Log in the user
+export const login = asyncHandler(async (req, res, next) => {
   passport.authenticate('local', function (err, user, info) {
-    if (err) {
-      return res.json({ err: "INVALID" });
-    } else {
-      if (!user) {
-        return res.json({ err: "INCORRECTLOGIN" });
-      } else {
-        req.login(user, function (err) {
-          if (err) {
-            return res.json({ err: "BADLOGIN" });
-          } else {
-            const token = createJWT({userId:user._id});
-            //Set the bearer token and redirect to the home page
-            return res.json({ token });
-          }
-        });
-      }
-    }
-  })(req,res);
-};
+    if (err) return next(createHttpError(400, "Bad Request"));
+    if (!user) return next(createHttpError(400, "Incorrect login"));
 
-export const updateUser = async (req, res) => {
-  if (req.body.region) req.user.region = req.body.region;
-  if (req.body.language) req.user.language = req.body.language;
-  req.user.save((err) => {
-    if (err) {
-      res.json({ err: "CANTSAVE" });
-    } else {
-      res.json({ status: "Success" });
-    }
-  });
-};
+    const token = createJWT({ userId: user._id }, '24h');
+    res.json({ token });
+  })(req, res, next);
+});
 
-export const deleteUser = async (req, res) => {
-  User.findByIdAndRemove(req.user._id, (err) => {
-    if (err) {
-      res.json({ err: "NOUSER" });
-    } else {
-      res.json({ status: "Success" });
-    }
-  });
-};
+// Update the current user's data
+export const updateUser = asyncHandler(async (req, res) => {
+  let user = req.user;
+  if (req.body.region) user.region = req.body.region;
+  if (req.body.language) user.language = req.body.language;
 
-export const requestPasswordReset = async (req, res) => {
-  if (!req.body.email) {
-    return res.json({ err: "NOEMAIL" });
-  }
-  User.findOne({ email: req.body.email }, async (err, user) => {
-    if (err) {
-      res.json({ err: "BADQUERY" });
-    } else {
-      if (!user) {
-        res.json({ status: "Success" });
-      } else {
-        const token = createJWT({userId: user._id});
-        SendPasswordReset(user.email, token)
-          .then(() => {
-            res.json({ status: "Success" });
-          })
-          .catch((err) => {
-            res.json({ err: "INTERNAL" });
-            console.log(err);
-          });
-      }
-    }
-  });
-};
+  await user.save();
 
-export const resetPassword = async (req, res) => {
-  // has req.body.token and req.body.password
-  verifyJWT(req.body.token).then(({ userId }) => {
-    User.findById(userId, (err, user) => {
-      if (err) {
-        res.json({ err: "BADQUERY" });
-      } else {
-        if (!user) {
-          res.json({ err: "NOTAUSER" });
-        } else {
-          user.setPassword(req.body.password, (err) => {
-            if (err) {
-              res.json({ err: "BADPASSWORD" });
-            } else {
-              user.save((err) => {
-                if (err) {
-                  res.json({ err: "CANTSAVE" });
-                } else {
-                  res.json({ status: "Success" });
-                }
-              });
-            }
-          });
-        }
-      }
-    });
-  }).catch(err => {
-    res.json({ err: "BADTOKEN" });
-  });
-};
+  res.end();
+});
+
+// Delete the current user from the db
+export const deleteUser = asyncHandler(async (req, res) => {
+  await User.findByIdAndRemove(req.user._id).exec();
+
+  res.status(204).end();
+});
+
+// Request a password reset for the given email address
+export const requestPasswordReset = asyncHandler(async (req, res) => {
+  const user = await User.findOne({ email: req.body.email }).exec();
+  const token = createJWT({ userId: user._id }, '2h');
+
+  await SendPasswordReset(user.email, token);
+
+  res.end();
+});
+
+// Reset the password for the user with the given token
+export const resetPassword = asyncHandler(async (req, res) => {
+  const userId = await verifyJWT(req.body.token);
+  const user = await User.findById(userId).exec();
+
+  user.setPassword(req.body.password);
+  await user.save();
+
+  res.end();
+});

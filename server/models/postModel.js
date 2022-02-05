@@ -4,13 +4,13 @@ import mongoose from 'mongoose';
 const Schema = mongoose.Schema;
 
 const PostSchema = new Schema({
-  title: {type: String, required: true},
-  content: {type: String, required: true},
-  user: { type: Schema.Types.ObjectId, ref: "users", required: true },
+  title: { type: String, required: true },
+  content: { type: String, required: true },
+  user: { type: Schema.Types.ObjectId, ref: 'users', required: true },
   dateCreated: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
-  reportCount: { type:Number, default: 0 },
-  reports: {type:[String], default:[]},
+  reportCount: { type: Number, default: 0 },
+  reports: { type: [String], default: [] }
 });
 
 // Update dateUpdated on save

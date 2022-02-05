@@ -1,23 +1,14 @@
 import Post from "../models/postModel.js";
+import asyncHandler from "express-async-handler";
 
-export const getPost = async (req, res) => {
-  Post.findById(req.params.id, (err, post) => {
-    if (err) {
-      return res.json({ err: "BADQUERY" });
-    }
-    if (!post) {
-      return res.json({ err: "NOTAPOST" });
-    }
-    res.json({post});
-  });
-};
+// Get post by id
+export const getPost = asyncHandler(async (req, res) => {
+  const post = await Post.findById(req.params.id).exec();
+  res.json({ post });
+});
 
-export const getReportedPosts = async (req, res) => {
-  //Get posts where reportCount > 0 and sort by reportCount from highest to lowest
-  Post.find({ reportCount: { $gt: 0 } }).sort({ reportCount: -1 }).exec((err, posts) => {
-    if (err) {
-      return res.json({ err: "ERROR" });
-    }
-    res.json({ posts });
-  });
-}
+// Get reported posts where reportCount > 0 and sort by reportCount from highest to lowest
+export const getReportedPosts = asyncHandler(async (req, res) => {
+  const posts = await Post.find({ reportCount: { $gt: 0 } }).sort({ reportCount: -1 }).exec();
+  res.json({ posts });
+});
