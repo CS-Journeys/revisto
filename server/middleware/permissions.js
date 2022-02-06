@@ -1,5 +1,6 @@
 import { parse } from 'csv-parse/sync'; 
 import { readFileSync } from 'fs';
+import createHttpError from 'http-errors';
 
 const USER_TYPES = ["guest", "normal-user", "admin"];
 
@@ -9,7 +10,7 @@ class PermissionsManager {
 
   static config() {
     USER_TYPES.forEach(userType => {
-      const content = readFileSync("./auth/permissions/config/" + userType + ".csv").toString();
+      const content = readFileSync("./config/permissions/" + userType + ".csv").toString();
       const records = parse(content, {
         columns: true
       });
@@ -49,7 +50,7 @@ class PermissionsManager {
     if (isAllowed) {
       next();
     } else {
-      res.status(403).json({ err: "FORBIDDEN" });
+      throw createHttpError(403, "FORBIDDEN");
     }
   }
 }

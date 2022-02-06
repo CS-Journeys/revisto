@@ -1,0 +1,24 @@
+{
+  "logging": {
+    "dev": {
+      "console": {
+        "level": "debug",
+        "colorize": true
+      }
+    },
+    "prod": {
+      "console": {
+        "level": "warn",
+        "colorize": false
+      },
+      "file": {
+        "timestamp": true,
+        "json": false,
+        "filename": "logs/app.log",
+        "maxfiles": 5,
+        "maxsize": 10485760,
+        "level": "info"
+      }
+    }
+  }
+}

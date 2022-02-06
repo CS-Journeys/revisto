@@ -9,8 +9,7 @@ if (!("TOKEN_SECRET" in process.env)) {
 }
 
 // Creates a JSON Web Token with the secret key and given data.
-export const createJWT = (data) => {
-  const duration = '24h';
+export const createJWT = (data, duration) => {
   const token = jwt.sign(data, process.env.TOKEN_SECRET, {expiresIn: duration});
   
   return token;

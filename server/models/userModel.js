@@ -5,12 +5,17 @@ import passportLocalMongoose from 'passport-local-mongoose';
 const Schema = mongoose.Schema;
 
 const UserSchema = new Schema({
-  password: String,
-  email: String,
-  userType: { type: String, default: "normal-user" },
-  region: { type: String, default: "US" },
-  language: { type: String, default: "EN" },
-  lastPost: { type: Date, default: Date.now },
+  email: {
+    type: String,
+    required: true,
+    unique: true,
+    lowercase: true
+  },
+  password: { type: String },
+  userType: { type: String, default: 'normal-user' },
+  region: { type: String, default: 'US' },
+  language: { type: String, default: 'EN' },
+  lastPost: { type: Date, default: () => new Date(0) }
 });
 
 // Add passport-local-mongoose plug-in
