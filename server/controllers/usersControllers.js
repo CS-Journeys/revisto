@@ -4,7 +4,7 @@ import asyncHandler from "express-async-handler";
 
 import User from "../models/userModel.js";
 import { createJWT, verifyJWT } from "../utils/jwtAuth.js";
-import { SendPasswordReset } from "../utils/email.js";
+import { SendPasswordReset } from "../utils/email_old.js";
 import { validateEmail, validatePassword } from "../utils/validator.js";
 
 // Get the current user
