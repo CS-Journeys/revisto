@@ -119,7 +119,7 @@ class Email {
   }
 
   /**
-   * Ensure this email's fields are correctly set before being sent
+   * Ensures this email's fields are correctly set before the email gets sent
    * 
    * @returns {void}
    */
