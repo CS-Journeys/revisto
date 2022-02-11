@@ -20,9 +20,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
-app.use("/", requestLogger);
+app.use(requestLogger);
 app.use("/api", apiRoutes);
-app.use("/", errorLogger);
-app.use("/", errorController);
+app.use(errorLogger);
+app.use(errorController);
 
 export default app;
