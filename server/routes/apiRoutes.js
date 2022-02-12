@@ -11,10 +11,10 @@ import adminRoutes from "./api/adminRoutes.js";
 
 const router = express.Router();
 
-router.use("/", authenticate);
-router.use("/", getRoute);
-router.use("/", getUserObject);
-router.use("/", checkPermissions);
+router.use(authenticate);
+router.use(getRoute);
+router.use(getUserObject);
+router.use(checkPermissions);
 router.use("/posts", postRoutes);
 router.use("/users", userRoutes);
 router.use("/admin", adminRoutes);

@@ -132,13 +132,11 @@ class Email {
     if (this.#isHtml == null) throw new Error("isHtml is missing");
 
     // Ensure email addresses are valid
-    for (const address of this.#toAddresses) {
-      if (!validator.isEmail(address)) throw new Error(address + " is not a valid email address");
-    }
-    for (const address of this.#ccAddresses) {
-      if (!validator.isEmail(address)) throw new Error(address + " is not a valid email address");
-    }
-    for (const address of this.#bccAddresses) {
+    let addresses = [];
+    addresses.push(this.#toAddresses);
+    addresses.push(this.#ccAddresses);
+    addresses.push(this.#bccAddresses);    
+    for (const address of addresses) {
       if (!validator.isEmail(address)) throw new Error(address + " is not a valid email address");
     }
   }
