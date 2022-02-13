@@ -10,7 +10,7 @@ import LoginForm from "../forms/LoginForm";
  *  username: the email of the user
  *  region: region of the user
  *  language: language of the user
-*/
+ */
 
 const Login = () => {
     return (
