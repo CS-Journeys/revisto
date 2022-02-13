@@ -12,7 +12,7 @@ class Logger {
       this.generalLogger.add(new WinstonCloudwatch({
         cloudWatchLogs: new AWS.CloudWatchLogs(),
         logGroupName: "revisto-backend",
-        logStreamName: "logs starting from " + new Date().toISOString(),
+        logStreamName: new Date().toISOString().slice(0, 10),
       }));
     }
   }
