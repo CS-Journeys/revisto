@@ -45,6 +45,6 @@
     color: var(--clr-white);
 }
 
-.form-floating>.form-control {
-    padding: 1rem .75rem
+.form-floating > .form-control {
+    padding: 1rem 0.75rem;
 }

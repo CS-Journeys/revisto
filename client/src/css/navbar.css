@@ -19,12 +19,13 @@
     color: var(--clr-primary-1);
 }
 
-.nav-link h4, .nav-link span {
+.nav-link h4,
+.nav-link span {
     color: var(--clr-black);
 }
 
-.nav-link h4:hover, 
-    .nav-link span:hover {
+.nav-link h4:hover,
+.nav-link span:hover {
     color: var(--clr-primary-1);
 }
 

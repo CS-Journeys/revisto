@@ -8,32 +8,49 @@ import Navbar from "./components/Navbar";
 import CreatePost from "./pages/CreatePost";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import About from "./pages/About";
 
 import { useMe } from "./hooks/api";
 
-const App = () => {
-  const { user } = useMe();
+/**
+ * Main file for react component rendering
+ *
+ * @returns {JSX.Element} The website
+ */
 
-  return (
-    <div className="App container-fluid">
-      <div className="row d-flex justify-content-center">
-        <div className="col-lg-10">
-          <BrowserRouter>
-            <Navbar user={user} />
-            <br />
-            <Routes>
-              <Route path="/" element={<Home user={user} />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/post/:postId" element={<LargePost />} />
-              <Route path="/submit" element={<CreatePost user={user} />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/me" element={<Profile user={user} />} />
-            </Routes>
-          </BrowserRouter>
+const App = () => {
+    const { user } = useMe();
+
+    return (
+        <div className="App container-fluid">
+            <div className="row d-flex justify-content-center">
+                <div className="col-lg-10">
+                    <BrowserRouter>
+                        <Navbar user={user} />
+                        <br />
+                        <Routes>
+                            <Route path="/" element={<Home user={user} />} />
+                            <Route path="/login" element={<Login />} />
+                            <Route
+                                path="/post/:postId"
+                                element={<LargePost />}
+                            />
+                            <Route
+                                path="/submit"
+                                element={<CreatePost user={user} />}
+                            />
+                            <Route path="/about" element={<About />} />
+                            <Route path="/register" element={<Register />} />
+                            <Route
+                                path="/me"
+                                element={<Profile user={user} />}
+                            />
+                        </Routes>
+                    </BrowserRouter>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default App;
