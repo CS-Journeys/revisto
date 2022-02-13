@@ -29,7 +29,8 @@
     "passport-local-mongoose": "^6.1.0",
     "password-validator": "^5.2.1",
     "validator": "^13.7.0",
-    "winston": "^3.5.1"
+    "winston": "^3.5.1",
+    "winston-cloudwatch": "^3.1.1"
   },
   "devDependencies": {
     "@babel/plugin-transform-runtime": "^7.16.5",

@@ -1,9 +1,20 @@
-import winston from "winston";
+import winston, { loggers } from "winston";
+import WinstonCloudwatch from "winston-cloudwatch";
+import AWS from "aws-sdk";
+import { ENV } from "../constants.js";
+
+AWS.config.update({ region: "us-east-2" });
 
 class Logger {
 
   static config() {
-    // TODO: load config from file
+    if (ENV === "production") {
+      this.generalLogger.add(new WinstonCloudwatch({
+        cloudWatchLogs: new AWS.CloudWatchLogs(),
+        logGroupName: "revisto-backend",
+        logStreamName: "logs starting from " + new Date().toISOString(),
+      }));
+    }
   }
 
   static logFormat = winston.format.printf((info) => {
@@ -23,12 +34,17 @@ class Logger {
   static generalLogger = winston.createLogger({
     level: 'info',
     format: winston.format.combine(
-      winston.format.colorize(),
       winston.format.timestamp(),
       this.logFormat
     ),
     transports: [
-      new winston.transports.Console()
+      new winston.transports.Console({
+        format: winston.format.combine(
+          winston.format.colorize(),
+          winston.format.timestamp(),
+          this.logFormat
+        )
+      })
     ]
   });
 }
