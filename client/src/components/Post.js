@@ -1,15 +1,9 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import MarkdownView from "react-showdown";
-/*
- * Each Post in the databse has:
- *  _id: id of the collection
- *  title: title of the post
- *  content: content of the post
- *  dateCreated: date post was created
- */
 
 /**
+ * A post object in revisto.
  * @typedef Post
  * @type {Object}
  * @property {Number} _id - id of the collection

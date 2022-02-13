@@ -1,4 +1,4 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import { useQuery, useMutation, useQueryClient, Query } from "react-query";
 import axios from "axios";
 //====== USERS ======
 
@@ -6,7 +6,10 @@ const getAuthConfig = () => {
     const token = localStorage.getItem("token");
     return token ? { headers: { Authorization: `Bearer ${token}` } } : {};
 };
-
+/**
+ * useMe apiHook to get the current user data.
+ * @returns {Object} Query user data, isLoading, and error
+ */
 export const useMe = () => {
     const query = useQuery("me", async () => {
         const res = await axios.get("/users", getAuthConfig());

@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 /**
  * Component Navbar to be displayed at the top of the page in
  * all windows.
- * @param  {User} user           The current user logged in
+ * @param  {User} user       The current user logged in
  * @return {JSX.Element}     The updated Navbar
  */
 const Navbar = ({ user }) => {
@@ -36,7 +36,7 @@ const Navbar = ({ user }) => {
                         <Link className="nav-link" to="#">
                             <h4>Featured</h4>
                         </Link>
-                        <Link className="nav-link" to="#">
+                        <Link className="nav-link" to="/about">
                             <h4>About</h4>
                         </Link>
                     </div>

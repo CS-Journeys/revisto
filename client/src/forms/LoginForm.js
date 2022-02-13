@@ -3,10 +3,16 @@ import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/api";
 import { useNavigate } from "react-router-dom";
 
+// TODO: Add reset password button
+
+/**
+ * Login form component to be displayed on the login page.
+ *
+ * @returns {JSX.Element} The login form component to display
+ */
 const LoginForm = () => {
     const [showPass, setShowPass] = useState(false);
     const { login } = useLogin();
-
     const nav = useNavigate();
 
     const handleSubmit = (e) => {

@@ -2,6 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/api";
 
+/**
+ * React component for displaying the register page.
+ * @returns {JSX.Element} The register page.
+ */
 const Register = () => {
     const { register, error } = useRegister();
     const nav = useNavigate();

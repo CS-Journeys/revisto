@@ -8,13 +8,9 @@ import Navbar from "./components/Navbar";
 import CreatePost from "./pages/CreatePost";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
+import About from "./pages/About";
 
 import { useMe } from "./hooks/api";
-
-/**
- * A user object returned from the useMe API hook
- * @typedef {Object} User
- */
 
 /**
  * Main file for react component rendering
@@ -43,6 +39,7 @@ const App = () => {
                                 path="/submit"
                                 element={<CreatePost user={user} />}
                             />
+                            <Route path="/about" element={<About />} />
                             <Route path="/register" element={<Register />} />
                             <Route
                                 path="/me"

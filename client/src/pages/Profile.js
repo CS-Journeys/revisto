@@ -6,7 +6,7 @@ import { useMyPosts } from "../hooks/api";
 const Profile = (props) => {
     const postFunc = useMyPosts();
 
-    console.log(postFunc);
+    //console.log(postFunc);
 
     return (
         <div className="container">

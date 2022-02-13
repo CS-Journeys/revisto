@@ -2,6 +2,11 @@ import React from "react";
 import { useCreatePost } from "../hooks/api";
 import { useNavigate } from "react-router-dom";
 
+/**
+ * Form to fill out in order to create a new post
+ *
+ * @returns {JSX.Element} The post form component to display.
+ */
 const PostForm = () => {
     const { createPost } = useCreatePost();
     const nav = useNavigate();

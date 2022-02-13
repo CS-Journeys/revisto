@@ -1,0 +1,10 @@
+/* About Page CSS */
+.about-link h4,
+.about-link span {
+    color: var(--clr-black);
+}
+
+.about-link h4:hover,
+.about-link span:hover {
+    color: var(--clr-primary-1);
+}
