@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const { ObjectId } = mongoose.Types;
 
 const getRoute = (req, res, next) => {
-  let route = req.path.replace(/\/$/, '');
+  let route = req.path.replace(/\/$/, "");
 
   let pathFragments = route.split('/');
   pathFragments.forEach((pathFragment, index) => {
@@ -11,7 +11,7 @@ const getRoute = (req, res, next) => {
     }
   });
 
-  req.route = pathFragments.join('/');
+  req.route = pathFragments.join("/");
 
   next();
 }

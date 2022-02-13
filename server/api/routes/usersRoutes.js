@@ -8,7 +8,7 @@ import {
   deleteUser,
   requestPasswordReset,
   resetPassword,
-} from "../../controllers/usersControllers.js";
+} from "../controllers/usersControllers.js";
 
 const router = express.Router();
 

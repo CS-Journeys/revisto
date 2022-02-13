@@ -2,10 +2,12 @@ import express from "express";
 import cors from "cors";
 import passport from "passport";
 
-import apiRoutes from "./routes/apiRoutes.js";
-import UserDetails from "./models/userModel.js";
-import errorController from "./controllers/errorController.js";
-import { requestLogger, errorLogger } from "./utils/logger.js";
+import UserDetails from "./core/models/userModel.js";
+import getRoute from "./core/middleware/getRoute.js";
+import apiRoutes from "./api/routes/apiRoutes.js";
+import adminRoutes from "./services/admin/routes/adminRoutes.js";
+import errorHandler from "./core/middleware/errorHandler.js";
+import { requestLogger, errorLogger } from "./core/utils/logger.js";
 
 const app = express();
 
@@ -20,9 +22,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(cors());
 
+app.use(getRoute);
 app.use(requestLogger);
 app.use("/api", apiRoutes);
+app.use("/admin", adminRoutes);
 app.use(errorLogger);
-app.use(errorController);
+app.use(errorHandler);
 
 export default app;

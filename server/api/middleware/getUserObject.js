@@ -1,4 +1,4 @@
-import User from '../models/userModel.js';
+import User from "../../core/models/userModel.js";
 
 const getUserObject = async (req, res, next) => {
   if (req.token) {
@@ -9,7 +9,7 @@ const getUserObject = async (req, res, next) => {
     }
   }
   
-  req.user = { userType: 'guest' };
+  req.user = { userType: "guest" };
   next();
 }
 

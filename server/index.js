@@ -1,5 +1,5 @@
-import logger from "./utils/logger.js";
-import db from "./db/connection.js";
+import logger from "./core/utils/logger.js";
+import db from "./core/db/connection.js";
 import app from "./app.js";
 const PORT = process.env.PORT || 5000;
 

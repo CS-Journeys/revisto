@@ -1,6 +1,6 @@
 import dotenv from "dotenv";
 dotenv.config();
-import {ENV} from "../constants.js";
+import {ENV} from "../../core/constants.js";
 import AWS from "aws-sdk";
 
 let AWS_SES;

@@ -1,6 +1,8 @@
-import { parse } from 'csv-parse/sync'; 
-import { readFileSync } from 'fs';
-import createHttpError from 'http-errors';
+import { parse } from "csv-parse/sync"; 
+import { readFileSync } from "fs";
+import createHttpError from "http-errors";
+
+import logger from "../../core/utils/logger.js";
 
 const USER_TYPES = ["guest", "normal-user", "admin"];
 
@@ -10,7 +12,7 @@ class PermissionsManager {
 
   static config() {
     USER_TYPES.forEach(userType => {
-      const content = readFileSync("./config/permissions/" + userType + ".csv").toString();
+      const content = readFileSync("./api/config/permissions/" + userType + ".csv").toString();
       const records = parse(content, {
         columns: true
       });
@@ -35,11 +37,11 @@ class PermissionsManager {
     // Determine if the request is allowed
     let userPermissions = PermissionsManager.permissions[userType];
     if (!userPermissions) {
-      console.error(`ERROR: Please define permissions for ${userType}`);
+      logger.error(`Please define permissions for ${userType}`);
     } else if (!userPermissions[route]) {
-      console.error(`ERROR: Please define permissions for ${userType, route}`);
+      logger.error(`Please define permissions for ${userType, route}`);
     } else if (!userPermissions[route][method]) {
-      console.error(`ERROR: Please define permission for ${userType, route, method}`);
+      logger.error(`Please define permission for ${userType, route, method}`);
     } else if (userPermissions[route][method] == "yes") {
       isAllowed = true;
     } else if (userPermissions[route][method] == "if_own") {

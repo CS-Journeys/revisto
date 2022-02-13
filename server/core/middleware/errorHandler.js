@@ -1,7 +1,7 @@
-import { isHttpError } from 'http-errors';
+import { isHttpError } from "http-errors";
 
 // Handle errors
-const errorController = (err, req, res, next) => {
+const errorHandler = (err, req, res, next) => {
   if (isHttpError(err)) {
     handleHttpError(err, res);
   }
@@ -20,7 +20,7 @@ const errorController = (err, req, res, next) => {
 }
 
 const isMongooseValidationError = (err) => {
-  return err.name === 'ValidationError';
+  return err.name === "ValidationError";
 }
 
 const isDuplicateKeyError = (err) => {
@@ -62,4 +62,4 @@ const handleOtherError = (err, res) => {
 }
 
 
-export default errorController;
+export default errorHandler;

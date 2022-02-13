@@ -1,5 +1,5 @@
-import mongoose from 'mongoose';
-import dotenv from 'dotenv';
+import mongoose from "mongoose";
+import dotenv from "dotenv";
 import logger from "../utils/logger.js";
 
 // Load .env configuration
@@ -20,6 +20,6 @@ mongoose.connect(process.env.ATLAS_URI, { useNewUrlParser: true, useUnifiedTopol
 
 let db = mongoose.connection;
 
-db.on('error', (err) => {logger.error("Mongoose Connection Error: " + err)});
+db.on("error", (err) => {logger.error("Mongoose Connection Error: " + err)});
 
 export default db;

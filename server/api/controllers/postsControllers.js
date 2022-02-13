@@ -1,7 +1,7 @@
 import createHttpError from "http-errors";
 import asyncHandler from "express-async-handler";
 
-import Post from "../models/postModel.js";
+import Post from "../../core/models/postModel.js";
 
 const REVERSE_DATE_SORT = { dateCreated: -1 };
 

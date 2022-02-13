@@ -2,10 +2,10 @@ import passport from "passport";
 import createHttpError from "http-errors";
 import asyncHandler from "express-async-handler";
 
-import User from "../models/userModel.js";
-import { createJWT, verifyJWT } from "../utils/jwtAuth.js";
-import { SendPasswordReset } from "../utils/email.js";
-import { validateEmail, validatePassword } from "../utils/validator.js";
+import User from "../../core/models/userModel.js";
+import { createJWT, verifyJWT } from "../../core/utils/jwtAuth.js";
+import { SendPasswordReset } from "../../services/email/email.js";
+import { validateEmail, validatePassword } from "../../core/utils/validator.js";
 
 // Get the current user
 export const me = asyncHandler(async (req, res) => {
@@ -27,11 +27,11 @@ export const register = asyncHandler(async (req, res) => {
 
 // Log in the user
 export const login = asyncHandler(async (req, res, next) => {
-  passport.authenticate('local', function (err, user, info) {
+  passport.authenticate("local", function (err, user, info) {
     if (err) return next(createHttpError(400, "Bad Request"));
     if (!user) return next(createHttpError(400, "Incorrect login"));
 
-    const token = createJWT({ userId: user._id }, '24h');
+    const token = createJWT({ userId: user._id }, "24h");
     res.json({ token });
   })(req, res, next);
 });
@@ -57,7 +57,7 @@ export const deleteUser = asyncHandler(async (req, res) => {
 // Request a password reset for the given email address
 export const requestPasswordReset = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: req.body.email }).exec();
-  const token = createJWT({ userId: user._id }, '2h');
+  const token = createJWT({ userId: user._id }, "2h");
 
   await SendPasswordReset(user.email, token);
 
