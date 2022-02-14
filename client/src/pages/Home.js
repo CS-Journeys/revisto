@@ -4,19 +4,19 @@ import PostInput from "../components/PostInput";
 import { usePosts } from "../hooks/api";
 
 const Home = (props) => {
-  const postFunc = usePosts();
+    const postFunc = usePosts();
 
-  console.log(postFunc);
+    console.log(postFunc);
 
-  return (
-    <div>
-      <div className="container-fluid">
-        {/* Render home page */}
-        <PostInput user={props.user} />
-        <PostsList postFunc={postFunc} />
-      </div>
-    </div>
-  );
+    return (
+        <div>
+            <div className="container-fluid">
+                {/* Render home page */}
+                <PostInput user={props.user} />
+                <PostsList postFunc={postFunc} />
+            </div>
+        </div>
+    );
 };
 
 export default Home;

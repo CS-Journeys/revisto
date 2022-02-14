@@ -9,7 +9,7 @@
 }
 
 .cp-input:hover {
-    border-color: #116c82;
+    border-color: var(--clr-primary-1);
 }
 
 /*--Post Card--*/
