@@ -6,7 +6,7 @@ import { usePosts } from "../hooks/api";
 const Home = (props) => {
     const postFunc = usePosts();
 
-    console.log(postFunc);
+    //console.log(postFunc);
 
     return (
         <div>

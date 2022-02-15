@@ -9,6 +9,7 @@ import CreatePost from "./pages/CreatePost";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
+import PageNotFound from "./pages/PageNotFound";
 
 import { useMe } from "./hooks/api";
 
@@ -29,22 +30,34 @@ const App = () => {
                         <Navbar user={user} />
                         <br />
                         <Routes>
-                            <Route path="/" element={<Home user={user} />} />
+                            <Route
+                                exact
+                                path="/"
+                                element={<Home user={user} />}
+                            />
                             <Route path="/login" element={<Login />} />
                             <Route
+                                exact
                                 path="/post/:postId"
                                 element={<LargePost />}
                             />
                             <Route
+                                exact
                                 path="/submit"
                                 element={<CreatePost user={user} />}
                             />
-                            <Route path="/about" element={<About />} />
-                            <Route path="/register" element={<Register />} />
+                            <Route exact path="/about" element={<About />} />
                             <Route
+                                exact
+                                path="/register"
+                                element={<Register />}
+                            />
+                            <Route
+                                exact
                                 path="/me"
                                 element={<Profile user={user} />}
                             />
+                            <Route path="/*" element={<PageNotFound />} />
                         </Routes>
                     </BrowserRouter>
                 </div>

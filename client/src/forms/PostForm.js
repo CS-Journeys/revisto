@@ -16,7 +16,7 @@ const PostForm = () => {
         const form = e.target;
 
         if (form.title && form.content) {
-            console.log(form.content.value);
+            //console.log(form.content.value);
             createPost(
                 {
                     title: form.title.value,

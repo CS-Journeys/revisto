@@ -2,7 +2,7 @@
 @import "css/navbar.css";
 @import "css/posts.css";
 @import "css/forms.css";
-@import "css/about.css";
+@import "css/about&404.css";
 
 .btn-dark {
     background-color: black;

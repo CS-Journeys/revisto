@@ -1,11 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import {
-    usePost,
-    useUpdatePost,
-    useDeletePost,
-    useReportPost,
-} from "../hooks/api";
+import { usePost, useUpdatePost, useDeletePost, useReportPost,} from "../hooks/api";
 import MarkdownView from "react-showdown";
 import ConfirmationModal from "../components/ConfirmationModal";
 import MarkdownEditor from "../components/MarkdownEditor";

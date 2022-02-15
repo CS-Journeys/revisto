@@ -6,8 +6,8 @@ import { useState, useCallback, useRef } from "react";
 
 /**
  * Allows for markdown editing within posts.
- * @param {string} initial - The initial text within the markdown.
- * @return {SimpleMDE}       The updated markdown text
+ * @param  {string} initial - The initial text within the markdown.
+ * @return {SimpleMDE}     - The updated markdown text
  */
 const MarkdownEditor = ({ initial = "" }) => {
     const [value, setValue] = useState(initial);
