@@ -6,9 +6,7 @@ import {
     useDeletePost,
     useReportPost,
 } from "../hooks/api";
-import MarkdownView from "react-showdown";
 import ConfirmationModal from "../components/ConfirmationModal";
-import MarkdownEditor from "../components/MarkdownEditor";
 
 const NormalPost = ({ post, onEdit }) => {
     const { deletePost } = useDeletePost();
@@ -40,14 +38,11 @@ const NormalPost = ({ post, onEdit }) => {
             <h1 className="display-4 text-center border border-top-0 border-left-0 border-right-0 border-dark">
                 {post.title}
             </h1>
-            <MarkdownView
-                markdown={post.content}
-                options={{
-                    simpleLineBreaks: true,
-                    openLinksInNewWindow: true,
-                    emoji: true,
-                }}
-            />
+
+            { (post.content) ? 
+                <p>{post.content}</p> : 
+                "No Content Found." 
+            }
             <span>
                 <strong>{date}</strong>
             </span>
@@ -110,16 +105,14 @@ const EditablePost = ({ post, onCancel }) => {
     };
 
     return (
-        <form
-            ref={form}
-            onSubmit={onUpdate}
-            className="w-100 p-4 bg-light shadow-sm"
-        >
+        <form ref={form} onSubmit={onUpdate} className="w-100 p-4 bg-light shadow-sm" >
             <input
                 className="mb-2 bg-light text-center border border-top-0 border-left-0 border-right-0 border-dark w-100 display-4"
-                name="title"
-            />
-            <MarkdownEditor initial={post.content} />
+                name="title" />
+
+            <textarea className="form-control" name="content" placeholder={post.content} />
+            <br />
+
             {post.isMine ? (
                 <div className="w-100 d-flex justify-content-end">
                     <button className="btn btn-primary mr-2" type="submit">

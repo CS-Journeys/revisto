@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import MarkdownView from "react-showdown";
 
 /**
  * A post object in revisto.
@@ -29,14 +28,7 @@ const Post = ({ post }) => {
                 <div className="card-header">{post.title}</div>
                 <div className="card-body c-body-dim">
                     {post.content ? (
-                        <MarkdownView
-                            markdown={post.content}
-                            options={{
-                                simpleLineBreaks: true,
-                                openLinksInNewWindow: true,
-                                emoji: true,
-                            }}
-                        />
+                        <p>{post.content}</p>
                     ) : (
                         "No Content Found."
                     )}
