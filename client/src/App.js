@@ -10,7 +10,7 @@ import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
 
-import { useMe } from "./hooks/api";
+import { useMe } from "./services/userService";
 
 /**
  * Main file for react component rendering

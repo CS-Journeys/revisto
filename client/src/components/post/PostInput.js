@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 
 /*
  *
- */
+*/
 const PostInput = (props) => {
     let linkTo = props.user ? "/submit" : "/login";
 

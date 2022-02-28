@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import teamImage from "./static/media/sample-team-pic.jpg";
+import teamImage from "../assets/media/team-pic.jpg";
 
 // TODO: Contact Form
 // TODO: Style

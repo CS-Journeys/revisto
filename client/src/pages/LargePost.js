@@ -5,7 +5,7 @@ import {
     useUpdatePost,
     useDeletePost,
     useReportPost,
-} from "../hooks/api";
+} from "../services/postService";
 import ConfirmationModal from "../components/ConfirmationModal";
 
 const NormalPost = ({ post, onEdit }) => {

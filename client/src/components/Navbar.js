@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../revistoLogo.svg";
+import logo from "../assets/media/revistoLogo.svg";
 import { Link } from "react-router-dom";
 
 /**

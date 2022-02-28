@@ -32,17 +32,17 @@
 /*--Font--*/
 @font-face {
     font-family: "Bebas";
-    src: url(./bebas/Bebas-Regular.ttf);
+    src: url(../fonts/bebas/Bebas-Regular.ttf);
 }
 
 @font-face {
     font-family: "RobotoCondensed";
-    src: url(./roboto-condensed/RobotoCondensed-Regular.ttf);
+    src: url(../fonts/roboto-condensed/RobotoCondensed-Regular.ttf);
 }
 
 @font-face {
     font-family: "RobotoLight";
-    src: url(./roboto-condensed/RobotoCondensed-Light.ttf);
+    src: url(../fonts/roboto-condensed/RobotoCondensed-Light.ttf);
 }
 
 body {
