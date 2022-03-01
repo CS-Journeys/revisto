@@ -1,5 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { getAuthConfig } from "./authServices";
+import { getAuthConfig } from "./authHook";
 import axios from "axios";
 
 //====== POSTS ======

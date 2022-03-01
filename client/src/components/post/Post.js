@@ -36,8 +36,7 @@ const Post = ({ post }) => {
                 <div className="card-footer">
                     <Link
                         className="footer-link"
-                        to={{ pathname: url, state: { post } }}
-                    >
+                        to={{ pathname: url, state: { post } }} >
                         See More
                     </Link>
 

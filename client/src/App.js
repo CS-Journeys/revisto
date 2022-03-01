@@ -11,7 +11,7 @@ import Profile from "./pages/Profile";
 import About from "./pages/About";
 import PageNotFound from "./pages/PageNotFound";
 
-import { useMe } from "./services/userService";
+import { useMe } from "./hooks/userHook";
 
 /**
  * Main file for react component rendering

@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogin } from "../services/userService";
+import { useLogin } from "../hooks/userHook";
 import { useNavigate } from "react-router-dom";
 
 // Axios POST requests will be made
