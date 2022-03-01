@@ -45,7 +45,7 @@ const About = () => {
                 <img
                     src={teamImage}
                     className="w-50 img-thumbnail"
-                    alt="Team picture!"
+                    alt="The Team"
                 />
             </div>
             <p>

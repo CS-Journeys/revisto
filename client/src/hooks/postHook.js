@@ -1,5 +1,6 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getAuthConfig } from "./authHook";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 //====== POSTS ======
@@ -21,14 +22,14 @@ export const usePosts = () => {
 };
 
 export const usePost = (postid) => {
+    const nav = useNavigate();
     const query = useQuery(["post", postid], async () => {
-        const res = await axios.get(`/posts/id/${postid}`, getAuthConfig());
-        //Error handling
-        if (res.data.err) {
-            throw new Error(res.data.err);
-        }
+        const res = await axios
+            .get(`/posts/id/${postid}`, getAuthConfig())
+            .catch((err) => nav("/404"));
         return res.data.post;
     });
+
     return { post: query.data, isLoading: query.isLoading, error: query.error };
 };
 

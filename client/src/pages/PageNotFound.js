@@ -15,6 +15,7 @@ const About = () => {
             <img
                 className="img-fluid"
                 src={cat}
+                alt="Sad cat for your troubles. ;-;"
                 style={{
                     display: "block",
                     marginLeft: "auto",
@@ -23,14 +24,14 @@ const About = () => {
                 }}
             />
             <div className="align-items">
-                <figure class="text-center">
-                    <blockquote class="blockquote">
+                <figure className="text-center">
+                    <blockquote className="blockquote">
                         <p>
                             Sorry for the inconvenience, but we cannot find the
                             page you're looking for.
                         </p>
                     </blockquote>
-                    <figcaption class="blockquote-footer">
+                    <figcaption className="blockquote-footer">
                         The Revisto Team
                     </figcaption>
                     <br />

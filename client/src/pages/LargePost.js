@@ -67,7 +67,8 @@ const NormalPost = ({ post, onEdit }) => {
                         confirmText="Report"
                         title="Why are you reporting this post?"
                         onConfirm={onReport}
-                        context={true}>
+                        context={true}
+                    >
                         Report
                     </ConfirmationModal>
                 </div>
@@ -103,12 +104,21 @@ const EditablePost = ({ post, onCancel }) => {
     };
 
     return (
-        <form ref={form} onSubmit={onUpdate} className="w-100 p-4 bg-light shadow-sm" >
+        <form
+            ref={form}
+            onSubmit={onUpdate}
+            className="w-100 p-4 bg-light shadow-sm"
+        >
             <input
                 className="mb-2 bg-light text-center border border-top-0 border-left-0 border-right-0 border-dark w-100 display-4"
-                name="title" />
+                name="title"
+            />
 
-            <textarea className="form-control" name="content" placeholder={post.content} />
+            <textarea
+                className="form-control"
+                name="content"
+                placeholder={post.content}
+            />
             <br />
 
             {post.isMine ? (
