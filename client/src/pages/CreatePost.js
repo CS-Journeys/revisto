@@ -1,12 +1,61 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import PostForm from "../forms/PostForm";
+import { useCreatePost } from "../services/postService";
+import { useNavigate } from "react-router-dom";
 
 const CreatePost = (props) => {
+    const { createPost } = useCreatePost();
+    const nav = useNavigate();
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        const form = e.target;
+
+        if (form.title && form.content) {
+            console.log(form.content.value);
+            createPost(
+                {
+                    title: form.title.value,
+                    content: form.content.value,
+                },
+                {
+                    onSuccess: () => {
+                        nav("/");
+                    },
+                }
+            );
+        }
+    };
+
     return (
         <div className="container-fluid">
             {props.user ? (
-                <PostForm />
+                <div className="form">
+                    <form onSubmit={handleSubmit}>
+                        <h1>Create Post</h1>
+                        <input
+                            className="form-control form-control-lg"
+                            type="text"
+                            placeholder="Title"
+                            id="title"
+                            name="title"
+                        />
+        
+                        <div className="form-group">
+                            <label htmlFor="content">What's Happening?</label>
+                            <textarea
+                                className="form-control"
+                                type="text"
+                                id="content"
+                                name="content"
+                            ></textarea>
+                        </div>
+        
+                        <button className="w-10" type="submit">
+                            Submit
+                        </button>
+                    </form>
+                </div>
             ) : (
                 <Link className="text-center" to="/login">
                     <h1>Please Login</h1>

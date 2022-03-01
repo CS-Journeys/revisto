@@ -1,7 +1,7 @@
 import React from "react";
-import PostsList from "../components/PostsList";
+import PostsList from "../components/post/PostsList";
 import { Link } from "react-router-dom";
-import { useMyPosts } from "../hooks/api";
+import { useMyPosts } from "../services/postService";
 
 const Profile = (props) => {
     const postFunc = useMyPosts();

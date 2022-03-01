@@ -1,7 +1,7 @@
 import React from "react";
-import PostsList from "../components/PostsList";
-import PostInput from "../components/PostInput";
-import { usePosts } from "../hooks/api";
+import PostsList from "../components/post/PostsList";
+import PostInput from "../components/post/PostInput";
+import { usePosts } from "../services/postService";
 
 const Home = (props) => {
     const postFunc = usePosts();
