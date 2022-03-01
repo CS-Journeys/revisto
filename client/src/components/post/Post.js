@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { formatContent } from "../../hooks/authHook";
 
 /**
  * A post object in revisto.
@@ -26,13 +27,7 @@ const Post = ({ post }) => {
         <div className="col-md-5">
             <div className="card">
                 <div className="card-header">{post.title}</div>
-                <div className="card-body c-body-dim">
-                    {post.content ? (
-                        <p>{post.content}</p>
-                    ) : (
-                        "No Content Found."
-                    )}
-                </div>
+                <div className="card-body c-body-dim" dangerouslySetInnerHTML={formatContent(post.content)} />
                 <div className="card-footer">
                     <Link
                         className="footer-link"

@@ -6,6 +6,7 @@ import {
     useDeletePost,
     useReportPost,
 } from "../hooks/postHook";
+import { formatContent } from "../hooks/authHook";
 import ConfirmationModal from "../components/ConfirmationModal";
 
 const NormalPost = ({ post, onEdit }) => {
@@ -39,10 +40,8 @@ const NormalPost = ({ post, onEdit }) => {
                 {post.title}
             </h1>
 
-            { (post.content) ? 
-                <p>{post.content}</p> : 
-                "No Content Found." 
-            }
+            {/* This is dangerous? Probs */}
+            <div dangerouslySetInnerHTML={formatContent(post.content)} />
             <span>
                 <strong>{date}</strong>
             </span>
@@ -68,8 +67,7 @@ const NormalPost = ({ post, onEdit }) => {
                         confirmText="Report"
                         title="Why are you reporting this post?"
                         onConfirm={onReport}
-                        context={true}
-                    >
+                        context={true}>
                         Report
                     </ConfirmationModal>
                 </div>
