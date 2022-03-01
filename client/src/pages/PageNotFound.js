@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import cat from "./static/media/sad-cat.jpg";
+import cat from "../assets/media/sad-cat.jpg";
 
 // TODO: Contact Form
 // TODO: Style

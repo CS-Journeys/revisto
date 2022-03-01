@@ -1,8 +1,8 @@
-@import "css/vars.css";
-@import "css/navbar.css";
-@import "css/posts.css";
-@import "css/forms.css";
-@import "css/about&404.css";
+@import "assets/css/vars.css";
+@import "assets/css/navbar.css";
+@import "assets/css/posts.css";
+@import "assets/css/forms.css";
+@import "assets/css/about.css";
 
 .btn-dark {
     background-color: black;
