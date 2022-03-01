@@ -8,3 +8,8 @@
 .about-link span:hover {
     color: var(--clr-primary-1);
 }
+
+/* 404 Page CSS */
+.fof-img img {
+    max-width: 10px;
+}
