@@ -4,6 +4,13 @@ export const getAuthConfig = () => {
 };
 
 export const formatContent = (content) => {
-    let fContent = "<p>" + content.replaceAll("\n", "<br>") + "</p>";
+    // Check for spam links
+    if (content.search("<a href=") >= 0 || content.search("http") >= 0) {
+        return {__html: "[Malicious Link Detected]"}
+    }
+
+    // Add newlines    
+    let fContent = content.replaceAll("\n", "<br>");
+
     return {__html: fContent };
 }

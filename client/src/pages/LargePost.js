@@ -41,7 +41,7 @@ const NormalPost = ({ post, onEdit }) => {
             </h1>
 
             {/* This is dangerous? Probs */}
-            <div dangerouslySetInnerHTML={formatContent(post.content)} />
+            <p dangerouslySetInnerHTML={formatContent(post.content)} />
             <span>
                 <strong>{date}</strong>
             </span>
