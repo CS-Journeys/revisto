@@ -3,6 +3,10 @@ import mongoose from "mongoose";
 // Define a schema
 const Schema = mongoose.Schema;
 
+// Currently 3 possible reactions
+const reactionLength = 3;
+const reactionLimit = (val) => val.length < reactionLength;
+
 const PostSchema = new Schema({
   title: { type: String, required: true },
   content: { type: String, required: true },
@@ -10,7 +14,13 @@ const PostSchema = new Schema({
   dateCreated: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
   reportCount: { type: Number, default: 0 },
-  reports: { type: [String], default: [] }
+  reports: { type: [String], default: [] },
+  reactedUsers: [{type: Schema.Types.ObjectId, ref: "users"}],
+  
+  reactions: [{type: Number, 
+    validate: [reactionLimit, 
+        "Cannot have more than " + reactionLength + " reactions"
+    ]}]
 });
 
 // Update dateUpdated on save

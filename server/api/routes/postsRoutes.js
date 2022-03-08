@@ -7,7 +7,8 @@ import {
   getUserPosts,
   deletePost,
   updatePost,
-  reportPost
+  reportPost,
+  reactPost
 } from "../controllers/postsControllers.js";
 
 const router = express.Router();
@@ -19,5 +20,6 @@ router.post("/", createPost);
 router.delete("/id/:id", deletePost);
 router.patch("/id/:id", updatePost);
 router.post("/report/:id", reportPost);
+router.patch("/react/:id", reactPost);
 
 export default router;
