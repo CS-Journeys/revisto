@@ -15,11 +15,11 @@ const PostSchema = new Schema({
   dateUpdated: { type: Date, default: Date.now },
   reportCount: { type: Number, default: 0 },
   reports: { type: [String], default: [] },
+
   reactedUsers: [{type: Schema.Types.ObjectId, ref: "users"}],
-  
   reactions: [{type: Number, 
     validate: [reactionLimit, 
-        "Cannot have more than " + reactionLength + " reactions"
+        "Reaction must be > 0 and < " + reactionLength
     ]}]
 });
 
