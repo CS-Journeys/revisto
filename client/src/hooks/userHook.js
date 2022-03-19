@@ -46,13 +46,13 @@ export const useRegister = () => {
 export const useLogin = () => {
     const qc = useQueryClient();
     const mut = useMutation(
-        async ({ email, password }) => {
+        async ({ email, password, rememberMe }) => {
             if (email === "" || password === "") {
                 throw new Error("Please fill out all fields");
             }
             const res = await axios.post(
                 "/users/login",
-                { email, password },
+                { email, password, rememberMe },
                 getAuthConfig()
             );
             //Error handling

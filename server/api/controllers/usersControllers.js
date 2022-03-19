@@ -31,8 +31,16 @@ export const login = asyncHandler(async (req, res, next) => {
     if (err) return next(createHttpError(400, "Bad Request"));
     if (!user) return next(createHttpError(400, "Incorrect login"));
 
-    const token = createJWT({ userId: user._id }, "24h");
-    res.json({ token });
+    // Create token for 1 week if "Remember Me" is checked, otherwise 24 hours
+    if (req.body.rememberMe) {
+      console.log("ok i will");
+      const token = createJWT({ userId: user._id }, "1w");
+      res.json({ token });
+    } else {
+      console.log("ok i wont");
+      const token = createJWT({ userId: user._id }, "24h");
+      res.json({ token });
+    }
   })(req, res, next);
 });
 
