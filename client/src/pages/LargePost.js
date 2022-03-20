@@ -12,6 +12,7 @@ import ConfirmationModal from "../components/ConfirmationModal";
 const NormalPost = ({ post, onEdit }) => {
     const { deletePost } = useDeletePost();
     const { reportPost } = useReportPost();
+    const [show, setShow] = useState(false);
     const nav = useNavigate();
 
     const date = new Date(post.dateCreated).toDateString();
@@ -29,7 +30,7 @@ const NormalPost = ({ post, onEdit }) => {
     const onDelete = () => {
         deletePost(post._id, {
             onSuccess: () => {
-                nav("/");
+                nav("/me");
             },
         });
     };
@@ -50,14 +51,16 @@ const NormalPost = ({ post, onEdit }) => {
                     <button className="btn btn-primary mr-2" onClick={onEdit}>
                         Edit
                     </button>
+                    <button className="btn btn-secondary mr-2" onClick={() => setShow(true)}>
+                        Delete
+                    </button>
                     <ConfirmationModal
-                        style="secondary"
                         confirmText="Delete"
                         body="Deleting is irreversible."
                         title="Are you sure?"
                         onConfirm={onDelete}
-                    >
-                        Delete
+                        show={show}
+                        onHide={() => setShow(false)}>
                     </ConfirmationModal>
                 </div>
             ) : (
@@ -83,12 +86,14 @@ const EditablePost = ({ post, onCancel }) => {
 
     useEffect(() => {
         form.current.title.value = post.title;
+        form.current.content.value = post.content;
     }, []);
 
     const onUpdate = (e) => {
         e.preventDefault();
-        const content = e.target.content.value;
         const title = e.target.title.value;
+        const content = e.target.content.value;
+        
         updatePost(
             {
                 id: post._id,
@@ -110,14 +115,15 @@ const EditablePost = ({ post, onCancel }) => {
             className="w-100 p-4 bg-light shadow-sm"
         >
             <input
-                className="mb-2 bg-light text-center border border-top-0 border-left-0 border-right-0 border-dark w-100 display-4"
+                className="mb-2 bg-light text-center border border-top-0 border-left-0 
+                border-right-0 border-dark w-100 display-4"
+
                 name="title"
             />
 
             <textarea
                 className="form-control"
                 name="content"
-                placeholder={post.content}
             />
             <br />
 
