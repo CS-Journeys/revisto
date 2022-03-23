@@ -12,27 +12,27 @@ import { NavDropdown } from "react-bootstrap";
 const Navbar = ({ user }) => {
 
     const isMobile = window.matchMedia('(max-width: 1000px)').matches;
-    const leftLinks = [
-        { 
+    const leftLinks = [{ 
             text: "Featured",
-            url: "#"
+            url: "#",
+            key: 0
         },
         {
             text: "About",
-            url: "/about"
-        }
-    ]
+            url: "/about",
+            key: 1
+    }]
 
-    const rightLinks = [
-        { 
+    const rightLinks = [{ 
             text: "Sign Up",
-            url: "/register"
+            url: "/register",
+            key: 2
         },
         {
             text: "Login",
-            url: "/login"
-        }
-    ]
+            url: "/login",
+            key: 3
+    }]
 
     return (
         <div className="nav-control">
@@ -49,12 +49,12 @@ const Navbar = ({ user }) => {
                         type="button">
                         
                         { leftLinks.map(link => 
-                            <NavDropdown.Item className="nav-link" href={link.url}>
+                            <NavDropdown.Item className="nav-link" key={link.key} href={link.url}>
                                 <h4>{link.text}</h4>
                             </NavDropdown.Item>) }
 
                         { rightLinks.map(link => 
-                            <NavDropdown.Item className="nav-link" href={link.url}>
+                            <NavDropdown.Item className="nav-link" key={link.key} href={link.url}>
                                 <span>{link.text}</span>
                             </NavDropdown.Item>) }
                     </NavDropdown> :
@@ -62,7 +62,7 @@ const Navbar = ({ user }) => {
                     <div className="collapse navbar-collapse">
                         <div className="navbar-nav navbar-left">
                             { leftLinks.map(link => 
-                                <Link className="nav-link" to={link.url}>
+                                <Link className="nav-link" key={link.key} to={link.url}>
                                     <h4>{link.text}</h4>
                                 </Link>)}
                         </div>
@@ -73,7 +73,7 @@ const Navbar = ({ user }) => {
                             ) : (
                                 <div className="navbar-nav navbar-right">
                                     { rightLinks.map(link => 
-                                <Link className="nav-link" to={link.url}>
+                                <Link className="nav-link" key={link.key} to={link.url}>
                                     <span>{link.text}</span>
                                 </Link>)}
                                 </div>
