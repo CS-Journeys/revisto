@@ -6,7 +6,6 @@ import {
     useDeletePost,
     useReportPost,
 } from "../hooks/postHook";
-import { formatContent } from "../hooks/authHook";
 import ConfirmationModal from "../components/ConfirmationModal";
 
 const NormalPost = ({ post, user, onEdit }) => {
@@ -38,15 +37,15 @@ const NormalPost = ({ post, user, onEdit }) => {
     };
 
     return (
-        <div className="w-100 p-4 bg-light shadow-sm">
+        <div className="container w-100 p-4 bg-light shadow-sm">
             <h1 className="display-4 text-center border border-top-0 
                 border-left-0 border-right-0 border-dark">
 
                 {post.title}
             </h1>
 
-            {/* This is dangerous? Probs */}
-            <p dangerouslySetInnerHTML={formatContent(post.content)} />
+            <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{post.content}</p>
+            
             <span>
                 <strong>{date}</strong>
 

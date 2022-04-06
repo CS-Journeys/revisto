@@ -28,7 +28,7 @@ const Post = ({ post }) => {
             <div className="card">
                 <div className="card-header">{post.title}</div>
                 <div className="card-body c-body-dim">
-                    <p dangerouslySetInnerHTML={formatContent(post.content)} />
+                    <p className="card-text">{post.content}</p>
                 </div>
                 <div className="card-footer">
                     <Link
