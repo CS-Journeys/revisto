@@ -21,7 +21,7 @@ export const getPosts = asyncHandler(async (req, res) => {
 
 // Get post of given id
 export const getPost = asyncHandler(async (req, res) => {
-  const responseFields = "title content dateCreated user";
+  const responseFields = "title content dateCreated user reactedUsers";
   let post = await Post.findById(req.params.id, responseFields).exec();
 
   if (!post) throw createHttpError(404, "Post not found");
@@ -33,9 +33,15 @@ export const getPost = asyncHandler(async (req, res) => {
   if (post.user.equals(req.user._id)) {
     post.isMine = true;
   }
+
+  // Determine if user has already reacted to the post
+  if (post.reactedUsers.some(id => id.equals(req.user._id))) {
+    post.isReacted = true;
+  }
   
-  // Prevent the author's info from being exposed to the frontend
+  // Prevent private info from being exposed to the frontend
   delete post.user;
+  delete post.reactedUsers;
 
   res.json({ post });
 });
