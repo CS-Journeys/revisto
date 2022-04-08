@@ -1,6 +1,7 @@
 import React from "react";
 import logo from "../assets/media/revistoLogo.svg";
 import { Link } from "react-router-dom";
+import { NavDropdown } from "react-bootstrap";
 
 /**
  * Component Navbar to be displayed at the top of the page in
@@ -9,6 +10,30 @@ import { Link } from "react-router-dom";
  * @return {JSX.Element}     The updated Navbar
  */
 const Navbar = ({ user }) => {
+
+    const isMobile = window.matchMedia('(max-width: 1000px)').matches;
+    const leftLinks = [{ 
+            text: "Featured",
+            url: "#",
+            key: 0
+        },
+        {
+            text: "About",
+            url: "/about",
+            key: 1
+    }]
+
+    const rightLinks = [{ 
+            text: "Sign Up",
+            url: "/register",
+            key: 2
+        },
+        {
+            text: "Login",
+            url: "/login",
+            key: 3
+    }]
+
     return (
         <div className="nav-control">
             <nav className="navbar navbar-expand-lg navbar-light nav-bg">
@@ -18,43 +43,43 @@ const Navbar = ({ user }) => {
                 </Link>
 
                 {/* Mobile Button */}
-                <button
-                    className="navbar-toggler"
-                    type="button"
-                    data-toggle="collapse"
-                    data-target="#navbarNav"
-                    aria-controls="navbarNav"
-                    aria-expanded="false"
-                    aria-label="Toggle navigation"
-                >
-                    <span className="navbar-toggler-icon"></span>
-                </button>
+                { (isMobile) ? 
+                    <NavDropdown
+                        className="navbar-toggler"
+                        type="button">
+                        
+                        { leftLinks.map(link => 
+                            <NavDropdown.Item className="nav-link" key={link.key} href={link.url}>
+                                <h4>{link.text}</h4>
+                            </NavDropdown.Item>) }
 
-                {/* Links */}
-                <div className="collapse navbar-collapse" id="navbarNav">
-                    <div className="navbar-nav navbar-left">
-                        <Link className="nav-link" to="#">
-                            <h4>Featured</h4>
-                        </Link>
-                        <Link className="nav-link" to="/about">
-                            <h4>About</h4>
-                        </Link>
-                    </div>
-                    {user ? (
-                        <Link className="nav-link" to="/me">
-                            <span>Your Journals</span>
-                        </Link>
-                    ) : (
-                        <div className="navbar-nav navbar-right">
-                            <Link className="nav-link" to="/register">
-                                <span>Sign Up</span>
-                            </Link>
-                            <Link className="nav-link" to="/login">
-                                <span>Login</span>
-                            </Link>
+                        { rightLinks.map(link => 
+                            <NavDropdown.Item className="nav-link" key={link.key} href={link.url}>
+                                <span>{link.text}</span>
+                            </NavDropdown.Item>) }
+                    </NavDropdown> :
+
+                    <div className="collapse navbar-collapse">
+                        <div className="navbar-nav navbar-left">
+                            { leftLinks.map(link => 
+                                <Link className="nav-link" key={link.key} to={link.url}>
+                                    <h4>{link.text}</h4>
+                                </Link>)}
                         </div>
-                    )}
-                </div>
+                        {user ? (
+                                <Link className="nav-link" to="/me">
+                                    <span>Your Journals</span>
+                                </Link>
+                            ) : (
+                                <div className="navbar-nav navbar-right">
+                                    { rightLinks.map(link => 
+                                <Link className="nav-link" key={link.key} to={link.url}>
+                                    <span>{link.text}</span>
+                                </Link>)}
+                                </div>
+                            )}
+                    </div>
+                }
             </nav>
         </div>
     );

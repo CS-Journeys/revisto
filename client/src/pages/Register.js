@@ -1,6 +1,6 @@
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { useRegister } from "../services/userService";
+import { useRegister } from "../hooks/userHook";
 
 /**
  * React component for displaying the register page.

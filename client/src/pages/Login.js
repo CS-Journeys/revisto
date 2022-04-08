@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useLogin } from "../services/userService";
+import { useLogin } from "../hooks/userHook";
 import { useNavigate } from "react-router-dom";
 
 // Axios POST requests will be made
@@ -32,6 +32,7 @@ const Login = () => {
             {
                 email: form.email.value,
                 password: form.password.value,
+                rememberMe: form.rememberMe.checked
             },
             {
                 onSuccess: () => {
@@ -78,6 +79,16 @@ const Login = () => {
                                 onChange={() => setShowPass(!showPass)}
                             />
                             Show Password
+                        </label>
+                    </span>
+                    <span className="check">
+                        <label htmlFor="Remember Me">
+                            <input
+                                type="checkbox"
+                                id="rememberMe"
+                                name="rememberMe"
+                            />
+                            Remember Me
                         </label>
                     </span>
                 </form>

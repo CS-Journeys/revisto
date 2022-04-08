@@ -5,12 +5,15 @@ import {
     useUpdatePost,
     useDeletePost,
     useReportPost,
-} from "../services/postService";
+} from "../hooks/postHook";
 import ConfirmationModal from "../components/ConfirmationModal";
 
-const NormalPost = ({ post, onEdit }) => {
+const NormalPost = ({ post, user, onEdit }) => {
     const { deletePost } = useDeletePost();
     const { reportPost } = useReportPost();
+    const [show, setShow] = useState(false);
+    const [reacted, setReact] = useState(false);
+
     const nav = useNavigate();
 
     const date = new Date(post.dateCreated).toDateString();
@@ -28,52 +31,77 @@ const NormalPost = ({ post, onEdit }) => {
     const onDelete = () => {
         deletePost(post._id, {
             onSuccess: () => {
-                nav("/");
+                nav("/me");
             },
         });
     };
 
     return (
-        <div className="w-100 p-4 bg-light shadow-sm">
-            <h1 className="display-4 text-center border border-top-0 border-left-0 border-right-0 border-dark">
+        <div className="container w-100 p-4 bg-light shadow-sm">
+            <h1 className="display-4 text-center border border-top-0 
+                border-left-0 border-right-0 border-dark">
+
                 {post.title}
             </h1>
 
-            { (post.content) ? 
-                <p>{post.content}</p> : 
-                "No Content Found." 
-            }
+            <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{post.content}</p>
+            
             <span>
                 <strong>{date}</strong>
+
+                <br />
+                <br />
+                { (user && !post.isMine) ? <div>
+                    { (!reacted) ? 
+                        <div>
+                            <a>React to this!</a>
+                            <br />
+                            <button className="btn" onClick={() => setReact(true)}>
+                                &#128512;
+                            </button>
+                            <button className="btn" onClick={() => setReact(true)}>
+                                &#128514;
+                            </button>
+                            <button className="btn" onClick={() => setReact(true)}>
+                                &#128562;
+                            </button>
+                        </div> : <a>Your reaction has been saved!</a>}
+                    </div> : null
+                }
             </span>
-            {post.isMine ? (
-                <div className="w-100 d-flex justify-content-end">
-                    <button className="btn btn-primary mr-2" onClick={onEdit}>
-                        Edit
-                    </button>
-                    <ConfirmationModal
-                        style="secondary"
-                        confirmText="Delete"
-                        body="Deleting is irreversible."
-                        title="Are you sure?"
-                        onConfirm={onDelete}
-                    >
-                        Delete
-                    </ConfirmationModal>
-                </div>
-            ) : (
-                <div className="w-100 d-flex justify-content-end">
-                    <ConfirmationModal
-                        style="secondary"
-                        confirmText="Report"
-                        title="Why are you reporting this post?"
-                        onConfirm={onReport}
-                        context={true}
-                    >
-                        Report
-                    </ConfirmationModal>
-                </div>
-            )}
+            <div className="w-100 d-flex justify-content-end">
+                {post.isMine ? 
+                    (<div>
+                        <button className="btn btn-primary mr-2" onClick={onEdit}>
+                            Edit
+                        </button>
+                        <button className="btn btn-secondary mr-2" onClick={() => setShow(true)}>
+                            Delete
+                        </button>
+                        <ConfirmationModal
+                            confirmText="Delete"
+                            body="Deleting is irreversible."
+                            title="Are you sure?"
+                            onConfirm={onDelete}
+                            show={show}
+                            onHide={() => setShow(false)}>
+                        </ConfirmationModal>
+                    </div>) :
+                    (<div>
+                        <button className="btn btn-secondary mr-2" onClick={() => setShow(true)}>
+                            Report
+                        </button>
+                        <ConfirmationModal
+                            confirmText="Report"
+                            title="Are you sure?"
+                            body="Our system will take a look as soon as possible."
+                            onConfirm={onReport}
+                            show={show}
+                            onHide={() => setShow(false)}>
+                        </ConfirmationModal>
+                    </div>)
+                }
+            </div>
         </div>
     );
 };
@@ -84,12 +112,14 @@ const EditablePost = ({ post, onCancel }) => {
 
     useEffect(() => {
         form.current.title.value = post.title;
+        form.current.content.value = post.content;
     }, []);
 
     const onUpdate = (e) => {
         e.preventDefault();
-        const content = e.target.content.value;
         const title = e.target.title.value;
+        const content = e.target.content.value;
+        
         updatePost(
             {
                 id: post._id,
@@ -105,12 +135,12 @@ const EditablePost = ({ post, onCancel }) => {
     };
 
     return (
-        <form ref={form} onSubmit={onUpdate} className="w-100 p-4 bg-light shadow-sm" >
-            <input
-                className="mb-2 bg-light text-center border border-top-0 border-left-0 border-right-0 border-dark w-100 display-4"
-                name="title" />
+        <form ref={form} onSubmit={onUpdate} className="w-100 p-4 bg-light shadow-sm">
 
-            <textarea className="form-control" name="content" placeholder={post.content} />
+            <input className="mb-2 bg-light text-center border border-top-0 border-left-0 
+                border-right-0 border-dark w-100 display-4" name="title" />
+
+            <textarea className="form-control" name="content" />
             <br />
 
             {post.isMine ? (
@@ -127,7 +157,7 @@ const EditablePost = ({ post, onCancel }) => {
     );
 };
 
-const LargePost = () => {
+const LargePost = (props) => {
     const [editing, setEditing] = useState(false);
 
     const { postId } = useParams();
@@ -140,6 +170,7 @@ const LargePost = () => {
                     (!editing ? (
                         <NormalPost
                             post={post}
+                            user={props.user}
                             onEdit={() => setEditing(true)}
                         />
                     ) : (
