@@ -29,8 +29,8 @@ export const getPost = asyncHandler(async (req, res) => {
   post = post.toObject();
   if (post.user.equals(req.user._id)) {
     post.isMine = true;
-  } 
-  if (post.reactedUsers.includes(req.user._id)) {
+  }
+  if (post.reactedUsers && post.reactedUsers.includes(req.user._id)) {
     post.hasReacted = true;
   }
 
