@@ -21,7 +21,7 @@ export const getPosts = asyncHandler(async (req, res) => {
 
 // Get post of given id
 export const getPost = asyncHandler(async (req, res) => {
-  const responseFields = "title content dateCreated user"
+  const responseFields = "title content dateCreated user";
   let post = await Post.findById(req.params.id, responseFields).exec();
 
   if (!post) throw createHttpError(404, "Post not found");
