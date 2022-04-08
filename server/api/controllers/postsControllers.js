@@ -15,7 +15,7 @@ export const getPosts = asyncHandler(async (req, res) => {
     .limit(20)
     .select()
     .exec();
-  
+
   res.json({ posts });
 });
 
@@ -26,14 +26,15 @@ export const getPost = asyncHandler(async (req, res) => {
 
   if (!post) throw createHttpError(404, "Post not found");
 
+  // Turn the post obj into a basic vanilla object so that we can add/remove props
   post = post.toObject();
+  
+  // Determine if user owns the post
   if (post.user.equals(req.user._id)) {
     post.isMine = true;
-  } 
-  if (post.reactedUsers.includes(req.user._id)) {
-    post.hasReacted = true;
   }
-
+  
+  // Prevent the author's info from being exposed to the frontend
   delete post.user;
 
   res.json({ post });
@@ -62,7 +63,7 @@ export const deletePost = asyncHandler(async (req, res) => {
   let post = await Post.findById(req.params.id).exec();
 
   if (!post) throw createHttpError(404, "Post not found");
-  if (req.ifOwn && post.user.toString() != req.user._id) {
+  if (post.user.toString() != req.user._id) {
     throw createHttpError(403, "FORBIDDEN");
   }
   await Post.deleteOne({ _id: post._id });
@@ -75,7 +76,7 @@ export const updatePost = asyncHandler(async (req, res) => {
   let post = await Post.findById(req.params.id).exec();
 
   if (!post) throw createHttpError(404, "Post not found");
-  if (req.ifOwn && post.user.toString() != req.user._id) {
+  if (post.user.toString() != req.user._id) {
     throw createHttpError(403, "FORBIDDEN");
   }
 
@@ -105,22 +106,21 @@ export const reportPost = asyncHandler(async (req, res) => {
 
 // React to post with given id
 export const reactPost = asyncHandler(async (req, res) => {
-    let post = await Post.findById(req.params.id).exec();
-    if (!post) throw createHttpError(404, "Post not found");
-  
-    // Ensure no self-reaction
-    post = post.toObject();
-    if (post.user.equals(req.user._id)) {
-        throw createHttpError(403, "FORBIDDEN");
-    }
-    
-    // Has user not reacted?
-    if (!post.reactedUsers.includes(req.user._id)) {
-        // Increment reaction count
-        post.reactionCount++;
-        post.reactedUsers.push(req.user._id);
+  let post = await Post.findById(req.params.id).exec();
+  if (!post) throw createHttpError(404, "Post not found");
 
-        await post.save();
-    }
-    res.end();
+  // Ensure no self-reaction
+  if (post.user.equals(req.user._id)) {
+    throw createHttpError(403, "FORBIDDEN");
+  }
+
+  // Has user not reacted?
+  if (!post.reactedUsers.includes(req.user._id)) {
+    // Increment reaction count
+    post.reactionCount++;
+    post.reactedUsers.push(req.user._id);
+
+    await post.save();
+  }
+  res.end();
 });

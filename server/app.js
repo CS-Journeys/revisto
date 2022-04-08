@@ -6,6 +6,7 @@ import UserDetails from "./core/models/userModel.js";
 import getRoute from "./core/middleware/getRoute.js";
 import apiRoutes from "./api/routes/apiRoutes.js";
 import adminRoutes from "./services/admin/routes/adminRoutes.js";
+import migrateRoutes from "./services/migrate/migrateRoutes.js";
 import errorHandler from "./core/middleware/errorHandler.js";
 import { requestLogger, errorLogger } from "./core/utils/logger.js";
 
@@ -26,6 +27,7 @@ app.use(getRoute);
 app.use(requestLogger);
 app.use("/api", apiRoutes);
 app.use("/admin", adminRoutes);
+app.use("/migrate", migrateRoutes)
 app.use(errorLogger);
 app.use(errorHandler);
 

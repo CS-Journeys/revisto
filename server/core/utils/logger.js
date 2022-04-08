@@ -27,7 +27,7 @@ class Logger {
   };
 
   static errorLogger = (err, req, res, next) => {
-    this.generalLogger.error(err);
+    this.generalLogger.error(err.stack);
     next(err);
   };
 

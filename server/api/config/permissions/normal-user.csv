@@ -1,9 +1,0 @@
-route,GET,POST,PUT,PATCH,DELETE
-/posts,yes,yes,,,
-/posts/id/:id,yes,,,if_own,if_own
-/posts/user,yes,,,,
-/posts/report/:id,,yes,,,
-/users,yes,,,yes,yes
-/users/register,,yes,,,
-/users/login,,yes,,,
-/users/resetPass,yes,yes,,,
