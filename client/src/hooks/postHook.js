@@ -27,7 +27,12 @@ export const usePost = (postid) => {
         const res = await axios
             .get(`/posts/id/${postid}`, getAuthConfig())
             .catch((err) => nav("/404"));
-        return res.data.post;
+        // Ensure we do not read from undefined (404 page), could be a better way to do this.
+        if (res) {
+            return res.data.post;
+        } else {
+            return undefined;
+        }
     });
 
     return { post: query.data, isLoading: query.isLoading, error: query.error };

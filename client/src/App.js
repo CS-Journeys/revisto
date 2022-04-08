@@ -39,7 +39,7 @@ const App = () => {
                             <Route
                                 exact
                                 path="/post/:postId"
-                                element={<LargePost />}
+                                element={<LargePost user={user} />}
                             />
                             <Route
                                 exact
