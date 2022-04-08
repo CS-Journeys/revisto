@@ -2,7 +2,6 @@ import createHttpError from "http-errors";
 import asyncHandler from "express-async-handler";
 
 import Post from "../../core/models/postModel.js";
-import { mongoose } from "mongoose";
 
 const REVERSE_DATE_SORT = { dateCreated: -1 };
 
@@ -30,7 +29,11 @@ export const getPost = asyncHandler(async (req, res) => {
   post = post.toObject();
   if (post.user.equals(req.user._id)) {
     post.isMine = true;
+  } 
+  if (post.reactedUsers.includes(req.user._id)) {
+    post.hasReacted = true;
   }
+
   delete post.user;
 
   res.json({ post });
@@ -110,29 +113,14 @@ export const reactPost = asyncHandler(async (req, res) => {
     if (post.user.equals(req.user._id)) {
         throw createHttpError(403, "FORBIDDEN");
     }
-
-    // Get the reaction type from the params
-    let reactType = req.params.reactType;
-
-    // Get already reacted post object
-    let reactedPost = await Post.findOne({
-        _id: post._id,
-        reactedUsers: { $in: [
-            mongoose.Schema.ObjectId(req.user._id)
-        ]}
-    });
     
     // Has user not reacted?
-    if (!reactedPost) {
-        // Increment specific reaction index
-        post.reactions[reactType]++;
+    if (!post.reactedUsers.includes(req.user._id)) {
+        // Increment reaction count
+        post.reactionCount++;
+        post.reactedUsers.push(req.user._id);
 
         await post.save();
-        return res.end();
     }
-    delete post.user;
-
-    // Else set reacted to true
-    post.hasReacted = true;
-    res.json({ post });
+    res.end();
 });
