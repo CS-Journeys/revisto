@@ -12,6 +12,7 @@ import About from "./pages/About";
 import PageNotFound from "./pages/PageNotFound";
 
 import { useMe } from "./hooks/userHook";
+import Featured from "./pages/Featured";
 
 /**
  * Main file for react component rendering
@@ -56,6 +57,11 @@ const App = () => {
                                 exact
                                 path="/me"
                                 element={<Profile user={user} />}
+                            />
+                            <Route
+                                exact
+                                path="/featured"
+                                element={<Featured />}
                             />
                             <Route path="/*" element={<PageNotFound />} />
                         </Routes>

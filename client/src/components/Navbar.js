@@ -14,7 +14,7 @@ const Navbar = ({ user }) => {
     const isMobile = window.matchMedia('(max-width: 1000px)').matches;
     const leftLinks = [{ 
             text: "Featured",
-            url: "#",
+            url: "/featured",
             key: 0
         },
         {

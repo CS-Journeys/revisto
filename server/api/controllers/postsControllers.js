@@ -7,11 +7,15 @@ const REVERSE_DATE_SORT = { dateCreated: -1 };
 
 // Get all posts
 export const getPosts = asyncHandler(async (req, res) => {
+
   const before = new Date(req.query.before);
   const query = req.query.before ? { dateCreated: { $lt: before } } : {};
   const responseFields = "title content dateCreated";
+
+  const SORT_ORDER = { [req.query.sortAttribute] : -1};
+
   const posts = await Post.find(query, responseFields)
-    .sort(REVERSE_DATE_SORT)
+    .sort(SORT_ORDER)
     .limit(20)
     .select()
     .exec();
