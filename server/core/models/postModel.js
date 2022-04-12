@@ -10,7 +10,10 @@ const PostSchema = new Schema({
   dateCreated: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
   reportCount: { type: Number, default: 0 },
-  reports: { type: [String], default: [] }
+  reports: { type: [String], default: [] },
+
+  reactedUsers: [{type: Schema.Types.ObjectId, ref: "users"}],
+  reactionCount: {type: Number, default: 0}
 });
 
 // Update dateUpdated on save

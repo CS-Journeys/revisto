@@ -4,18 +4,16 @@ import { Link } from "react-router-dom";
 import { useMyPosts } from "../hooks/postHook";
 
 const Profile = (props) => {
-    const postFunc = useMyPosts();
-
-    //console.log(postFunc);
+    const posts = useMyPosts();
 
     return (
         <div className="container">
             {props.user ? (
                 <div>
-                    {postFunc ? (
+                    {posts ? (
                         <div>
                             <h1 className="text-center">Your Journals</h1>
-                            <PostsList postFunc={postFunc} />
+                            <PostsList posts={posts} />
                         </div>
                     ) : (
                         <h1>

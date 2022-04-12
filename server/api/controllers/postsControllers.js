@@ -7,30 +7,45 @@ const REVERSE_DATE_SORT = { dateCreated: -1 };
 
 // Get all posts
 export const getPosts = asyncHandler(async (req, res) => {
+
   const before = new Date(req.query.before);
   const query = req.query.before ? { dateCreated: { $lt: before } } : {};
   const responseFields = "title content dateCreated";
+
+  const SORT_ORDER = { [req.query.sortAttribute] : -1};
+
   const posts = await Post.find(query, responseFields)
-    .sort(REVERSE_DATE_SORT)
+    .sort(SORT_ORDER)
     .limit(20)
     .select()
     .exec();
-  
+
   res.json({ posts });
 });
 
 // Get post of given id
 export const getPost = asyncHandler(async (req, res) => {
-  const responseFields = "title content dateCreated user"
+  const responseFields = "title content dateCreated user reactedUsers";
   let post = await Post.findById(req.params.id, responseFields).exec();
 
   if (!post) throw createHttpError(404, "Post not found");
 
+  // Turn the post obj into a basic vanilla object so that we can add/remove props
   post = post.toObject();
+  
+  // Determine if user owns the post
   if (post.user.equals(req.user._id)) {
     post.isMine = true;
   }
+
+  // Determine if user has already reacted to the post
+  if (post.reactedUsers.some(id => id.equals(req.user._id))) {
+    post.isReacted = true;
+  }
+  
+  // Prevent private info from being exposed to the frontend
   delete post.user;
+  delete post.reactedUsers;
 
   res.json({ post });
 });
@@ -58,7 +73,7 @@ export const deletePost = asyncHandler(async (req, res) => {
   let post = await Post.findById(req.params.id).exec();
 
   if (!post) throw createHttpError(404, "Post not found");
-  if (req.ifOwn && post.user.toString() != req.user._id) {
+  if (post.user.toString() != req.user._id) {
     throw createHttpError(403, "FORBIDDEN");
   }
   await Post.deleteOne({ _id: post._id });
@@ -71,7 +86,7 @@ export const updatePost = asyncHandler(async (req, res) => {
   let post = await Post.findById(req.params.id).exec();
 
   if (!post) throw createHttpError(404, "Post not found");
-  if (req.ifOwn && post.user.toString() != req.user._id) {
+  if (post.user.toString() != req.user._id) {
     throw createHttpError(403, "FORBIDDEN");
   }
 
@@ -96,5 +111,29 @@ export const reportPost = asyncHandler(async (req, res) => {
 
   await Post.findByIdAndUpdate(req.params.id, query).exec();
 
+  res.end();
+});
+
+// React to post with given id
+export const reactPost = asyncHandler(async (req, res) => {
+  let post = await Post.findById(req.params.id).exec();
+  if (!post) throw createHttpError(404, "Post not found");
+
+  // Ensure no self-reaction
+  if (post.user.equals(req.user._id)) {
+    throw createHttpError(403, "FORBIDDEN");
+  }
+
+  // Has user already reacted?
+  if (post.reactedUsers.includes(req.user._id)) {
+    throw createHttpError(403, "Already Reacted!");
+  }
+
+  // Else increment reaction
+  post.reactionCount++;
+  post.reactedUsers.push(req.user._id);
+
+  await post.save();
+  
   res.end();
 });

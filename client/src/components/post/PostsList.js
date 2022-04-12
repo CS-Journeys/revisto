@@ -7,8 +7,8 @@ import Post from "./Post";
  * @param {Function} postFunc The function to get the posts (usePosts())
  * @returns {JSX.Element} The posts to be displayed
  */
-const PostsList = ({ postFunc }) => {
-    const { posts } = postFunc;
+const PostsList = (props) => {
+    const { posts } = props.posts;
 
     return (
         <div className="row d-flex justify-content-center">

@@ -5,13 +5,13 @@ import axios from "axios";
 
 //====== POSTS ======
 
-export const usePosts = () => {
+export const usePosts = (params) => {
     const query = useQuery("posts", async () => {
-        const res = await axios.get("/posts", getAuthConfig());
+        const res = await axios.get("/posts", {params : params}, getAuthConfig());
+
         //Error handling
-        if (res.data.err) {
-            throw new Error(res.data.err);
-        }
+        if (res.data.err) { throw new Error(res.data.err); }
+
         return res.data.posts;
     });
     return {
@@ -160,5 +160,23 @@ export const useReportPost = () => {
         isLoading: mut.isLoading,
         error: mut.error,
         reportPost: mut.mutate,
+    };
+};
+
+
+export const useReactPost = () => {
+    const mut = useMutation(
+        async (id) => {
+            const res = await axios.patch(`/posts/react/${id}`, { params: {}}, getAuthConfig());
+
+            //Error handling
+            if (res.data.err) {
+                throw new Error(res.data.err);
+            }
+    });
+    return {
+        isLoading: mut.isLoading,
+        error: mut.error,
+        reactPost: mut.mutate,
     };
 };
