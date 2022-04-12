@@ -3,8 +3,6 @@ import PostsList from "../components/post/PostsList";
 import { usePosts } from "../hooks/postHook";
 
 const Featured = (props) => {
-    // TODO: update featured when clicked, so user does not have to
-     // refresh page to see featured posts
     const posts = usePosts({ sortAttribute : "reactionCount" });
 
     return (

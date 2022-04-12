@@ -124,13 +124,16 @@ export const reactPost = asyncHandler(async (req, res) => {
     throw createHttpError(403, "FORBIDDEN");
   }
 
-  // Has user not reacted?
-  if (!post.reactedUsers.includes(req.user._id)) {
-    // Increment reaction count
-    post.reactionCount++;
-    post.reactedUsers.push(req.user._id);
-
-    await post.save();
+  // Has user already reacted?
+  if (post.reactedUsers.includes(req.user._id)) {
+    throw createHttpError(403, "Already Reacted!");
   }
+
+  // Else increment reaction
+  post.reactionCount++;
+  post.reactedUsers.push(req.user._id);
+
+  await post.save();
+  
   res.end();
 });

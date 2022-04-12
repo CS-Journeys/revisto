@@ -162,3 +162,21 @@ export const useReportPost = () => {
         reportPost: mut.mutate,
     };
 };
+
+
+export const useReactPost = () => {
+    const mut = useMutation(
+        async (id) => {
+            const res = await axios.patch(`/posts/react/${id}`, { params: {}}, getAuthConfig());
+
+            //Error handling
+            if (res.data.err) {
+                throw new Error(res.data.err);
+            }
+    });
+    return {
+        isLoading: mut.isLoading,
+        error: mut.error,
+        reactPost: mut.mutate,
+    };
+};

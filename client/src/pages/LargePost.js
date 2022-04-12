@@ -5,12 +5,15 @@ import {
     useUpdatePost,
     useDeletePost,
     useReportPost,
+    useReactPost,
 } from "../hooks/postHook";
 import ConfirmationModal from "../components/ConfirmationModal";
 
 const NormalPost = ({ post, user, onEdit }) => {
     const { deletePost } = useDeletePost();
     const { reportPost } = useReportPost();
+    const { reactPost } = useReactPost();
+
     const [show, setShow] = useState(false);
     const [reacted, setReact] = useState(false);
 
@@ -35,6 +38,11 @@ const NormalPost = ({ post, user, onEdit }) => {
             },
         });
     };
+    const onReact = () => {
+        reactPost(post._id, {
+            onSuccess: () => setReact(true)
+        });
+    };
 
     return (
         <div className="container w-100 p-4 bg-light shadow-sm">
@@ -51,21 +59,23 @@ const NormalPost = ({ post, user, onEdit }) => {
 
                 <br />
                 <br />
-                { (user && !post.isMine) ? <div>
-                    { (!reacted) ? 
+                { (user && !post.isMine && !post.isReacted) ? 
+                    <div>
+                    { (!reacted) ?
                         <div>
                             <a>React to this!</a>
                             <br />
-                            <button className="btn" onClick={() => setReact(true)}>
+                            <button className="btn" onClick={onReact}>
                                 &#128512;
                             </button>
-                            <button className="btn" onClick={() => setReact(true)}>
+                            <button className="btn" onClick={onReact}>
                                 &#128514;
                             </button>
-                            <button className="btn" onClick={() => setReact(true)}>
+                            <button className="btn" onClick={onReact}>
                                 &#128562;
                             </button>
-                        </div> : <a>Your reaction has been saved!</a>}
+                        </div> : 
+                        <a>Your reaction has been saved!</a>}
                     </div> : null
                 }
             </span>
