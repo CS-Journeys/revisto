@@ -1,9 +1,10 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PostsList from "../components/post/PostsList";
 import { usePosts } from "../hooks/postHook";
 
 const Featured = (props) => {
-    const posts = usePosts({ sortAttribute : "reactionCount" });
+    const attrib = "reactionCount";
+    const posts = usePosts({ sortAttribute : attrib });
 
     return (
         <div>

@@ -1,10 +1,11 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PostsList from "../components/post/PostsList";
 import PostInput from "../components/post/PostInput";
 import { usePosts } from "../hooks/postHook";
 
 const Home = (props) => {
-    const posts = usePosts({ sortAttribute : "dateCreated" });
+    const attrib = "dateCreated";
+    const posts = usePosts({ sortAttribute : attrib });
 
     return (
         <div>

@@ -5,6 +5,17 @@ import axios from "axios";
 
 //====== POSTS ======
 
+export const refreshPosts = (prev, curr) => {
+    const qc = useQueryClient();
+
+    if (prev != curr) {
+        qc.invalidateQueries("posts");
+        return curr;
+    }
+
+    return prev;
+}
+
 export const usePosts = (params) => {
     const query = useQuery("posts", async () => {
         const res = await axios.get("/posts", {params : params}, getAuthConfig());
@@ -162,7 +173,6 @@ export const useReportPost = () => {
         reportPost: mut.mutate,
     };
 };
-
 
 export const useReactPost = () => {
     const mut = useMutation(

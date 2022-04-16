@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -13,6 +13,7 @@ import PageNotFound from "./pages/PageNotFound";
 
 import { useMe } from "./hooks/userHook";
 import Featured from "./pages/Featured";
+import { refreshPosts } from "./hooks/postHook";
 
 /**
  * Main file for react component rendering
@@ -22,13 +23,18 @@ import Featured from "./pages/Featured";
 
 const App = () => {
     const { user } = useMe();
+    const [postParams, setParams ] = useState("dateCreated");
+
+    const updateParams = (curr) => {
+        setParams(refreshPosts(postParams, curr));
+    }
 
     return (
         <div className="App container-fluid">
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-10">
                     <BrowserRouter>
-                        <Navbar user={user} />
+                        <Navbar user={user} updateParams={updateParams} />
                         <br />
                         <Routes>
                             <Route

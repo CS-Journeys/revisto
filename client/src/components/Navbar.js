@@ -13,9 +13,10 @@ import { useQueryClient } from "react-query";
 const Navbar = ({ user }) => {
     const isMobile = window.matchMedia('(max-width: 1000px)').matches;
 
-    const resetPostQuery = () => {
-        const qc = useQueryClient();
-        qc.invalidateQueries("posts");
+    const resetPostQuery = (attrib) => {
+        if (attrib == "Home" || attrib == "Featured") {
+            props.updateParams(attrib);
+        }
     }
 
     const leftLinks = [{ 
@@ -44,7 +45,7 @@ const Navbar = ({ user }) => {
         <div className="nav-control">
             <nav className="navbar navbar-expand-lg navbar-light nav-bg">
                 {/* Logo */}
-                <Link onClick={() => resetPostQuery()} to="/" className="nav-logo">
+                <Link onClick={() => resetPostQuery("Home")} to="/" className="nav-logo">
                     <img src={logo} alt="Logo" id="logo" />
                 </Link>
 
@@ -56,7 +57,7 @@ const Navbar = ({ user }) => {
                         
                         { leftLinks.map(link => 
                             <NavDropdown.Item className="nav-link" key={link.key} 
-                                onClick={() => resetPostQuery()} href={link.url}>
+                                onClick={() => resetPostQuery(link.text)} href={link.url}>
 
                                 <h4>{link.text}</h4>
                             </NavDropdown.Item>) }
@@ -72,7 +73,7 @@ const Navbar = ({ user }) => {
                         <div className="navbar-nav navbar-left">
                             { leftLinks.map(link => 
                                 <Link className="nav-link" key={link.key} 
-                                    onClick={() => resetPostQuery()} to={link.url}>
+                                    onClick={() => resetPostQuery(link.text)} to={link.url}>
 
                                     <h4>{link.text}</h4>
                                 </Link>)}
