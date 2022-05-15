@@ -13,10 +13,10 @@ import { useQueryClient } from "react-query";
 const Navbar = ({ user }) => {
     const isMobile = window.matchMedia('(max-width: 1000px)').matches;
 
+    const qc = useQueryClient();
+
     const resetPostQuery = (attrib) => {
-        if (attrib == "Home" || attrib == "Featured") {
-            props.updateParams(attrib);
-        }
+        qc.invalidateQueries("posts");
     }
 
     const leftLinks = [{ 

@@ -5,7 +5,7 @@ import axios from "axios";
 
 //====== POSTS ======
 
-export const refreshPosts = (prev, curr) => {
+export const useRefreshPosts = (prev, curr) => {
     const qc = useQueryClient();
 
     if (prev != curr) {

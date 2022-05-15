@@ -13,7 +13,7 @@ import PageNotFound from "./pages/PageNotFound";
 
 import { useMe } from "./hooks/userHook";
 import Featured from "./pages/Featured";
-import { refreshPosts } from "./hooks/postHook";
+import { useRefreshPosts } from "./hooks/postHook";
 
 /**
  * Main file for react component rendering
@@ -25,8 +25,8 @@ const App = () => {
     const { user } = useMe();
     const [postParams, setParams ] = useState("dateCreated");
 
-    const updateParams = (curr) => {
-        setParams(refreshPosts(postParams, curr));
+    const useUpdateParams = (curr) => {
+        setParams(useRefreshPosts(postParams, curr));
     }
 
     return (
@@ -34,7 +34,7 @@ const App = () => {
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-10">
                     <BrowserRouter>
-                        <Navbar user={user} updateParams={updateParams} />
+                        <Navbar user={user} updateParams={useUpdateParams} />
                         <br />
                         <Routes>
                             <Route
