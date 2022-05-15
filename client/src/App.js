@@ -26,6 +26,8 @@ const App = () => {
     const [postParams, setParams ] = useState("dateCreated");
 
     const useUpdateParams = (curr) => {
+        if (curr == "About") { return; }
+
         setParams(useRefreshPosts(postParams, curr));
     }
 

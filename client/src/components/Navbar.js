@@ -2,7 +2,6 @@ import React from "react";
 import logo from "../assets/media/revistoLogo.svg";
 import { Link } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
-import { useQueryClient } from "react-query";
 
 /**
  * Component Navbar to be displayed at the top of the page in
@@ -10,14 +9,8 @@ import { useQueryClient } from "react-query";
  * @param  {User} user       The current user logged in
  * @return {JSX.Element}     The updated Navbar
  */
-const Navbar = ({ user }) => {
+const Navbar = ({ user, updateParams }) => {
     const isMobile = window.matchMedia('(max-width: 1000px)').matches;
-
-    const qc = useQueryClient();
-
-    const resetPostQuery = (attrib) => {
-        qc.invalidateQueries("posts");
-    }
 
     const leftLinks = [{ 
             text: "Featured",
@@ -45,7 +38,7 @@ const Navbar = ({ user }) => {
         <div className="nav-control">
             <nav className="navbar navbar-expand-lg navbar-light nav-bg">
                 {/* Logo */}
-                <Link onClick={() => resetPostQuery("Home")} to="/" className="nav-logo">
+                <Link onClick={() => updateParams("Home")} to="/" className="nav-logo">
                     <img src={logo} alt="Logo" id="logo" />
                 </Link>
 
@@ -57,7 +50,7 @@ const Navbar = ({ user }) => {
                         
                         { leftLinks.map(link => 
                             <NavDropdown.Item className="nav-link" key={link.key} 
-                                onClick={() => resetPostQuery(link.text)} href={link.url}>
+                                onClick={() => updateParams(link.text)} href={link.url}>
 
                                 <h4>{link.text}</h4>
                             </NavDropdown.Item>) }
@@ -73,7 +66,7 @@ const Navbar = ({ user }) => {
                         <div className="navbar-nav navbar-left">
                             { leftLinks.map(link => 
                                 <Link className="nav-link" key={link.key} 
-                                    onClick={() => resetPostQuery(link.text)} to={link.url}>
+                                    onClick={() => updateParams(link.text)} to={link.url}>
 
                                     <h4>{link.text}</h4>
                                 </Link>)}

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PostsList from "../components/post/PostsList";
 import { usePosts } from "../hooks/postHook";
 
