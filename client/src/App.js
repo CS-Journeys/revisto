@@ -13,7 +13,7 @@ import PageNotFound from "./pages/PageNotFound";
 
 import { useMe } from "./hooks/userHook";
 import Featured from "./pages/Featured";
-import { useRefreshPosts } from "./hooks/postHook";
+import { useQueryClient } from "react-query";
 
 /**
  * Main file for react component rendering
@@ -23,12 +23,16 @@ import { useRefreshPosts } from "./hooks/postHook";
 
 const App = () => {
     const { user } = useMe();
+    const qc = useQueryClient();
     const [postParams, setParams ] = useState("dateCreated");
 
     const useUpdateParams = (curr) => {
-        const params = useRefreshPosts(postParams, curr);
         if (curr == "About") { return; }
-        setParams(params);
+
+        if (curr != postParams) {
+            qc.invalidateQueries("posts");
+            setParams(curr);
+        }
     }
 
     return (

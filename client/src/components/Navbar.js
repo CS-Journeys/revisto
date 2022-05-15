@@ -38,7 +38,7 @@ const Navbar = ({ user }) => {
         <div className="nav-control">
             <nav className="navbar navbar-expand-lg navbar-light nav-bg">
                 {/* Logo */}
-                <Link to="/" className="nav-logo">
+                <Link onClick={() => updateParams("Home")} to="/" className="nav-logo">
                     <img src={logo} alt="Logo" id="logo" />
                 </Link>
 
@@ -50,7 +50,7 @@ const Navbar = ({ user }) => {
                         
                         { leftLinks.map(link => 
                             <NavDropdown.Item className="nav-link" key={link.key} 
-                                 href={link.url}>
+                                onClick={() => updateParams("Home")} href={link.url}>
 
                                 <h4>{link.text}</h4>
                             </NavDropdown.Item>) }
@@ -66,7 +66,7 @@ const Navbar = ({ user }) => {
                         <div className="navbar-nav navbar-left">
                             { leftLinks.map(link => 
                                 <Link className="nav-link" key={link.key} 
-                                     to={link.url}>
+                                    onClick={() => updateParams("Home")} to={link.url}>
 
                                     <h4>{link.text}</h4>
                                 </Link>)}

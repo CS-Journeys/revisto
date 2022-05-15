@@ -4,7 +4,7 @@
 }
 
 .cp-input {
-    border: 0;
+    border: 1px solid var(--clr-grey-3);
     padding-top: 3vh;
 }
 
@@ -14,7 +14,7 @@
 
 /*--Post Card--*/
 .card {
-    border: none;
+    border: 1px solid var(--clr-grey-3);
     box-shadow: 0px 0px var(--clr-white);
     transition: box-shadow 0.3s;
 }
