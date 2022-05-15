@@ -4,20 +4,22 @@ import asyncHandler from "express-async-handler";
 import Post from "../../core/models/postModel.js";
 
 const REVERSE_DATE_SORT = { dateCreated: -1 };
+const PAGE_SIZE = 20;
 
 // Get all posts
 export const getPosts = asyncHandler(async (req, res) => {
 
+  const page = req.query.page ? req.query.page : 0;
+  const sortOrder = req.query.sortAttribute ? { [req.query.sortAttribute] : -1} : REVERSE_DATE_SORT;
   const before = new Date(req.query.before);
+
   const query = req.query.before ? { dateCreated: { $lt: before } } : {};
   const responseFields = "title content dateCreated";
 
-  const SORT_ORDER = { [req.query.sortAttribute] : -1};
-
   const posts = await Post.find(query, responseFields)
-    .sort(SORT_ORDER)
-    .limit(20)
-    .select()
+    .sort(sortOrder)
+    .skip(page * PAGE_SIZE)
+    .limit(PAGE_SIZE)
     .exec();
 
   res.json({ posts });
