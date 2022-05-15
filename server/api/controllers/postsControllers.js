@@ -2,14 +2,17 @@ import createHttpError from "http-errors";
 import asyncHandler from "express-async-handler";
 
 import Post from "../../core/models/postModel.js";
+import logger from "../../core/utils/logger.js";
 
 const REVERSE_DATE_SORT = { dateCreated: -1 };
 const PAGE_SIZE = 20;
 
 // Get all posts
 export const getPosts = asyncHandler(async (req, res) => {
-
   const page = req.query.page ? req.query.page : 0;
+  if (page < 0) {
+    throw new createHttpError(400, "Page number must be positive");
+  }
   const sortOrder = req.query.sortAttribute ? { [req.query.sortAttribute] : -1} : REVERSE_DATE_SORT;
   const before = new Date(req.query.before);
 
