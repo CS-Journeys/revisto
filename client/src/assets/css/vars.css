@@ -15,12 +15,12 @@
     --clr-black-1: #222;
     --clr-white: #fff;
 
-    --clr-grey-1: hsl(210, 22%, 49%);
-    --clr-grey-2: hsl(209, 23%, 60%);
-    --clr-grey-3: hsl(211, 27%, 70%);
+    --clr-grey-1: hsl(207, 10%, 56%);
+    --clr-grey-2: hsl(209, 14%, 67%);
+    --clr-grey-3: hsl(210, 15%, 75%);
     --clr-grey-4: hsl(210, 31%, 80%);
     --clr-grey-5: hsl(212, 33%, 89%);
-    --clr-grey-6: hsl(210, 36%, 96%);
+    --clr-grey-6: hsl(210, 36%, 94%);
 
     --spacing: 0.1rem;
     --radius: 0.25rem;

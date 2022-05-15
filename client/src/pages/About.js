@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 import teamImage from "../assets/media/team-pic.jpg";
 
 // TODO: Contact Form
@@ -11,7 +10,7 @@ import teamImage from "../assets/media/team-pic.jpg";
  */
 const About = () => {
     return (
-        <article>
+        <article className="about-cover">
             <div className="container-fl">
                 <h1>What is Revisto?</h1>
                 <p className="lead">
@@ -20,8 +19,8 @@ const About = () => {
 
                 <p>
                     Our goal is for anyone to be able to post anything, anytime,
-                    about their lives - without the over-emphasis on popularity
-                    that is commonplace among many social media venues.
+                    about their lives! We want to create a social media app that
+                    does not use addictive tactics or feel like a popularity contest!
                 </p>
                 <p>
                     The site is currently being developed and maintained as part
@@ -37,21 +36,19 @@ const About = () => {
                     projects and developing working applications. We love what
                     we do and want to share our progress with the world!
                 </p>
-                <br />
             </div>
 
             <div>
-                <h2>The Team</h2>
                 <img
                     src={teamImage}
-                    className="w-50 img-thumbnail"
+                    className="w-25"
                     alt="The Team"
                 />
-            </div>
-            <p>
+                <p>
                 We would appreciate any and all feedback you have about the
                 site!
             </p>
+            </div>
         </article>
     );
 };

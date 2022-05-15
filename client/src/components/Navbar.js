@@ -9,7 +9,7 @@ import { NavDropdown } from "react-bootstrap";
  * @param  {User} user       The current user logged in
  * @return {JSX.Element}     The updated Navbar
  */
-const Navbar = ({ user, updateParams }) => {
+const Navbar = ({ user }) => {
     const isMobile = window.matchMedia('(max-width: 1000px)').matches;
 
     const leftLinks = [{ 
@@ -38,7 +38,7 @@ const Navbar = ({ user, updateParams }) => {
         <div className="nav-control">
             <nav className="navbar navbar-expand-lg navbar-light nav-bg">
                 {/* Logo */}
-                <Link onClick={() => updateParams("Home")} to="/" className="nav-logo">
+                <Link to="/" className="nav-logo">
                     <img src={logo} alt="Logo" id="logo" />
                 </Link>
 
@@ -50,7 +50,7 @@ const Navbar = ({ user, updateParams }) => {
                         
                         { leftLinks.map(link => 
                             <NavDropdown.Item className="nav-link" key={link.key} 
-                                onClick={() => updateParams(link.text)} href={link.url}>
+                                 href={link.url}>
 
                                 <h4>{link.text}</h4>
                             </NavDropdown.Item>) }
@@ -66,7 +66,7 @@ const Navbar = ({ user, updateParams }) => {
                         <div className="navbar-nav navbar-left">
                             { leftLinks.map(link => 
                                 <Link className="nav-link" key={link.key} 
-                                    onClick={() => updateParams(link.text)} to={link.url}>
+                                     to={link.url}>
 
                                     <h4>{link.text}</h4>
                                 </Link>)}

@@ -13,10 +13,14 @@
 .form input {
     border-radius: var(--radius);
     padding: 0.25rem 0.5rem;
-    border-color: var(--clr-primary-2);
+    border-color: var(--clr-grey-3);
 }
 .form textarea {
     border-color: var(--clr-primary-2);
+}
+
+.form input:hover {
+    box-shadow: 2px 2px 3px var(--clr-grey-3);
 }
 
 .cf-control {
@@ -38,11 +42,15 @@
     text-transform: capitalize;
     border-radius: var(--radius);
     cursor: pointer;
+    transition: box-shadow 0.1s;
 }
 
 .form button:hover {
-    background: var(--clr-primary-1);
+    background: var(--clr-primary-2);
+    border-color: transparent;
     color: var(--clr-white);
+
+    box-shadow: 2px 2px 3px var(--clr-primary-1);
 }
 
 .form-floating > .form-control {

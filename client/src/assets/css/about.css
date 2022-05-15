@@ -13,3 +13,10 @@
 .fof-img img {
     max-width: 10px;
 }
+
+.about-cover {
+    background-color: var(--clr-white);
+    padding: 1vw;
+    padding-bottom: 0;
+    border-radius: 3px;
+}

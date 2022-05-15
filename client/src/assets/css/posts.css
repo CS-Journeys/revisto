@@ -4,28 +4,37 @@
 }
 
 .cp-input {
-    border: 2px solid var(--clr-primary-2);
+    border: 0;
     padding-top: 3vh;
 }
 
 .cp-input:hover {
-    border-color: var(--clr-primary-1);
+    box-shadow: 5px 5px var(--clr-black);
 }
 
 /*--Post Card--*/
 .card {
-    background-color: var(--clr-primary-2);
+    border: none;
+    box-shadow: 0px 0px var(--clr-white);
+    transition: box-shadow 0.3s;
+}
+
+.card:hover {
+    box-shadow: 5px 5px var(--clr-black);
 }
 
 .card-header {
-    background-color: var(--clr-primary-2);
-    color: var(--clr-white);
+    background-color: var(--clr-white);
+    color: var(--clr-black-1);
+    border: 0;
+    border-radius: 0;
+    
 }
 
 .card-body {
-    padding-bottom: 0px;
     color: var(--card-body);
     background-color: var(--clr-white);
+    width: 100%
 }
 
 .c-body-dim {
@@ -38,14 +47,24 @@
 .card-footer {
     padding-top: 0px;
     background-color: var(--clr-white);
-    border: 0px;
+    border: 0;
+    border-radius: 0;
 }
 
 .footer-link {
     text-align: center;
     display: block;
+    color: var(--clr-primary-2);
 }
 
 .footer-date {
     font-size: 90%;
+}
+
+.lg-p-header {
+    font-weight: bold;
+}
+
+.lg-p-content {
+    font-size: large;
 }

@@ -46,13 +46,14 @@ const NormalPost = ({ post, user, onEdit }) => {
 
     return (
         <div className="container w-100 p-4 bg-light shadow-sm">
-            <h1 className="display-4 text-center border border-top-0 
+            <p className="lg-p-header display-4 text-center border border-top-0 
                 border-left-0 border-right-0 border-dark">
-
                 {post.title}
-            </h1>
+            </p>
 
-            <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>{post.content}</p>
+            <p className="lg-p-content" style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                {post.content}
+            </p>
             
             <span>
                 <strong>{date}</strong>
