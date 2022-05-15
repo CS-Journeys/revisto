@@ -1,21 +1,19 @@
 import React, { useEffect } from "react";
 import PostsList from "../components/post/PostsList";
-import PostInput from "../components/post/PostInput";
 import { usePosts } from "../hooks/postHook";
 
-const Home = (props) => {
-    const attrib = "dateCreated";
+const Featured = (props) => {
+    const attrib = "reactionCount";
     const posts = usePosts({ sortAttribute : attrib });
 
     return (
         <div>
             <div className="container-fluid">
-                {/* Render home page */}
-                <PostInput user={props.user} />
+                <h1 className="text-center">Featured</h1>
                 <PostsList posts={posts} />
             </div>
         </div>
     );
 };
 
-export default Home;
+export default Featured;

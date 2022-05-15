@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -9,8 +9,11 @@ import CreatePost from "./pages/CreatePost";
 import Register from "./pages/Register";
 import Profile from "./pages/Profile";
 import About from "./pages/About";
+import PageNotFound from "./pages/PageNotFound";
 
-import { useMe } from "./services/userService";
+import { useMe } from "./hooks/userHook";
+import Featured from "./pages/Featured";
+import { useRefreshPosts } from "./hooks/postHook";
 
 /**
  * Main file for react component rendering
@@ -20,31 +23,53 @@ import { useMe } from "./services/userService";
 
 const App = () => {
     const { user } = useMe();
+    const [postParams, setParams ] = useState("dateCreated");
+
+    const useUpdateParams = (curr) => {
+        setParams(useRefreshPosts(postParams, curr));
+    }
 
     return (
         <div className="App container-fluid">
             <div className="row d-flex justify-content-center">
                 <div className="col-lg-10">
                     <BrowserRouter>
-                        <Navbar user={user} />
+                        <Navbar user={user} updateParams={useUpdateParams} />
                         <br />
                         <Routes>
-                            <Route path="/" element={<Home user={user} />} />
+                            <Route
+                                exact
+                                path="/"
+                                element={<Home user={user} />}
+                            />
                             <Route path="/login" element={<Login />} />
                             <Route
+                                exact
                                 path="/post/:postId"
-                                element={<LargePost />}
+                                element={<LargePost user={user} />}
                             />
                             <Route
+                                exact
                                 path="/submit"
                                 element={<CreatePost user={user} />}
                             />
-                            <Route path="/about" element={<About />} />
-                            <Route path="/register" element={<Register />} />
+                            <Route exact path="/about" element={<About />} />
                             <Route
+                                exact
+                                path="/register"
+                                element={<Register />}
+                            />
+                            <Route
+                                exact
                                 path="/me"
                                 element={<Profile user={user} />}
                             />
+                            <Route
+                                exact
+                                path="/featured"
+                                element={<Featured />}
+                            />
+                            <Route path="/*" element={<PageNotFound />} />
                         </Routes>
                     </BrowserRouter>
                 </div>

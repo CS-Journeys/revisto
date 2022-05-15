@@ -45,16 +45,13 @@ const About = () => {
                 <img
                     src={teamImage}
                     className="w-50 img-thumbnail"
-                    alt="Team picture!"
+                    alt="The Team"
                 />
             </div>
             <p>
                 We would appreciate any and all feedback you have about the
                 site!
             </p>
-            <Link className="about-link" to="/">
-                <h4 className="display-5">Contact Us (WIP)</h4>
-            </Link>
         </article>
     );
 };

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { formatContent } from "../../hooks/authHook";
 
 /**
  * A post object in revisto.
@@ -27,17 +28,12 @@ const Post = ({ post }) => {
             <div className="card">
                 <div className="card-header">{post.title}</div>
                 <div className="card-body c-body-dim">
-                    {post.content ? (
-                        <p>{post.content}</p>
-                    ) : (
-                        "No Content Found."
-                    )}
+                    <p className="card-text">{post.content}</p>
                 </div>
                 <div className="card-footer">
                     <Link
                         className="footer-link"
-                        to={{ pathname: url, state: { post } }}
-                    >
+                        to={{ pathname: url, state: { post } }} >
                         See More
                     </Link>
 

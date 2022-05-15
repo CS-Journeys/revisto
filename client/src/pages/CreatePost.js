@@ -1,17 +1,28 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { useCreatePost } from "../services/postService";
+import { useCreatePost } from "../hooks/postHook";
 import { useNavigate } from "react-router-dom";
 
 const CreatePost = (props) => {
+    const MIN_CONT = 50;
+    const MAX_TITLE = 75;
+
     const { createPost } = useCreatePost();
     const nav = useNavigate();
+    const [numChars, setNumChars] = useState(MIN_CONT);
 
     const handleSubmit = (e) => {
         e.preventDefault();
         const form = e.target;
 
         if (form.title && form.content) {
+            // Ensure correct sizes
+            if (form.content.length < MIN_CONT 
+                || form.title.length > MAX_TITLE) {
+
+                return;
+            }
+
             console.log(form.content.value);
             createPost(
                 {
@@ -39,6 +50,7 @@ const CreatePost = (props) => {
                             placeholder="Title"
                             id="title"
                             name="title"
+                            maxLength={MAX_TITLE}
                         />
         
                         <div className="form-group">
@@ -48,9 +60,14 @@ const CreatePost = (props) => {
                                 type="text"
                                 id="content"
                                 name="content"
+                                onChange={e => setNumChars(MIN_CONT - e.target.value.length)}
+                                minLength={MIN_CONT}
                             ></textarea>
                         </div>
-        
+
+                        { (numChars > 0) ?
+                            <p>{numChars} characters needed</p> : null
+                        }
                         <button className="w-10" type="submit">
                             Submit
                         </button>

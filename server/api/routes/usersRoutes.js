@@ -1,4 +1,5 @@
 import express from "express";
+import requireLogin from "../../core/middleware/requireLogin.js";
 
 import {
   me,
@@ -12,12 +13,12 @@ import {
 
 const router = express.Router();
 
-router.get("/", me);
+router.get("/", requireLogin, me);
 router.post("/register", register);
 router.post("/login", login);
-router.patch("/", updateUser);
-router.delete("/", deleteUser);
-router.post("/requestReset", requestPasswordReset);
-router.post("/resetPass", resetPassword);
+router.patch("/", requireLogin, updateUser);
+router.delete("/", requireLogin, deleteUser);
+router.post("/requestReset", requireLogin, requestPasswordReset);
+router.post("/resetPass", requireLogin, resetPassword);
 
 export default router;

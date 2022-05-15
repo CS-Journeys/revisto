@@ -1,16 +1,28 @@
 import { useQuery, useMutation, useQueryClient } from "react-query";
-import { getAuthConfig } from "./authServices";
+import { getAuthConfig } from "./authHook";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 //====== POSTS ======
 
-export const usePosts = () => {
+export const useRefreshPosts = (prev, curr) => {
+    const qc = useQueryClient();
+
+    if (prev != curr) {
+        qc.invalidateQueries("posts");
+        return curr;
+    }
+
+    return prev;
+}
+
+export const usePosts = (params) => {
     const query = useQuery("posts", async () => {
-        const res = await axios.get("/posts", getAuthConfig());
+        const res = await axios.get("/posts", {params : params}, getAuthConfig());
+
         //Error handling
-        if (res.data.err) {
-            throw new Error(res.data.err);
-        }
+        if (res.data.err) { throw new Error(res.data.err); }
+
         return res.data.posts;
     });
     return {
@@ -21,14 +33,19 @@ export const usePosts = () => {
 };
 
 export const usePost = (postid) => {
+    const nav = useNavigate();
     const query = useQuery(["post", postid], async () => {
-        const res = await axios.get(`/posts/id/${postid}`, getAuthConfig());
-        //Error handling
-        if (res.data.err) {
-            throw new Error(res.data.err);
+        const res = await axios
+            .get(`/posts/id/${postid}`, getAuthConfig())
+            .catch((err) => nav("/404"));
+        // Ensure we do not read from undefined (404 page), could be a better way to do this.
+        if (res) {
+            return res.data.post;
+        } else {
+            return undefined;
         }
-        return res.data.post;
     });
+
     return { post: query.data, isLoading: query.isLoading, error: query.error };
 };
 
@@ -154,5 +171,22 @@ export const useReportPost = () => {
         isLoading: mut.isLoading,
         error: mut.error,
         reportPost: mut.mutate,
+    };
+};
+
+export const useReactPost = () => {
+    const mut = useMutation(
+        async (id) => {
+            const res = await axios.patch(`/posts/react/${id}`, { params: {}}, getAuthConfig());
+
+            //Error handling
+            if (res.data.err) {
+                throw new Error(res.data.err);
+            }
+    });
+    return {
+        isLoading: mut.isLoading,
+        error: mut.error,
+        reactPost: mut.mutate,
     };
 };
