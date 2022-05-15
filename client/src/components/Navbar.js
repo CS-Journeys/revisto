@@ -9,7 +9,7 @@ import { NavDropdown } from "react-bootstrap";
  * @param  {User} user       The current user logged in
  * @return {JSX.Element}     The updated Navbar
  */
-const Navbar = ({ user }) => {
+const Navbar = ({ user, updateParams }) => {
     const isMobile = window.matchMedia('(max-width: 1000px)').matches;
 
     const leftLinks = [{ 
