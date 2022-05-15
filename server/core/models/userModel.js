@@ -15,7 +15,8 @@ const UserSchema = new Schema({
   userType: { type: String, default: "normal-user" },
   region: { type: String, default: "US" },
   language: { type: String, default: "EN" },
-  lastPost: { type: Date, default: () => new Date(0) }
+  lastPost: { type: Date, default: () => new Date(0) },
+  ban: { type: Schema.Types.ObjectId, ref: "bans" }
 });
 
 // Add passport-local-mongoose plug-in

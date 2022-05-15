@@ -5,7 +5,8 @@ const Schema = mongoose.Schema;
 
 const ReportSchema = new Schema({
   reason: { type: String },
-  dateReported: { type: Date, default: Date.now }
+  dateCreated: { type: Date, default: Date.now },
+  ignored: { type: Boolean, default: false }
 });
 
 export default mongoose.model("reports", ReportSchema);

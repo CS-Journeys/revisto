@@ -16,13 +16,16 @@ export const getPosts = asyncHandler(async (req, res) => {
   let sorter = { reportCount: -1 };
   delete query.orderBy;
 
-  if (orderBy == "title") sorter = { title : 1 };
-  else if (orderBy == "user") sorter = { user : 1 };
-  else if (orderBy == "dateCreated") sorter = { dateCreated : -1 };
-  else if (orderBy == "dateUpdated") sorter = { dateUpdated : -1};
+  // Select the sort type
+  if (orderBy == 'title') sorter = { title : 'ascending' };
+  else if (orderBy == 'user') sorter = { user : 'ascending' };
+  else if (orderBy == 'dateCreated') sorter = { dateCreated : 'descending' };
+  else if (orderBy == 'dateUpdated') sorter = { dateUpdated : 'descending' };
   else throw createHttpError(400, orderBy + " sort not implemented");
 
+  // Get the posts
   const posts = await Post.find(query).sort(sorter).exec();
+
   res.json({ posts });
 });
 
@@ -34,6 +37,16 @@ export const getPosts = asyncHandler(async (req, res) => {
  * @param {Object}    req.body.post  the new post data
  */
 export const updatePost = asyncHandler(async (req, res) => {
+  // Find the post
+  let post = await Post.findById(req.params.id).exec();
+  if (!post) throw createHttpError(404, "Post not found");
+
+  // Update the post
+  if (req.body.title) post.title = req.body.title;
+  if (req.body.content) post.content = req.body.content;
+  if ('hidden' in req.body) post.hidden = req.body.hidden;
+  if ('archived' in req.body) post.archived = req.body.archived;
+  await post.save();
 
   res.end();
 });

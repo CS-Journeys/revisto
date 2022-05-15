@@ -1,4 +1,6 @@
 import asyncHandler from "express-async-handler";
+import Post from "../../../core/models/postModel.js";
+import User from "../../../core/models/userModel.js";
 
 /**
  * Get all users, sorted by number of reports received
@@ -6,7 +8,17 @@ import asyncHandler from "express-async-handler";
  * @param {boolean}   req.query.banned    only get users which have/haven't been banned
  */
 export const getUsers = asyncHandler(async (req, res) => {
-  let users = [];
+  let query = {};
+  if ('banned' in req.query) {
+    query.ban = {$exists: req.query.banned};
+  }
+
+  let posts = await Post.find()
+
+  let users = await User
+    .find(query)
+    .sort({ reportCount})
+    .exec();
 
   res.json({ users });
 });
