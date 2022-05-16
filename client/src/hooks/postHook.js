@@ -1,193 +1,240 @@
-import { useQuery, useMutation, useQueryClient } from "react-query";
+import {
+  useQuery,
+  useInfiniteQuery,
+  useMutation,
+  useQueryClient,
+} from "react-query";
 import { getAuthConfig } from "./authHook";
 import { useNavigate } from "react-router-dom";
+import { useInView } from 'react-intersection-observer';
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 //====== POSTS ======
 export const useRefreshPosts = (curr) => {
-    const [postParams, setParams ] = useState("Home");
-    const qc = useQueryClient();
+  const [postParams, setParams] = useState("Home");
+  const qc = useQueryClient();
 
-    if (curr === "About") { return; }
+  if (curr === "About") {
+    return;
+  }
 
-    if (curr !== postParams) {
-        setParams(curr);
-        qc.invalidateQueries("posts");
-    }
-}
+  if (curr !== postParams) {
+    setParams(curr);
+    qc.invalidateQueries("posts");
+  }
+};
 
 export const usePosts = (params) => {
-    const query = useQuery("posts", async () => {
-        const res = await axios.get("/posts", {params : params}, getAuthConfig());
+  const [posts, setPosts] = useState([]);
+  const { ref, inView } = useInView();
+  const query = useInfiniteQuery(
+    "posts",
+    async ({ pageParam = 0 }) => {
+      params.page = pageParam;
+      const res = await axios.get(
+        "/posts",
+        { params: params },
+        getAuthConfig()
+      );
+      //Error handling
+      if (res.data.err) {
+        throw new Error(res.data.err);
+      }
+      return res.data;
+    },
+    {
+      getNextPageParam: (lastPage, pages) => {
+        if (pages.length > 2 && pages[pages.length - 2][0] === lastPage[0]) {
+          return null;
+        }
+        return pages.length;
+      }
+    }
+  );
+  useEffect(() => {
+    if (query.data) {
+      const flat = query.data.pages.map((page) => page.posts).flat();
+      // const filter = flat.filter((c, index) => {
+      //   return flat.indexOf(c) === index;
+      // });
+      setPosts(flat);
+    }
+  }, [query.data]);
 
-        //Error handling
-        if (res.data.err) { throw new Error(res.data.err); }
+  useEffect(() => {
+    if (inView) {
+      query.fetchNextPage();
+    }
+  }, [inView]);
 
-        return res.data.posts;
-    });
-    return {
-        posts: query.data,
-        isLoading: query.isLoading,
-        error: query.error,
-    };
+  return {
+    posts: posts,
+    isLoading: query.isLoading,
+    error: query.error,
+    loadMoreRef: ref,
+    hasMore: query.hasNextPage
+  };
 };
 
 export const usePost = (postid) => {
-    const nav = useNavigate();
-    const query = useQuery(["post", postid], async () => {
-        const res = await axios
-            .get(`/posts/id/${postid}`, getAuthConfig())
-            .catch((err) => nav("/404"));
-        // Ensure we do not read from undefined (404 page), could be a better way to do this.
-        if (res) {
-            return res.data.post;
-        } else {
-            return undefined;
-        }
-    });
+  const nav = useNavigate();
+  const query = useQuery(["post", postid], async () => {
+    const res = await axios
+      .get(`/posts/id/${postid}`, getAuthConfig())
+      .catch((err) => nav("/404"));
+    // Ensure we do not read from undefined (404 page), could be a better way to do this.
+    if (res) {
+      return res.data.post;
+    } else {
+      return undefined;
+    }
+  });
 
-    return { post: query.data, isLoading: query.isLoading, error: query.error };
+  return { post: query.data, isLoading: query.isLoading, error: query.error };
 };
 
 //Gets the post of the logged in user
 export const useMyPosts = () => {
-    const query = useQuery("myposts", async () => {
-        const res = await axios.get("/posts/user", getAuthConfig());
-        //Error handling
-        if (res.data.err) {
-            throw new Error(res.data.err);
-        }
-        return res.data.posts;
-    });
-    return {
-        posts: query.data,
-        isLoading: query.isLoading,
-        error: query.error,
-    };
+  const query = useQuery("myposts", async () => {
+    const res = await axios.get("/posts/user", getAuthConfig());
+    //Error handling
+    if (res.data.err) {
+      throw new Error(res.data.err);
+    }
+    return res.data.posts;
+  });
+  return {
+    posts: query.data,
+    isLoading: query.isLoading,
+    error: query.error,
+  };
 };
 
 //createPost returns id onSuccess
 export const useCreatePost = () => {
-    const qc = useQueryClient();
-    const mut = useMutation(
-        async ({ title, content }) => {
-            const res = await axios.post(
-                "/posts",
-                { title, content },
-                getAuthConfig()
-            );
-            //Error handling
-            if (res.data.err) {
-                throw new Error(res.data.err);
-            }
-            return res.data.id;
-        },
-        {
-            onSuccess: (id) => {
-                qc.invalidateQueries("posts");
-                qc.invalidateQueries("myposts");
-            },
-        }
-    );
-    return {
-        isLoading: mut.isLoading,
-        error: mut.error,
-        createPost: mut.mutate,
-    };
+  const qc = useQueryClient();
+  const mut = useMutation(
+    async ({ title, content }) => {
+      const res = await axios.post(
+        "/posts",
+        { title, content },
+        getAuthConfig()
+      );
+      //Error handling
+      if (res.data.err) {
+        throw new Error(res.data.err);
+      }
+      return res.data.id;
+    },
+    {
+      onSuccess: (id) => {
+        qc.invalidateQueries("posts");
+        qc.invalidateQueries("myposts");
+      },
+    }
+  );
+  return {
+    isLoading: mut.isLoading,
+    error: mut.error,
+    createPost: mut.mutate,
+  };
 };
 
 //deletePost accespts an id
 export const useDeletePost = () => {
-    const qc = useQueryClient();
-    const mut = useMutation(
-        async (id) => {
-            const res = await axios.delete(`/posts/id/${id}`, getAuthConfig());
-            //Error handling
-            if (res.data.err) {
-                throw new Error(res.data.err);
-            }
-            return res.data;
-        },
-        {
-            onSuccess: (id) => {
-                qc.invalidateQueries("posts");
-                qc.invalidateQueries("myposts");
-            },
-        }
-    );
-    return {
-        isLoading: mut.isLoading,
-        error: mut.error,
-        deletePost: mut.mutate,
-    };
+  const qc = useQueryClient();
+  const mut = useMutation(
+    async (id) => {
+      const res = await axios.delete(`/posts/id/${id}`, getAuthConfig());
+      //Error handling
+      if (res.data.err) {
+        throw new Error(res.data.err);
+      }
+      return res.data;
+    },
+    {
+      onSuccess: (id) => {
+        qc.invalidateQueries("posts");
+        qc.invalidateQueries("myposts");
+      },
+    }
+  );
+  return {
+    isLoading: mut.isLoading,
+    error: mut.error,
+    deletePost: mut.mutate,
+  };
 };
 
 //updatePost accespts {id,title,content}
 export const useUpdatePost = () => {
-    const qc = useQueryClient();
-    const mut = useMutation(
-        async ({ id, title, content }) => {
-            const res = await axios.patch(
-                `/posts/id/${id}`,
-                { title, content },
-                getAuthConfig()
-            );
-            //Error handling
-            if (res.data.err) {
-                throw new Error(res.data.err);
-            }
-            return { id, title, content };
-        },
-        {
-            onSuccess: (data) => {
-                qc.invalidateQueries(["post", data.id]);
-                qc.invalidateQueries("myposts");
-                qc.invalidateQueries("posts");
-            },
-        }
-    );
-    return {
-        isLoading: mut.isLoading,
-        error: mut.error,
-        updatePost: mut.mutate,
-    };
+  const qc = useQueryClient();
+  const mut = useMutation(
+    async ({ id, title, content }) => {
+      const res = await axios.patch(
+        `/posts/id/${id}`,
+        { title, content },
+        getAuthConfig()
+      );
+      //Error handling
+      if (res.data.err) {
+        throw new Error(res.data.err);
+      }
+      return { id, title, content };
+    },
+    {
+      onSuccess: (data) => {
+        qc.invalidateQueries(["post", data.id]);
+        qc.invalidateQueries("myposts");
+        qc.invalidateQueries("posts");
+      },
+    }
+  );
+  return {
+    isLoading: mut.isLoading,
+    error: mut.error,
+    updatePost: mut.mutate,
+  };
 };
 
 //reportPost accespts an {id,report (string)}
 export const useReportPost = () => {
-    const mut = useMutation(async ({ id, reason }) => {
-        const res = await axios.post(
-            `/posts/report/${id}`,
-            { reason },
-            getAuthConfig()
-        );
-        //Error handling
-        if (res.data.err) {
-            throw new Error(res.data.err);
-        }
-        return res.data;
-    });
-    return {
-        isLoading: mut.isLoading,
-        error: mut.error,
-        reportPost: mut.mutate,
-    };
+  const mut = useMutation(async ({ id, reason }) => {
+    const res = await axios.post(
+      `/posts/report/${id}`,
+      { reason },
+      getAuthConfig()
+    );
+    //Error handling
+    if (res.data.err) {
+      throw new Error(res.data.err);
+    }
+    return res.data;
+  });
+  return {
+    isLoading: mut.isLoading,
+    error: mut.error,
+    reportPost: mut.mutate,
+  };
 };
 
 export const useReactPost = () => {
-    const mut = useMutation(
-        async (id) => {
-            const res = await axios.patch(`/posts/react/${id}`, { params: {}}, getAuthConfig());
+  const mut = useMutation(async (id) => {
+    const res = await axios.patch(
+      `/posts/react/${id}`,
+      { params: {} },
+      getAuthConfig()
+    );
 
-            //Error handling
-            if (res.data.err) {
-                throw new Error(res.data.err);
-            }
-    });
-    return {
-        isLoading: mut.isLoading,
-        error: mut.error,
-        reactPost: mut.mutate,
-    };
+    //Error handling
+    if (res.data.err) {
+      throw new Error(res.data.err);
+    }
+  });
+  return {
+    isLoading: mut.isLoading,
+    error: mut.error,
+    reactPost: mut.mutate,
+  };
 };
