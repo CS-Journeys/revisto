@@ -11,13 +11,9 @@ import axios from "axios";
 export const useMe = () => {
     const query = useQuery("me", async () => {
         const res = await axios.get("/users", getAuthConfig());
-        //Error handling
-        if (res.data.err) {
-            throw new Error(res.data.err);
-        }
         return res.data.user;
     });
-    return { user: query.data, isLoading: query.isLoading, error: query.error };
+    return query.error ? {user: null} : { user: query.data, isLoading: query.isLoading };
 };
 
 //register accepts {email, password, confirm?}
@@ -42,6 +38,27 @@ export const useRegister = () => {
     });
     return { isLoading: mut.isLoading, error: mut.error, register: mut.mutate };
 };
+
+export const useSignOut = () => {
+    const qc = useQueryClient();
+    const mut = useMutation(
+        () => {},
+        {
+            onSuccess: () => {
+                localStorage.removeItem("token");
+                delete axios.defaults.headers.common["Authorization"];
+                qc.invalidateQueries("me");
+                //qc.invalidateQueries("posts");
+                //qc.invalidateQueries("myposts");
+            }
+        }
+    );
+    return {
+        isLoading: mut.isLoading,
+        error: mut.error,
+        signOut: mut.mutate
+    }
+}
 
 export const useLogin = () => {
     const qc = useQueryClient();
