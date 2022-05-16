@@ -1,9 +1,9 @@
 /*--Variables--*/
 :root {
     /* Main Theme Colors */
-    --clr-primary-1: #116c82;
-    --clr-primary-2: #679db6;
-    --clr-secondary-1: #f5a61c;
+    --clr-primary-1: #0AA1DD;
+    --clr-primary-2: #2155CD;
+    --clr-primary-3: #39c7ff;
 
     /* Grey Background Colors */
     --bg-gr-1: #bcbdc0;
@@ -65,5 +65,12 @@ p {
 
 a,
 a:hover {
-    color: var(--clr-primary-2);
+    color: var(--clr-primary-1);
+}
+
+::selection {
+    background: var(--clr-primary-3);
+}
+::-moz-selection {
+    background: var(--clr-primary-3);
 }

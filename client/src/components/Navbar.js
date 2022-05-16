@@ -1,5 +1,5 @@
 import React from "react";
-import logo from "../assets/media/revistoLogo.svg";
+import logo from "../assets/media/revistoLogo-primary.svg";
 import { Link } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
 
@@ -50,7 +50,7 @@ const Navbar = ({ user, updateParams }) => {
                         
                         { leftLinks.map(link => 
                             <NavDropdown.Item className="nav-link" key={link.key} 
-                                onClick={() => updateParams("Home")} href={link.url}>
+                                onClick={() => updateParams(link.text)} href={link.url}>
 
                                 <h4>{link.text}</h4>
                             </NavDropdown.Item>) }
@@ -66,7 +66,7 @@ const Navbar = ({ user, updateParams }) => {
                         <div className="navbar-nav navbar-left">
                             { leftLinks.map(link => 
                                 <Link className="nav-link" key={link.key} 
-                                    onClick={() => updateParams("Home")} to={link.url}>
+                                    onClick={() => updateParams(link.text)} to={link.url}>
 
                                     <h4>{link.text}</h4>
                                 </Link>)}

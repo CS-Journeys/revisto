@@ -2,18 +2,19 @@ import { useQuery, useMutation, useQueryClient } from "react-query";
 import { getAuthConfig } from "./authHook";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
 
 //====== POSTS ======
-
-export const useRefreshPosts = (prev, curr) => {
+export const useRefreshPosts = (curr) => {
+    const [postParams, setParams ] = useState("Home");
     const qc = useQueryClient();
 
-    if (prev != curr) {
-        qc.invalidateQueries("posts");
-        return curr;
-    }
+    if (curr === "About") { return; }
 
-    return prev;
+    if (curr !== postParams) {
+        setParams(curr);
+        qc.invalidateQueries("posts");
+    }
 }
 
 export const usePosts = (params) => {

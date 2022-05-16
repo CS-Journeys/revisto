@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import Home from "./pages/Home";
@@ -13,7 +13,7 @@ import PageNotFound from "./pages/PageNotFound";
 
 import { useMe } from "./hooks/userHook";
 import Featured from "./pages/Featured";
-import { useQueryClient } from "react-query";
+import { useRefreshPosts } from "./hooks/postHook";
 
 /**
  * Main file for react component rendering
@@ -23,17 +23,7 @@ import { useQueryClient } from "react-query";
 
 const App = () => {
     const { user } = useMe();
-    const qc = useQueryClient();
-    const [postParams, setParams ] = useState("dateCreated");
-
-    const useUpdateParams = (curr) => {
-        if (curr == "About") { return; }
-
-        if (curr != postParams) {
-            qc.invalidateQueries("posts");
-            setParams(curr);
-        }
-    }
+    const useUpdateParams = useRefreshPosts();
 
     return (
         <div className="App container-fluid">

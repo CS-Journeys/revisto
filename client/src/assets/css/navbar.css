@@ -12,7 +12,7 @@
 }
 
 .nav-bg a {
-    color: var(--clr-black);
+    color: var(--clr-primary-1);
 }
 
 .nav-bg a:hover {

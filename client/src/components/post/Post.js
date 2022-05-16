@@ -1,6 +1,5 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { formatContent } from "../../hooks/authHook";
 
 /**
  * A post object in revisto.

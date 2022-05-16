@@ -16,7 +16,7 @@
     border-color: var(--clr-grey-3);
 }
 .form textarea {
-    border-color: var(--clr-primary-2);
+    border-color: var(--clr-primary-1);
 }
 
 .form input:hover {
@@ -33,7 +33,7 @@
 
 .form button {
     display: inline-block;
-    background: var(--clr-primary-2);
+    background: var(--clr-primary-1);
     color: var(--clr-white);
 
     border-color: transparent;
@@ -46,7 +46,7 @@
 }
 
 .form button:hover {
-    background: var(--clr-primary-2);
+    background: var(--clr-primary-1);
     border-color: transparent;
     color: var(--clr-white);
 
