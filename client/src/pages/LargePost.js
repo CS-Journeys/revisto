@@ -95,7 +95,8 @@ const NormalPost = ({ post, user, onEdit }) => {
                             title="Are you sure?"
                             onConfirm={onDelete}
                             show={show}
-                            onHide={() => setShow(false)}>
+                            onHide={() => setShow(false)}
+                            buttonType="btn-danger">
                         </ConfirmationModal>
                     </div>) :
                     (<div>
@@ -108,7 +109,9 @@ const NormalPost = ({ post, user, onEdit }) => {
                             body="Our system will take a look as soon as possible."
                             onConfirm={onReport}
                             show={show}
-                            onHide={() => setShow(false)}>
+                            onHide={() => setShow(false)}
+                            buttonType="btn-danger"
+                            showFooter={true}>
                         </ConfirmationModal>
                     </div>)
                 }

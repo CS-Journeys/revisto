@@ -19,14 +19,17 @@ const ConfirmationModal = (props) => {
             <Modal.Body>
                 <p>{props.body}</p>
             </Modal.Body>
-            <Modal.Footer>
-                <button className="btn btn-secondary" variant="secondary" onClick={props.onHide}>
-                    Close
-                </button>
-                <button className="btn btn-danger" variant="primary" onClick={handleClick}>
-                    {props.confirmText}
-                </button>
-            </Modal.Footer>
+
+            { (props.showFooter) ?
+                <Modal.Footer>
+                    <button className="btn btn-secondary" variant="secondary" onClick={props.onHide}>
+                        Close
+                    </button>
+                    <button className={"btn " + props.buttonType} variant="primary" onClick={handleClick}>
+                        {props.confirmText}
+                    </button>
+                </Modal.Footer>
+            : null }
         </Modal>
     );
 };

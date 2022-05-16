@@ -4,7 +4,7 @@
 }
 
 .cp-input {
-    border: 1px solid var(--clr-grey-3);
+    border: none;
     padding-top: 3vh;
 }
 
