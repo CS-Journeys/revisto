@@ -90,7 +90,9 @@ const Navbar = ({ user, updateParams }) => {
                                         title="Bye forever?"
                                         onConfirm={onSignOut}
                                         show={showSignOut}
-                                        onHide={() => setShowSignOut(false)}>
+                                        onHide={() => setShowSignOut(false)}
+                                        buttonType="btn-danger"
+                                        showFooter={true}>
                                     </ConfirmationModal>
                                     <Link className="nav-link" to="/me">
                                         <span>My Journals</span>
