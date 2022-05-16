@@ -5,12 +5,18 @@ import { Modal } from "react-bootstrap";
 const ConfirmationModal = (props) => {
     const ctx = useRef();
     const onConfirm = props.onConfirm;
+    const onHide = props.onHide;
+    let res;
 
     const handleClick = () => {
         if (props.context) {
-            return onConfirm(ctx.current.value);
+            res = onConfirm(ctx.current.value);
+            onHide();
+            return res;
         }
-        return onConfirm();
+        res = onConfirm();
+        onHide();
+        return res;
     };
 
     return (
