@@ -9,12 +9,14 @@ import {
   deletePost,
   updatePost,
   reportPost,
-  reactPost
+  reactPost,
+  getFeatured
 } from "../controllers/postsControllers.js";
 
 const router = express.Router();
 
 router.get("/", getPosts);
+router.get("/featured", getFeatured);
 router.get("/id/:id", getPost);
 router.get("/user", requireLogin, getUserPosts);
 router.post("/", requireLogin, createPost);

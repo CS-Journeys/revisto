@@ -1,10 +1,9 @@
 import React from "react";
 import PostsList from "../components/post/PostsList";
-import { usePosts } from "../hooks/postHook";
+import { useFeaturedPosts, usePosts } from "../hooks/postHook";
 
 const Featured = () => {
-    const attrib = "reactionCount";
-    const posts = usePosts({ sortAttribute : attrib });
+    const posts = useFeaturedPosts();
 
     return (
         <div>

@@ -19,7 +19,7 @@ const PostsList = ({ posts }) => {
       {hasMore && !isLoading ? (
         <p ref={loadMoreRef}>Loading More...</p>
       ) :
-        <p className="text-center">You have reached the end!</p>
+        <p className="text-center"></p>
       }
       </>
   );

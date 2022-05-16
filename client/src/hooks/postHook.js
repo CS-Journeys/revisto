@@ -111,6 +111,22 @@ export const useMyPosts = () => {
   };
 };
 
+//Gets the featured posts
+export const useFeaturedPosts = () => {
+    const query = useQuery("featuredposts", async () => {
+        const res = await axios.get("/posts/featured");
+        if (res.data.err) {
+            throw new Error(res.data.err);
+        }
+        return res.data.posts;
+    });
+    return {
+        posts: query.data,
+        isLoading: query.isLoading,
+        error: query.error,
+    }
+}
+
 //createPost returns id onSuccess
 export const useCreatePost = () => {
   const qc = useQueryClient();

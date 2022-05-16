@@ -1,7 +1,7 @@
 import winston from "winston";
 import WinstonCloudwatch from "winston-cloudwatch";
 import AWS from "aws-sdk";
-import { ENV } from "../constants.js";
+import { ENV, LOG_LEVEL } from "../../constants.js";
 
 AWS.config.update({ region: "us-east-2" });
 
@@ -32,7 +32,7 @@ class Logger {
   };
 
   static generalLogger = winston.createLogger({
-    level: "info",
+    level: LOG_LEVEL,
     format: winston.format.combine(
       winston.format.timestamp(),
       this.logFormat

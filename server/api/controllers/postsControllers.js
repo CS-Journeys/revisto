@@ -2,9 +2,9 @@ import createHttpError from "http-errors";
 import asyncHandler from "express-async-handler";
 
 import Post from "../../core/models/postModel.js";
-import logger from "../../core/utils/logger.js";
+import {getFeaturedPosts} from "../../services/featured_posts/featuredPosts.js";
 
-const REVERSE_DATE_SORT = { dateCreated: -1 };
+const EARLIEST_DATE_SORT = { dateCreated: -1 };
 const PAGE_SIZE = 20;
 
 // Get all posts
@@ -13,7 +13,7 @@ export const getPosts = asyncHandler(async (req, res) => {
   if (page < 0) {
     throw new createHttpError(400, "Page number must be positive");
   }
-  const sortOrder = req.query.sortAttribute ? { [req.query.sortAttribute] : -1} : REVERSE_DATE_SORT;
+  const sortOrder = req.query.sortAttribute ? { [req.query.sortAttribute] : -1} : EARLIEST_DATE_SORT;
   const before = new Date(req.query.before);
 
   const query = req.query.before ? { dateCreated: { $lt: before } } : {};
@@ -26,6 +26,11 @@ export const getPosts = asyncHandler(async (req, res) => {
     .exec();
 
   res.json({ posts });
+});
+
+// Get featured posts
+export const getFeatured = asyncHandler(async (req, res) => {
+  res.json({ posts: getFeaturedPosts() });
 });
 
 // Get post of given id
@@ -58,7 +63,7 @@ export const getPost = asyncHandler(async (req, res) => {
 // Get all of the current user's posts
 export const getUserPosts = asyncHandler(async (req, res) => {
   const posts = await Post.find({ user: req.user._id }, "title content dateCreated")
-    .sort(REVERSE_DATE_SORT)
+    .sort(EARLIEST_DATE_SORT)
     .exec();
 
   res.json({ posts });
