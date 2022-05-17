@@ -10,7 +10,7 @@ import teamImage from "../assets/media/team-pic.jpg";
  */
 const About = () => {
     return (
-        <article className="about-cover">
+        <article className="about-cover text-center">
             <div className="container-fl">
                 <h1>What is Revisto?</h1>
                 <p className="lead">
@@ -19,7 +19,7 @@ const About = () => {
 
                 <p>
                     Our goal is for anyone to be able to post anything, anytime,
-                    about their lives! We want to create a social media app that
+                    about their lives from around the world! We want to create a social media app that
                     does not use addictive tactics or feel like a popularity contest!
                 </p>
                 <p>
