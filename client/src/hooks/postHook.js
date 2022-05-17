@@ -236,10 +236,11 @@ export const useReportPost = () => {
 };
 
 export const useReactPost = () => {
-  const mut = useMutation(async (id) => {
+  const mut = useMutation(async ({id, reaction}) => {
+      console.log(reaction);
     const res = await axios.patch(
       `/posts/react/${id}`,
-      { params: {} },
+      { reaction },
       getAuthConfig()
     );
 

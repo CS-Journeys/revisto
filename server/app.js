@@ -27,7 +27,7 @@ app.use(getRoute);
 app.use(requestLogger);
 app.use("/api", apiRoutes);
 app.use("/admin", adminRoutes);
-//app.use("/migrate", migrateRoutes) <-- only for testing!
+//app.use("/migrate", migrateRoutes) //<-- only for testing!
 app.use(errorLogger);
 app.use(errorHandler);
 

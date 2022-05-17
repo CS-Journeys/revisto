@@ -3,6 +3,8 @@ import asyncHandler from "express-async-handler";
 
 import Post from "../../core/models/postModel.js";
 import {getFeaturedPosts} from "../../services/featured_posts/featuredPosts.js";
+import getTopReaction from "../utils/getTopReaction.js";
+import logger from "../../core/utils/logger.js";
 
 const EARLIEST_DATE_SORT = { dateCreated: -1 };
 const PAGE_SIZE = 20;
@@ -17,13 +19,20 @@ export const getPosts = asyncHandler(async (req, res) => {
   const before = new Date(req.query.before);
 
   const query = req.query.before ? { dateCreated: { $lt: before } } : {};
-  const responseFields = "title content dateCreated";
+  const responseFields = "title content dateCreated reactions";
 
-  const posts = await Post.find(query, responseFields)
+  let posts = await Post.find(query, responseFields)
     .sort(sortOrder)
     .skip(page * PAGE_SIZE)
     .limit(PAGE_SIZE)
     .exec();
+
+  posts = posts.map((post) => {
+    post = post.toObject();
+    post.topReaction = getTopReaction(post);
+    delete post.reactions;
+    return post;
+  });
 
   res.json({ posts });
 });
@@ -35,7 +44,7 @@ export const getFeatured = asyncHandler(async (req, res) => {
 
 // Get post of given id
 export const getPost = asyncHandler(async (req, res) => {
-  const responseFields = "title content dateCreated user reactedUsers";
+  const responseFields = "title content dateCreated user reactions";
   let post = await Post.findById(req.params.id, responseFields).exec();
 
   if (!post) throw createHttpError(404, "Post not found");
@@ -48,23 +57,33 @@ export const getPost = asyncHandler(async (req, res) => {
     post.isMine = true;
   }
 
-  // Determine if user has already reacted to the post
-  if (post.reactedUsers.some(id => id.equals(req.user._id))) {
-    post.isReacted = true;
+  // Get my reaction
+  if (req.user._id) {
+    post.reaction = post.reactions.get(req.user._id.toString());
   }
+
+  // Get top reaction
+  post.topReaction = getTopReaction(post);
   
   // Prevent private info from being exposed to the frontend
   delete post.user;
-  delete post.reactedUsers;
+  delete post.reactions;
 
   res.json({ post });
 });
 
 // Get all of the current user's posts
 export const getUserPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ user: req.user._id }, "title content dateCreated")
+  const posts = await Post.find({ user: req.user._id }, "title content dateCreated reactions")
     .sort(EARLIEST_DATE_SORT)
     .exec();
+
+  posts = posts.map((post) => {
+    post = post.toObject();
+    post.topReaction = getTopReaction(post);
+    delete post.reactions;
+    return post;
+  });
 
   res.json({ posts });
 });
@@ -134,14 +153,13 @@ export const reactPost = asyncHandler(async (req, res) => {
     throw createHttpError(403, "FORBIDDEN");
   }
 
-  // Has user already reacted?
-  if (post.reactedUsers.includes(req.user._id)) {
-    throw createHttpError(403, "Already Reacted!");
+  if (!req.body.reaction) {
+    logger.debug(req.body);
+    throw createHttpError(400, "Please specify the reaction");
   }
 
-  // Else increment reaction
-  post.reactionCount++;
-  post.reactedUsers.push(req.user._id);
+  post.reactions.set(req.user._id.toString(), req.body.reaction);
+  post.reactionCount = post.reactions.length;
 
   await post.save();
   

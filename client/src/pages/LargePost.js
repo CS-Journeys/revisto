@@ -8,6 +8,9 @@ import {
     useReactPost,
 } from "../hooks/postHook";
 import ConfirmationModal from "../components/ConfirmationModal";
+import ReactionIcon from "../components/ReactionIcon";
+import Reactions from "../reactions";
+import { Button } from "react-bootstrap";
 
 const NormalPost = ({ post, user, onEdit }) => {
     const { deletePost } = useDeletePost();
@@ -15,11 +18,12 @@ const NormalPost = ({ post, user, onEdit }) => {
     const { reactPost } = useReactPost();
 
     const [show, setShow] = useState(false);
-    const [reacted, setReact] = useState(false);
+    const [reaction, setReaction] = useState(null);
 
     const nav = useNavigate();
 
     const date = new Date(post.dateCreated).toDateString();
+    const reactionsList = [Reactions.ENCOURAGING, Reactions.FUNNY, Reactions.SHOCKING, Reactions.THOUGHTPROVOKING, Reactions.RELATABLE];
 
     const onReport = (report) => {
         reportPost(
@@ -38,9 +42,10 @@ const NormalPost = ({ post, user, onEdit }) => {
             },
         });
     };
-    const onReact = () => {
-        reactPost(post._id, {
-            onSuccess: () => setReact(true)
+    const onReact = (reaction) => {
+        reactPost({ id: post._id, reaction }, 
+        {
+            onSuccess: () => setReaction(reaction)
         });
     };
 
@@ -60,26 +65,18 @@ const NormalPost = ({ post, user, onEdit }) => {
 
                 <br />
                 <br />
-                { (user && !post.isMine && !post.isReacted) ? 
+                {(user && !post.isMine) ?
                     <div>
-                    { (!reacted) ?
-                        <div>
-                            <a>React to this!</a>
-                            <br />
-                            <button className="btn" onClick={onReact}>
-                                &#128512;
-                            </button>
-                            <button className="btn" onClick={onReact}>
-                                &#128514;
-                            </button>
-                            <button className="btn" onClick={onReact}>
-                                &#128562;
-                            </button>
-                        </div> : 
-                        <a>Your reaction has been saved!</a>}
-                    </div> : null
-                }
-            </span>
+                        <a>React to this!</a>
+                        <br />
+                        {reactionsList.map(reactionListItem => (
+                            <Button key={reactionListItem} className="btn" variant="light" onClick={() => onReact(reactionListItem)} active={(post.reaction == reactionListItem && !reaction) || reaction == reactionListItem }>
+                                <ReactionIcon reaction={reactionListItem} highlighted={post.reaction || reaction} />
+                            </Button>
+                        ))}
+                    </div>
+                 : null}
+            </span >
             <div className="w-100 d-flex justify-content-end">
                 {post.isMine ? 
                     (<div>

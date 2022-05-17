@@ -1,9 +1,8 @@
 import Post from "../../../core/models/postModel.js";
 
 export const addReactions = async (req, res) => {
-  await Post.updateMany({reactionCount: undefined}, {
-    reactedUsers: [],
-    reactionCount: 0 
+  await Post.updateMany({}, {
+    reactions: {},
   }).exec();
 
   res.end();

@@ -13,8 +13,8 @@ const PostSchema = new Schema({
   reports: { type: [Schema.Types.ObjectId], ref: "reports", default: [] },
   hidden: { type : Boolean, default : false },
   archived: { type : Boolean, default : false },
-  reactedUsers: [{type: Schema.Types.ObjectId, ref: "users"}],
-  reactionCount: {type: Number, default: 0}
+  reactions: { type : Map, of : String, default: {}, required: true },
+  reactionCount: { type: Number, default: 0 }
 });
 
 // Update dateUpdated on save
