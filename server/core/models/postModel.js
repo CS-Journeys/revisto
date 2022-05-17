@@ -10,7 +10,7 @@ const PostSchema = new Schema({
   dateCreated: { type: Date, default: Date.now },
   dateUpdated: { type: Date, default: Date.now },
   reportCount: { type: Number, default: 0 },
-  reports: { type: [Schema.Types.ObjectId], ref: "reports", default: [] },
+  reports: { type: [String], default: [] },
   hidden: { type : Boolean, default : false },
   archived: { type : Boolean, default : false },
   reactions: { type : Map, of : String, default: {}, required: true },
