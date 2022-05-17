@@ -22,6 +22,7 @@ export const useRefreshPosts = (curr) => {
   if (curr !== postParams) {
     setParams(curr);
     qc.invalidateQueries("posts");
+    qc.invalidateQueries("featuredposts");
   }
 };
 
@@ -147,6 +148,7 @@ export const useCreatePost = () => {
       onSuccess: (id) => {
         qc.invalidateQueries("posts");
         qc.invalidateQueries("myposts");
+        qc.invalidateQueries("featuredposts");
       },
     }
   );
@@ -173,6 +175,7 @@ export const useDeletePost = () => {
       onSuccess: (id) => {
         qc.invalidateQueries("posts");
         qc.invalidateQueries("myposts");
+        qc.invalidateQueries("featuredposts");
       },
     }
   );
@@ -204,6 +207,7 @@ export const useUpdatePost = () => {
         qc.invalidateQueries(["post", data.id]);
         qc.invalidateQueries("myposts");
         qc.invalidateQueries("posts");
+        qc.invalidateQueries("featuredposts");
       },
     }
   );
