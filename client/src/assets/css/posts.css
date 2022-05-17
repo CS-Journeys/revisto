@@ -54,8 +54,18 @@
     color: var(--clr-primary-1);
 }
 
+.footer-footer {
+    display: flex;
+    flex-direction: row;
+}
+
 .footer-date {
     font-size: 90%;
+}
+
+.footer-reaction {
+    margin-left: auto; 
+    margin-right: 0;
 }
 
 .lg-p-header {

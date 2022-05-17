@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import ReactionIcon from "../ReactionIcon";
 
 /**
  * A post object in revisto.
@@ -9,6 +10,7 @@ import { Link } from "react-router-dom";
  * @property {String} title - title of the post
  * @property {String} content - content of the post
  * @property {Date} dateCreated - date post was created
+ * @property {String} topReaction - the top reaction to the post
  */
 
 /**
@@ -35,10 +37,17 @@ const Post = ({ post }) => {
                         to={{ pathname: url, state: { post } }} >
                         See More
                     </Link>
+                    <div className="footer-footer">
+                        <span className="footer-date">
+                            {formatDate(post.dateCreated)}
+                        </span>
+                        <div className="footer-reaction">
+                            {post.topReaction ?
+                                <ReactionIcon reaction={post.topReaction} />
+                                : null}
+                        </div>
+                    </div>
 
-                    <span className="footer-date">
-                        {formatDate(post.dateCreated)}
-                    </span>
                 </div>
             </div>
             <br />
