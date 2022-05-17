@@ -6,7 +6,7 @@ const ReactionIcon = ({ reaction }) => {
 
     return (
         <div>
-            <img data-tip data-for={reaction} src={filename} alt={reaction} height={size} width={size}/>
+            <img data-tip data-for={reaction} src={filename} alt={reaction} className="reaction"/>
             <ReactToolTip id={reaction} place="bottom" effect="solid">
                 {reaction}
             </ReactToolTip>

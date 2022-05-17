@@ -74,7 +74,7 @@ export const getPost = asyncHandler(async (req, res) => {
 
 // Get all of the current user's posts
 export const getUserPosts = asyncHandler(async (req, res) => {
-  const posts = await Post.find({ user: req.user._id }, "title content dateCreated reactions")
+  let posts = await Post.find({ user: req.user._id }, "title content dateCreated reactions")
     .sort(EARLIEST_DATE_SORT)
     .exec();
 
@@ -159,7 +159,7 @@ export const reactPost = asyncHandler(async (req, res) => {
   }
 
   post.reactions.set(req.user._id.toString(), req.body.reaction);
-  post.reactionCount = post.reactions.length;
+  post.reactionCount = post.reactions.size;
 
   await post.save();
   

@@ -3,10 +3,10 @@
  * Talk to Daniel Luper if you have questions.
  */
 
-const MIN_SELECT_FROM = 5;    // b
-const MID_SELECT_FROM = 20;   // d
+const MIN_SELECT_FROM = 3;    // b
+const MID_SELECT_FROM = 10;   // d
 const NUM_FEATURED = 20;      // f
-const MID_FEATURED_INDEX = 6  // c
+const MID_FEATURED_INDEX = 7  // c
 
 /**
  *

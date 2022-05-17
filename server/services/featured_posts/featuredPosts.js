@@ -1,6 +1,7 @@
 import Post from "../../core/models/postModel.js";
 import { getNumFeaturedPosts, getSelectionWindow } from "./featuredPostsCurve.js";
 import logger from "../../core/utils/logger.js";
+import getTopReaction from "../../api/utils/getTopReaction.js";
 
 const TOP_REACTION_SORT = { reactionCount: -1 };
 const EARLIEST_DATE_SORT = { dateCreated: -1 };
@@ -13,7 +14,7 @@ class FeaturedPosts {
   }
 
   static updatePosts = async () => {
-    const responseFields = "title content dateCreated reactionCount";
+    const responseFields = "title content dateCreated reactionCount reactions";
     const numFeatured = getNumFeaturedPosts();
     let featured = [];
     const numPosts = await Post.countDocuments().exec();
@@ -38,7 +39,9 @@ class FeaturedPosts {
           .limit(1)
           .exec();
         if (curFeatured.length > 0) {
-          featured.push(curFeatured[0]);
+          curFeatured = curFeatured[0].toObject();
+          curFeatured.topReaction = getTopReaction(curFeatured);
+          featured.push(curFeatured);
           repeatCount = 0;
         }
       }
