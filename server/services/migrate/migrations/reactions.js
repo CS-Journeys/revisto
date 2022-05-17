@@ -16,3 +16,18 @@ export const removeReactions = async (req, res) => {
 
   res.end();
 }
+
+export const removeReactedUsers = async (req, res) => {
+  Post.updateMany({}, {$unset : {
+    reactedUsers: 1
+  }}).exec();
+
+  res.end();
+}
+
+export const clearReactions = async (req, res) => {
+  Post.updateMany({}, {
+    reactions: {},
+    reactionCount: 0
+  })
+}
