@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import logo from "../assets/media/revistoLogo-primary.svg";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { NavDropdown } from "react-bootstrap";
 import { useSignOut } from "../hooks/userHook";
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -25,15 +25,17 @@ const Navbar = ({ user, updateParams }) => {
     const leftLinks = [{ 
             text: "Featured",
             url: "/featured",
-            key: 0
+            key: 0,
+            icon: "Featured"
         },
         {
             text: "About",
             url: "/about",
-            key: 1
+            key: 1,
+            icon: "About"
     }]
 
-    const rightLinksNotSignedIn = [{ 
+    const rightLinks = (!user) ? [{ 
             text: "Sign Up",
             url: "/register",
             key: 2
@@ -42,7 +44,16 @@ const Navbar = ({ user, updateParams }) => {
             text: "Login",
             url: "/login",
             key: 3
-    }]
+    }] : [{
+        text: "Sign Out",
+        url: "#",
+        key: 2   
+    },
+    {
+        text: "My Journals",
+        url: "/me",
+        key: 3
+    }];
 
     return (
         <div className="nav-control">
@@ -64,10 +75,14 @@ const Navbar = ({ user, updateParams }) => {
 
                                 <h4>{link.text}</h4>
                             </NavDropdown.Item>) }
-                        { rightLinksNotSignedIn.map(link => 
+                        { rightLinks.map(link => 
                                 <NavDropdown.Item className="nav-link navbar-right" key={link.key} 
-                                onclick={() => updateParams(link.text)} href={link.url}>
-                                    <span>{link.text}</span>
+                                onClick={() => { 
+                                    if (link.text === "Sign Out") setShowSignOut(true)}} href={link.url}>
+
+                                    <span>
+                                        {link.text}
+                                    </span>
                                 </NavDropdown.Item>) }
                     </NavDropdown> : 
                     <div className="collapse navbar-collapse">
@@ -79,35 +94,27 @@ const Navbar = ({ user, updateParams }) => {
                                     <h4>{link.text}</h4>
                                 </Link>)}
                         </div>
-                            { user ? (
-                                <div className="navbar-nav navbar-right">
-                                    <Link className="nav-link" to={useLocation} onClick={() => setShowSignOut(true)}>
-                                        <span>Sign Out</span>
-                                    </Link>
-                                    <ConfirmationModal
-                                        confirmText="Yes"
-                                        body="Are you sure you want to sign out?"
-                                        title="Bye forever?"
-                                        onConfirm={onSignOut}
-                                        show={showSignOut}
-                                        onHide={() => setShowSignOut(false)}
-                                        buttonType="btn-danger"
-                                        showFooter={true}>
-                                    </ConfirmationModal>
-                                    <Link className="nav-link" to="/me">
-                                        <span>My Journals</span>
-                                    </Link>
-                                </div>
-                            ) : (
-                                <div className="navbar-nav navbar-right">
-                                    { rightLinksNotSignedIn.map(link => 
-                                <Link className="nav-link" key={link.key} to={link.url}>
+                        <div className="navbar-nav navbar-right">
+                            { rightLinks.map(link => 
+                                <Link className="nav-link" key={link.key} onClick={() => {
+                                    if (link.text === "Sign Out") setShowSignOut(true)}} to={link.url}>
+
                                     <span>{link.text}</span>
-                                </Link>)}
-                                </div>
-                            )}
+                                </Link>)
+                            }
+                        </div>
                     </div>
                 }
+                <ConfirmationModal
+                    confirmText="Yes"
+                    body="Are you sure you want to sign out?"
+                    title="Bye forever?"
+                    onConfirm={onSignOut}
+                    show={showSignOut}
+                    onHide={() => setShowSignOut(false)}
+                    buttonType="btn-danger"
+                    showFooter={true}>
+                </ConfirmationModal>
             </nav>
         </div>
     );

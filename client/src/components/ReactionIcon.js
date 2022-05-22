@@ -1,7 +1,7 @@
 import ReactToolTip from "react-tooltip";
 
 const ReactionIcon = ({ reaction }) => {
-    const filename = `../reactions/${reaction}.svg`;
+    const filename = `../icons/${reaction}.svg`;
 
     return (
         <div>

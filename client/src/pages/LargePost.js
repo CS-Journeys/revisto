@@ -52,6 +52,9 @@ const NormalPost = ({ post, user, onEdit }) => {
 
     return (
         <div className="container w-100 p-4 bg-light shadow-sm">
+            {post.topReaction ?
+                    <ReactionIcon reaction={post.topReaction} />
+                        : null}
             <p className="lg-p-header display-4 text-center border border-top-0 
                 border-left-0 border-right-0 border-dark">
                 {post.title}
@@ -96,7 +99,7 @@ const NormalPost = ({ post, user, onEdit }) => {
                     </div>) :
                     (<div>
                         <button className="btn btn-secondary mr-2" onClick={() => setShow(true)}>
-                            Report
+                            <ReactionIcon reaction="Report" />
                         </button>
                         <ConfirmationModal
                             confirmText="Report"
