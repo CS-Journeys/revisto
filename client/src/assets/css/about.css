@@ -20,3 +20,12 @@
     padding-bottom: 0;
     border-radius: 3px;
 }
+
+.about-lead {
+    font-style: italic;
+    font-size: x-large;
+}
+
+.about-p {
+    font-size: larger;
+}
