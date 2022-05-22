@@ -1,6 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import ReactionIcon from "../ReactionIcon";
+import StyledParagraph from "../StyledParagraph";
 
 /**
  * A post object in revisto.
@@ -29,7 +30,7 @@ const Post = ({ post }) => {
             <div className="card">
                 <div className="card-header">{post.title}</div>
                 <div className="card-body c-body-dim">
-                    <p className="card-text">{post.content}</p>
+                   <StyledParagraph className="card-text" content={post.content}/>
                 </div>
                 <div className="card-footer">
                     <Link

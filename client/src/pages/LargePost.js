@@ -11,6 +11,7 @@ import ConfirmationModal from "../components/ConfirmationModal";
 import ReactionIcon from "../components/ReactionIcon";
 import Reactions from "../reactions";
 import { Button } from "react-bootstrap";
+import StyledParagraph from "../components/StyledParagraph";
 
 const NormalPost = ({ post, user, onEdit }) => {
     const { deletePost } = useDeletePost();
@@ -55,11 +56,8 @@ const NormalPost = ({ post, user, onEdit }) => {
                 border-left-0 border-right-0 border-dark">
                 {post.title}
             </p>
+            <StyledParagraph className="lg-p-content" style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }} content={post.content}/>
 
-            <p className="lg-p-content" style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
-                {post.content}
-            </p>
-            
             <span>
                 <strong>{date}</strong>
 

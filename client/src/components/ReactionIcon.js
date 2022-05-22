@@ -2,7 +2,6 @@ import ReactToolTip from "react-tooltip";
 
 const ReactionIcon = ({ reaction }) => {
     const filename = `../reactions/${reaction}.svg`;
-    const size = "30px";
 
     return (
         <div>
