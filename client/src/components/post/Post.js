@@ -30,12 +30,15 @@ const Post = ({ post }) => {
             <div className="card">
                 <div className="card-header">{post.title}</div>
                 <div className="card-body c-body-dim">
-                   <StyledParagraph className="card-text" content={post.content}/>
+                    <StyledParagraph className="card-text">
+                        {post.content}
+                    </StyledParagraph>
                 </div>
                 <div className="card-footer">
                     <Link
                         className="footer-link"
-                        to={{ pathname: url, state: { post } }} >
+                        to={{ pathname: url, state: { post } }}
+                    >
                         See More
                     </Link>
                     <div className="footer-footer">
@@ -43,12 +46,11 @@ const Post = ({ post }) => {
                             {formatDate(post.dateCreated)}
                         </span>
                         <div className="footer-reaction">
-                            {post.topReaction ?
+                            {post.topReaction ? (
                                 <ReactionIcon reaction={post.topReaction} />
-                                : null}
+                            ) : null}
                         </div>
                     </div>
-
                 </div>
             </div>
             <br />

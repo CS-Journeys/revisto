@@ -24,7 +24,13 @@ const NormalPost = ({ post, user, onEdit }) => {
     const nav = useNavigate();
 
     const date = new Date(post.dateCreated).toDateString();
-    const reactionsList = [Reactions.ENCOURAGING, Reactions.FUNNY, Reactions.SHOCKING, Reactions.THOUGHTPROVOKING, Reactions.RELATABLE];
+    const reactionsList = [
+        Reactions.ENCOURAGING,
+        Reactions.FUNNY,
+        Reactions.SHOCKING,
+        Reactions.THOUGHTPROVOKING,
+        Reactions.RELATABLE,
+    ];
 
     const onReport = (report) => {
         reportPost(
@@ -44,47 +50,74 @@ const NormalPost = ({ post, user, onEdit }) => {
         });
     };
     const onReact = (reaction) => {
-        reactPost({ id: post._id, reaction }, 
-        {
-            onSuccess: () => setReaction(reaction)
-        });
+        reactPost(
+            { id: post._id, reaction },
+            {
+                onSuccess: () => setReaction(reaction),
+            }
+        );
     };
 
     return (
         <div className="container w-100 p-4 bg-light shadow-sm">
-            {post.topReaction ?
-                    <ReactionIcon reaction={post.topReaction} />
-                        : null}
-            <p className="lg-p-header display-4 text-center border border-top-0 
-                border-left-0 border-right-0 border-dark">
+            {post.topReaction ? (
+                <ReactionIcon reaction={post.topReaction} />
+            ) : null}
+            <p
+                className="lg-p-header display-4 text-center border border-top-0 
+                border-left-0 border-right-0 border-dark"
+            >
                 {post.title}
             </p>
-            <StyledParagraph className="lg-p-content" style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }} content={post.content}/>
+            <StyledParagraph
+                className="lg-p-content"
+            >
+                {post.content}
+            </StyledParagraph>
 
             <span>
                 <strong>{date}</strong>
 
                 <br />
                 <br />
-                {(user && !post.isMine) ?
+                {user && !post.isMine ? (
                     <div>
                         <a>React to this!</a>
                         <br />
-                        {reactionsList.map(reactionListItem => (
-                            <Button key={reactionListItem} className="btn" variant="light" onClick={() => onReact(reactionListItem)} active={(post.reaction == reactionListItem && !reaction) || reaction == reactionListItem }>
-                                <ReactionIcon reaction={reactionListItem} highlighted={post.reaction || reaction} />
+                        {reactionsList.map((reactionListItem) => (
+                            <Button
+                                key={reactionListItem}
+                                className="btn"
+                                variant="light"
+                                onClick={() => onReact(reactionListItem)}
+                                active={
+                                    (post.reaction == reactionListItem &&
+                                        !reaction) ||
+                                    reaction == reactionListItem
+                                }
+                            >
+                                <ReactionIcon
+                                    reaction={reactionListItem}
+                                    highlighted={post.reaction || reaction}
+                                />
                             </Button>
                         ))}
                     </div>
-                 : null}
-            </span >
+                ) : null}
+            </span>
             <div className="w-100 d-flex justify-content-end">
-                {post.isMine ? 
-                    (<div>
-                        <button className="btn btn-primary mr-2" onClick={onEdit}>
+                {post.isMine ? (
+                    <div>
+                        <button
+                            className="btn btn-primary mr-2"
+                            onClick={onEdit}
+                        >
                             Edit
                         </button>
-                        <button className="btn btn-secondary mr-2" onClick={() => setShow(true)}>
+                        <button
+                            className="btn btn-secondary mr-2"
+                            onClick={() => setShow(true)}
+                        >
                             Delete
                         </button>
                         <ConfirmationModal
@@ -94,11 +127,15 @@ const NormalPost = ({ post, user, onEdit }) => {
                             onConfirm={onDelete}
                             show={show}
                             onHide={() => setShow(false)}
-                            buttonType="btn-danger">
-                        </ConfirmationModal>
-                    </div>) :
-                    (<div>
-                        <button className="btn btn-secondary mr-2" onClick={() => setShow(true)}>
+                            buttonType="btn-danger"
+                        ></ConfirmationModal>
+                    </div>
+                ) : (
+                    <div>
+                        <button
+                            className="btn btn-secondary mr-2"
+                            onClick={() => setShow(true)}
+                        >
                             <ReactionIcon reaction="Report" />
                         </button>
                         <ConfirmationModal
@@ -109,10 +146,10 @@ const NormalPost = ({ post, user, onEdit }) => {
                             show={show}
                             onHide={() => setShow(false)}
                             buttonType="btn-danger"
-                            showFooter={true}>
-                        </ConfirmationModal>
-                    </div>)
-                }
+                            showFooter={true}
+                        ></ConfirmationModal>
+                    </div>
+                )}
             </div>
         </div>
     );
@@ -131,7 +168,7 @@ const EditablePost = ({ post, onCancel }) => {
         e.preventDefault();
         const title = e.target.title.value;
         const content = e.target.content.value;
-        
+
         updatePost(
             {
                 id: post._id,
@@ -147,10 +184,16 @@ const EditablePost = ({ post, onCancel }) => {
     };
 
     return (
-        <form ref={form} onSubmit={onUpdate} className="w-100 p-4 bg-light shadow-sm">
-
-            <input className="mb-2 bg-light text-center border border-top-0 border-left-0 
-                border-right-0 border-dark w-100 display-4" name="title" />
+        <form
+            ref={form}
+            onSubmit={onUpdate}
+            className="w-100 p-4 bg-light shadow-sm"
+        >
+            <input
+                className="mb-2 bg-light text-center border border-top-0 border-left-0 
+                border-right-0 border-dark w-100 display-4"
+                name="title"
+            />
 
             <textarea className="form-control" name="content" />
             <br />
