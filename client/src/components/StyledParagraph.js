@@ -7,8 +7,22 @@ import rehypeStringify from "rehype-stringify";
 import { useAsync } from "react-async";
 import remarkParse from "remark-parse-no-trim";
 
-const allowTokenizers = (tokenizers) => {
+/**
+ * TODO: optimize this file!
+ */
 
+const TOKENIZERS = [
+    "paragraph",
+    "emphasis",
+    "break",
+    "strong",
+    "blankLine",
+    "escape",
+    "text",
+    "deletion",
+];
+
+const allowTokenizers = (tokenizers) => {
     Object.keys(remarkParse.Parser.prototype.blockTokenizers).forEach(
         (tokenizer) => {
             if (!tokenizers.includes(tokenizer)) {
@@ -18,30 +32,14 @@ const allowTokenizers = (tokenizers) => {
         }
     );
 
-    /**
-    remarkParse.Parser.prototype.inlineMethods.forEach((i, tokenizer) => {
-        if (!tokenizers.includes(tokenizer)) {
-            remarkParse.Parser.prototype.inlineMethods.splice(i, 1);
-        }
-    })
-    */
-
-    console.log(remarkParse.Parser.prototype.inlineMethods);
-    remarkParse.Parser.prototype.inlineMethods = remarkParse.Parser.prototype.inlineMethods.filter(tokenizer => tokenizers.includes(tokenizer))
- 
+    remarkParse.Parser.prototype.inlineMethods =
+        remarkParse.Parser.prototype.inlineMethods.filter((tokenizer) =>
+            tokenizers.includes(tokenizer)
+        );
 };
 
 const markdownToHTML = async ({ str }) => {
-    allowTokenizers([
-        "paragraph",
-        "emphasis",
-        "break",
-        "strong",
-        "blankLine",
-        "escape",
-        "text",
-        "deletion",
-    ]);
+    allowTokenizers(TOKENIZERS);
     const res = await unified()
         .use(remarkParse)
         .use(remarkBreaks)
@@ -69,7 +67,9 @@ const StyledParagraph = ({ content, className }) => {
             {data ? (
                 <Markup markup={data.value} replace={{ p: NoSpaceParagraph }} />
             ) : (
-                <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }} >{content}</p>
+                <p style={{ whiteSpace: "pre-wrap", wordBreak: "break-word" }}>
+                    {content}
+                </p>
             )}
         </>
     );
