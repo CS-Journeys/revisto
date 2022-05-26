@@ -128,6 +128,7 @@ const NormalPost = ({ post, user, onEdit }) => {
                             show={show}
                             onHide={() => setShow(false)}
                             buttonType="btn-danger"
+                            showFooter={true}
                         ></ConfirmationModal>
                     </div>
                 ) : (

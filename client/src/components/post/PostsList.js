@@ -17,7 +17,7 @@ const PostsList = ({ posts }) => {
           postArray.map((post,ndx) => <Post key={post._id+ndx} post={post} />)}
       </div>
       {hasMore && !isLoading ? (
-        <p ref={loadMoreRef}>Loading More...</p>
+        <p classname="text-center" ref={loadMoreRef}>Loading More...</p>
       ) :
         <p className="text-center"></p>
       }
