@@ -69,11 +69,8 @@ const NormalPost = ({ post, user, onEdit }) => {
             >
                 {post.title}
             </p>
-            <StyledParagraph
-                className="lg-p-content"
-            >
-                {post.content}
-            </StyledParagraph>
+            
+            <StyledParagraph content={post.content} className="lg-p-content" />
 
             <span>
                 <strong>{date}</strong>

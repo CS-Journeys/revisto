@@ -30,9 +30,7 @@ const Post = ({ post }) => {
             <div className="card">
                 <div className="card-header">{post.title}</div>
                 <div className="card-body c-body-dim">
-                    <StyledParagraph className="card-text">
-                        {post.content}
-                    </StyledParagraph>
+                    <StyledParagraph content={post.content} />
                 </div>
                 <div className="card-footer">
                     <Link
