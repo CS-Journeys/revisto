@@ -4,7 +4,7 @@ import { useCreatePost } from "../hooks/postHook";
 import { useNavigate } from "react-router-dom";
 
 const CreatePost = (props) => {
-    const MIN_CONT = 50;
+    const MIN_CONT = 200;
     const MAX_TITLE = 75;
 
     const { createPost } = useCreatePost();
