@@ -13,7 +13,9 @@ export const useMe = () => {
         const res = await axios.get("/users", getAuthConfig());
         return res.data.user;
     });
-    return query.error ? {user: null} : { user: query.data, isLoading: query.isLoading };
+    return query.error
+        ? { user: null }
+        : { user: query.data, isLoading: query.isLoading };
 };
 
 //register accepts {email, password, confirm?}
@@ -25,40 +27,40 @@ export const useRegister = () => {
         if (email === "" || password === "" || (confirm && confirm === "")) {
             throw new Error("Please fill out all fields");
         }
-        const res = await axios.post(
-            "/users/register",
-            { email, password },
-            getAuthConfig()
-        );
-        //Error handling
-        if (res.data.err) {
-            throw new Error(res.data.err);
+        try {
+            const res = await axios.post(
+                "/users/register",
+                { email, password },
+                getAuthConfig()
+            );
+            return res.data;
+        } catch (e) {
+            if (e.response) {
+                throw new Error(e.response.data.err);
+            }
+            throw new Error(e);
         }
-        return res.data;
     });
     return { isLoading: mut.isLoading, error: mut.error, register: mut.mutate };
 };
 
 export const useSignOut = () => {
     const qc = useQueryClient();
-    const mut = useMutation(
-        () => {},
-        {
-            onSuccess: () => {
-                localStorage.removeItem("token");
-                delete axios.defaults.headers.common["Authorization"];
-                qc.invalidateQueries("me");
-                //qc.invalidateQueries("posts");
-                //qc.invalidateQueries("myposts");
-            }
-        }
-    );
+    const mut = useMutation(() => {}, {
+        onSuccess: () => {
+            localStorage.removeItem("token");
+            delete axios.defaults.headers.common["Authorization"];
+            qc.invalidateQueries("me");
+            //qc.invalidateQueries("posts");
+            //qc.invalidateQueries("myposts");
+        },
+    });
     return {
         isLoading: mut.isLoading,
         error: mut.error,
-        signOut: mut.mutate
-    }
-}
+        signOut: mut.mutate,
+    };
+};
 
 export const useLogin = () => {
     const qc = useQueryClient();
