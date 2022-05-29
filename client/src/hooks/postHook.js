@@ -72,6 +72,7 @@ export const usePosts = (params) => {
   return {
     posts: posts,
     isLoading: query.isLoading,
+    isFetching: query.isFetching,
     error: query.error,
     loadMoreRef: ref,
     hasMore: query.hasNextPage
