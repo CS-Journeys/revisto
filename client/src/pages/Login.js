@@ -13,16 +13,16 @@ import { useNavigate } from "react-router-dom";
  * @property {String} username - the email of the user
  * @property {String} region - region of the user
  * @property {Stromg} language - language of the user
-*/
+ */
 
 /**
  * React component for displaying the login page.
  * @returns {JSX.Element} The login page.
-*/
+ */
 
 const Login = () => {
     const [showPass, setShowPass] = useState(false);
-    const { login } = useLogin();
+    const { login, error } = useLogin();
     const nav = useNavigate();
 
     const handleSubmit = (e) => {
@@ -32,7 +32,7 @@ const Login = () => {
             {
                 email: form.email.value,
                 password: form.password.value,
-                rememberMe: form.rememberMe.checked
+                rememberMe: form.rememberMe.checked,
             },
             {
                 onSuccess: () => {
@@ -47,6 +47,11 @@ const Login = () => {
             <div className="form custom-form">
                 <form onSubmit={handleSubmit} className="login-form">
                     <h1>Login</h1>
+                    {error && (
+                        <div className="alert alert-danger" role="alert">
+                            {error.message}
+                        </div>
+                    )}
                     <div className="form-floating">
                         <input
                             type="text"
@@ -93,7 +98,8 @@ const Login = () => {
                     </span>
                 </form>
             </div>
-        </div>);
+        </div>
+    );
 };
 
 export default Login;

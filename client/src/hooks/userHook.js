@@ -69,16 +69,19 @@ export const useLogin = () => {
             if (email === "" || password === "") {
                 throw new Error("Please fill out all fields");
             }
-            const res = await axios.post(
-                "/users/login",
-                { email, password, rememberMe },
-                getAuthConfig()
-            );
-            //Error handling
-            if (res.data.err) {
-                throw new Error(res.data.err);
+            try {
+                const res = await axios.post(
+                    "/users/login",
+                    { email, password, rememberMe },
+                    getAuthConfig()
+                );
+                return res.data.token;
+            } catch (e) {
+                if (e.response) {
+                    throw new Error(e.response.data.err);
+                }
+                throw new Error(e);
             }
-            return res.data.token;
         },
         {
             onSuccess: (token) => {
