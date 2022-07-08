@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PostsList from "../components/post/PostsList";
 import { Link } from "react-router-dom";
 import { useMyPosts } from "../hooks/postHook";
 
 const Profile = (props) => {
+    useEffect(() => {
+        document.title = "Revisto - Profile";
+    }, []);
+
     const posts = useMyPosts();
 
     return (

@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import teamImage from "../assets/media/team-pic.jpg";
 
 // TODO: Contact Form
@@ -9,6 +9,11 @@ import teamImage from "../assets/media/team-pic.jpg";
  * @returns {JSX.Element} The about page component.
  */
 const About = () => {
+
+    useEffect(() => {
+        document.title = "Revisto - About";
+    }, []);
+
     return (
         <article className="about-cover">
             <div className="container-fl">

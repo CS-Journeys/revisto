@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useLogin } from "../hooks/userHook";
 import { useNavigate } from "react-router-dom";
@@ -21,6 +21,10 @@ import { useNavigate } from "react-router-dom";
  */
 
 const Login = () => {
+    useEffect(() => {
+        document.title = "Revisto";
+    }, []);
+
     const [showPass, setShowPass] = useState(false);
     const { login, error } = useLogin();
     const nav = useNavigate();

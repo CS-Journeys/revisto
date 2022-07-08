@@ -1,9 +1,13 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCreatePost } from "../hooks/postHook";
 import { useNavigate } from "react-router-dom";
 
 const CreatePost = (props) => {
+    useEffect(() => {
+        document.title = "Revisto";
+    }, []);
+
     const MIN_CONT = 200;
     const MAX_TITLE = 75;
 

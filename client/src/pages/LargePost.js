@@ -14,6 +14,10 @@ import { Button } from "react-bootstrap";
 import StyledParagraph from "../components/StyledParagraph";
 
 const NormalPost = ({ post, user, onEdit }) => {
+    useEffect(() => {
+        document.title = "Revisto";
+    }, []);
+
     const { deletePost } = useDeletePost();
     const { reportPost } = useReportPost();
     const { reactPost } = useReactPost();

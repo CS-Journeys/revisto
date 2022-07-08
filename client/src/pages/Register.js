@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useRegister } from "../hooks/userHook";
 import ConfirmationModal from "../components/ConfirmationModal";
@@ -8,6 +8,10 @@ import ConfirmationModal from "../components/ConfirmationModal";
  * @returns {JSX.Element} The register page.
  */
 const Register = () => {
+    useEffect(() => {
+        document.title = "Revisto";
+    }, []);
+
     const { register, error } = useRegister();
     const nav = useNavigate();
     const [show, setShow] = useState(false);

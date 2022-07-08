@@ -1,9 +1,13 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PostsList from "../components/post/PostsList";
 import { useFeaturedPosts, usePosts } from "../hooks/postHook";
 
 const Featured = () => {
     const posts = useFeaturedPosts();
+
+    useEffect(() => {
+        document.title = "Revisto - Featured";
+    }, []);
 
     return (
         <div>
