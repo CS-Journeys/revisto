@@ -25,6 +25,7 @@ app.use(cors());
 
 app.use(getRoute);
 app.use(requestLogger);
+app.use("/health", (_, res) => res.sendStatus(200));
 app.use("/api", apiRoutes);
 app.use("/admin", adminRoutes);
 //app.use("/migrate", migrateRoutes) //<-- only for testing!

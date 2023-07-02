@@ -1,0 +1,7 @@
+# Don't upload anything to Elastic Beanstalk...
+*
+
+# ...except these files
+!.ebextensions
+!docker-compose.yml
+!Dockerrun.aws.json

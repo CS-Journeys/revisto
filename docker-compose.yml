@@ -1,0 +1,13 @@
+version: "2.1"
+
+services:
+  server:
+    image: 010087513592.dkr.ecr.us-east-1.amazonaws.com/revisto-server:latest
+    ports:
+    - 8080:8080
+    mem_limit: 512m
+  client:
+    image: 010087513592.dkr.ecr.us-east-1.amazonaws.com/revisto-client:latest
+    ports:
+    - 80:3000
+    mem_limit: 256m

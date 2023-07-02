@@ -1,61 +1,22 @@
 # Revisto
-[www.revisto.live](https://revisto.live) is a public, anonymous journaling website
+[revisto.net](https://revisto.net) is a public, anonymous journaling website
 ## Table of contents
   * [Getting started](#getting-started)
-    * [Setting up Git](#i-setting-up-git)
-    * [Setting up your IDE](#ii-setting-up-your-ide)
-    * [Setting up Node](#iii-setting-up-node)
-    * [Setting up your environment config](#iv-setting-up-your-environment-config)
-  * [Running Revisto locally](#running-revisto-locally)
-  * [Contributing to Revisto](#contributing-to-revisto)
-    * [Solving issues](#solving-issues)
+    * [Pre-requisites](#pre-requisites)
+    * [Running Revisto locally](#running-revisto-locally)
+  * [Using Docker](#using-docker)
+    * [Client](#client)
+    * [Server](#server)
+    * [Stopping](#stopping)
+  * [Deploying to AWS](#deploying-to-aws)
+  * [Helpful Resources](#helpful-resources)
 
 ## Getting started
-### I. Setting up Git
-1. Install [Git](https://git-scm.com/downloads)
-2. Set up command line authentication for your GitHub account (follow [this](https://docs.github.com/en/authentication/connecting-to-github-with-ssh/generating-a-new-ssh-key-and-adding-it-to-the-ssh-agent) tutorial)
-3. Set up your identity by typing into a command line:
-
-`git config --global user.name "John Doe"`
-
-`git config --global user.email johndoe@example.com`
-
-(replace John Doe and the email address with your actual GitHub user name and email address)
-
-4. Use the command line to navigate to the path where you want to store the repository: 
-
-`cd C:/YOUR_PATH`
-
-5. Clone the repository: 
-
-`git clone git@github.com:CS-Journeys/revisto.git`
-
-### II. Setting up your IDE
-Install an IDE for web development ([VS Code](https://code.visualstudio.com/) is recommended)
-
-### III. Setting up Node
+### Pre-requisites
 1. Install [Node.js](https://nodejs.org/en/) LTS
-2. Open a command line and navigate to the "server" folder:
+2. Set up your environment config (Contact the lead developers and ask them for the required .env files)
 
-`cd C:/YOUR_PATH/revisto/server`
-
-3. Install the backend server's dependencies: 
-
-`npm install`
-
-4. Navigate to the "client" folder:
-
-`cd ../client`
-
-5.  Install the frontend server's dependencies:
-
-`npm install`
-
-### IV. Setting up your environment config
-Contact the lead developers and ask them for the required .env files
-
-
-## Running Revisto locally
+### Running Revisto locally
 1. Open a command line and navigate to the "server" folder:
 
 `cd C:/YOUR_PATH/revisto/server`
@@ -72,39 +33,49 @@ Contact the lead developers and ask them for the required .env files
 
 `npm start`
 
+## Using Docker
+### Client
+```bash
+docker build -t revisto-client client
+docker run -p 3000:3000 -d revisto-client
+```
 
-## Contributing to Revisto
-### Solving issues
+### Server
+```bash
+docker build -t revisto-server server --build-arg ATLAS_URI=$ATLAS_URI --build-arg TOKEN_SECRET=$TOKEN_SECRET
+docker run -p 8080:8080 -d revisto-server
+```
 
-1. Identify the [issue](https://github.com/CS-Journeys/revisto/issues) you'd like to solve
-2. Open a command line to the root of your local repository
-3. Update your local repository:
+### Stopping
+```bash
+docker ps
+docker stop <YOUR_CONTAINER>
+docker stop $(docker ps -q)
+```
 
-`git pull`
+## Deploying to AWS
+1. Create an ECR repository for `revisto-client` and `revisto-server`
+2. Get the ECR repository URI without repository name (e.g.: `000000000000.dkr.ecr.us-east-1.amazonaws.com`)
+3. Login to ECR
+```bash
+aws ecr get-login-password | docker login --username AWS --password-stdin ${ECR_REPOSITORY}
+```
+4. Push the images to ECR
+```bash
+docker image tag revisto-client:latest ${ECR_REPOSITORY}/revisto-client:latest
+docker image tag revisto-server:latest ${ECR_REPOSITORY}/revisto-server:latest
+docker push ${ECR_REPOSITORY}/revisto-client:latest && docker push ${ECR_REPOSITORY}/revisto-server:latest
+```
 
-4. Create a new branch:
+5. Deploy the application to AWS
+```bash
+eb deploy
+```
 
-`git checkout -b my-branch-name`
+## Helpful Resources
+- [AWS Workshop for Multicontainer ELB Deployment](https://catalog.us-east-1.prod.workshops.aws/workshops/ffb2b90a-c99b-499d-a077-551cbf0dee84/en-US/api-setup-docker/api-db-setup)
+- [Article on ELB with docker-compose.yml](https://medium.com/adessoturkey/aws-elastic-beanstalk-with-docker-compose-yml-file-ae5958569b2f)
 
-5. Make your changes
-6. Add your modified files to the Git staging area:
-
-`git add my-file.js` to add specific files one by one, or
-
-`git add .` to add all modified files
-
-7. Commit your changes with a descriptive message:
-
-`git commit -m "Implement user authentication"`
-
-8. Push your changes to GitHub:
-
-`git push -u origin my-branch-name`
-
-9. Create a pull request in GitHub via the green "Compare & pull request" button
-10. In GitHub, link the pull request to the relevant issue
-11. Notify your team leader of your newly created pull request or assign a reviewer via the "Reviewers" settings button
-12. Wait for the reviewer to review your code. If everything looks good, they will merge your code into the master branch.
-13. Return to the master branch:
-
-`git switch master`
+## FAQ
+Q: I'm trying to deploy but I get this error: "The ECR service failed to authenticate your private repository. The deployment failed." How do I fix this?
+A: Refresh the credentials in the .dockercfg -- that file should be in an S3 bucket. If that still doesn't work, add the `AmazonEC2ContainerRegistryReadOnly` policy to your `aws-elasticbeanstalk-ec2-role`.
